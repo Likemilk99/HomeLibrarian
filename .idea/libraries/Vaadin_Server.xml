@@ -1,0 +1,67 @@
+<component name="libraryTable">
+  <library name="Vaadin Server">
+    <CLASSES>
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/vaadin-push-7.5.7.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/vaadin-server-7.5.7.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/vaadin-shared-7.5.7.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/vaadin-themes-7.5.7.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/vaadin-widgets-7.5.7.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/vaadin-client-compiled-7.5.7.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/sac-1.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/ant-1.6.5.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/asm-5.0.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/junit-4.11.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jsoup-1.8.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/easymock-3.0.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/httpcore-4.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/icu4j-50.1.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/objenesis-1.2.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/asm-tree-5.0.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/asm-util-5.0.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/commons-io-2.4.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/httpmime-4.3.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/cglib-nodep-2.2.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/flute-1.3.0.gg2.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/nekohtml-1.9.19.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/xml-apis-1.4.01.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/cssparser-0.9.11.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/httpclient-4.3.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/serializer-2.7.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/swing-worker-1.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/apache-mime4j-0.6.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/asm-commons-5.0.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/commons-codec-1.8.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/commons-lang3-3.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/hamcrest-core-1.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/xercesImpl-2.11.0.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/ant-launcher-1.6.5.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/commons-logging-1.1.3.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/commons-collections-3.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/javax.servlet-api-3.0.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/validation-api-1.0.0.GA.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/vaadin-slf4j-jdk14-1.6.1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-io-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-xml-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/appengine-api-1.0-sdk-1.7.7.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-http-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-jndi-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-plus-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-util-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/vaadin-sass-compiler-0.9.12.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-client-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-server-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-webapp-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-servlet-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-security-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-servlets-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/validation-api-1.0.0.GA-sources.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/atmosphere-runtime-2.2.7.vaadin1.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/vaadin-client-compiler-deps-1.2.0.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-annotations-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/jetty-continuation-8.1.12.v20130726.jar!/" />
+      <root url="jar://C:/Program Files/Java/vaadin-all-7.5.7/lib/streamhtmlparser-jsilver-0.0.10.vaadin1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
