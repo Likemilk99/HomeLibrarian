@@ -3,6 +3,18 @@
 
 </br>
 Обзор: Реализовать библиотеку с web интерфейсом
+Технгологии 
+--------------------------------
+* Java
+* PostgreSQL
+* Hibernate
+* Vaadin
+* Spring Security
+* Maven
+* Система контроля версий Github
+* Тестирование Junit
+* Сервер Tomcat или Jetty
+* Таблицы стилей CSS
 ##Настройка среды разработки 
 1. Установить intellij idea 14++
 2. Устаность PGAdmin 1.20.0 [ССЫЛКА](http://www.pgadmin.org/)
