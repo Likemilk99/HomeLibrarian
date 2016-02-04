@@ -11,7 +11,7 @@
     * Создать таблицу с именем homelibbd и владельцем postgres
     * Порт должен быть 5432
 3. Зарегистрироваться на github
-4. Установить Git (???) [ССЫЛКА](https://git-for-windows.github.io/)
+4. Установить Git ???? [ССЫЛКА](https://git-for-windows.github.io/)
 5. Подключиться из intellij idea к нужной репозитории и загрузить проект
 6. 
     
