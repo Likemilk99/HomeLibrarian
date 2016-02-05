@@ -5,7 +5,6 @@
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/homelibbd</jdbc-url>
-      <libraries />
     </data-source>
   </component>
 </project>
