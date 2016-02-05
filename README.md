@@ -29,6 +29,6 @@
 5. Подключиться из intellij idea к нужной репозитории и загрузить проект
     * Ставим Java 7, Maven, Git;
     * VCS > Checkout from Version Control > GitHub > Ввести пароль;
-    * Выбираете репозиторий https://github.com/e-government-ua/i.git > выбираете Parent Directory и название проекта > Clone. После       клонирования вам предложат открыть проект, тыцаете Yes
+    * Выбираете репозиторий https://github.com/Likemilk99/HomeLibrarian.git > выбираете Parent Directory и название проекта > Clone.      * После клонирования вам предложат открыть проект, тыцаете Yes
     * Откройте проект > Enable Auto Import
     * VCS > Git > Branches > origin/test > Checkout as new local branch > OK. 
