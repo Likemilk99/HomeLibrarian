@@ -1,9 +1,9 @@
 # HomeLibrarian
-##Проект интернет библиотеки
+##Проект интернет-библиотеки
 
 </br>
-Обзор: Реализовать библиотеку с web интерфейсом
-Технологии
+Обзор: Реализовать библиотеку с web-интерфейсом
+Технологии 
 --------------------------------
 * Java
 * PostgreSQL
@@ -33,3 +33,9 @@
     * После клонирования вам предложат открыть проект, тыцаете Yes
     * Откройте проект > Enable Auto Import
     * VCS > Git > Branches > origin/test > Checkout as new local branch > OK. 
+6. JDK 1.8
+7. PostgreSQL 9.4.5
+8. vaadin clean-compile
+9. livecircle: clean-compile
+10. jetty: run
+11. Путь к файлу в тесте
