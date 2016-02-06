@@ -27,5 +27,6 @@ public class TestBDBooks {
         F= new Factory();
         InterfaceDao InUser = F.getDAO(BookDAO.class );
         InUser.addEl(B);
+        //test
     }
 }
