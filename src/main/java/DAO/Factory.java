@@ -1,11 +1,15 @@
 package DAO;
 
+
+
 /**
  * Created by likemilk on 04.02.2016.
  */
-public class Factory {
+public class Factory{
 
-    private static UserDAO studentDAO = null;
+    private static UserDAO DAO = null;
+    //private static BookDAO DAO = null;
+    //  START WTF ???
     private static Factory instance = null;
 
     public static synchronized Factory getInstance(){
@@ -15,10 +19,10 @@ public class Factory {
         return instance;
     }
 
-    public UserDAO getStudentDAO(){
-        if (studentDAO == null){
-            studentDAO = new UserDAO();
-        }
-        return studentDAO;
+    //  END WTF
+    public InterfaceDao getDAO(Object Obj){
+       if(Obj== UserDAO.class ) return new UserDAO();
+        else if(Obj == BookDAO.class)return new BookDAO();
+        return null;
     }
 }

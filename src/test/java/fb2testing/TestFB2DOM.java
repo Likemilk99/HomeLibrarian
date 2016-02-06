@@ -4,6 +4,9 @@ import Data.Books;
 import XMlWorker.Fb2OpenDOM;
 import org.junit.Test;
 
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+
 /**
  * Created by likemilk on 06.01.2016.
  */
@@ -11,7 +14,7 @@ import org.junit.Test;
 public class TestFB2DOM {
 
     private Fb2OpenDOM Fxml;
-    private final String path = new String("F:\\PROJECTS\\JAVA\\newtest\\src\\main\\resources\\doc_xml\\Drakonoboriets_impierii_-_Andriei_Burievoi.fb2");
+    private final String path = new String("F:\\PROJECTS\\JAVA\\HomeLibrarian\\src\\main\\resources\\doc_xml\\Drakonoboriets_impierii_-_Andriei_Burievoi.fb2");
 
     /**
      * Тест открытия xml файла
@@ -76,5 +79,17 @@ public class TestFB2DOM {
         Fxml = new Fb2OpenDOM(path);
         String str = Fxml.getAnnotation();
         System.out.print(str.toString());
+    }
+
+    @Test
+    public void TestGetImage() throws  Exception {
+        Fxml = new Fb2OpenDOM(path);
+        BufferedImage image = Fxml.getImage();
+        JFrame frame = new JFrame();
+        frame.setSize(300, 300);
+        JLabel label = new JLabel(new ImageIcon(image));
+        frame.add(label);
+        frame.setVisible(true);
+
     }
 }

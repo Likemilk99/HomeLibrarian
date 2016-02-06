@@ -157,6 +157,16 @@ public class Fb2OpenXPATH {
         return Err;
     }
 
+    public String GetImage() {
+        try {
+            return xpath.compile("/FictionBook/description/title-info/binary/text()").evaluate(xmlDoc);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return Err;
+    }
+
+
     // SETTERS
 
     /**

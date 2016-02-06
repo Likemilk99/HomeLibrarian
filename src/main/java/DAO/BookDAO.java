@@ -1,5 +1,6 @@
 package DAO;
 
+import Data.Books;
 import Data.Guest;
 import Data.Users;
 import org.hibernate.Session;
@@ -11,15 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Реализация интерфейса для пользователей
+ * Реализация интерфейса для книг
  */
-public class UserDAO implements InterfaceDao<Users> {
+public class BookDAO implements InterfaceDao<Books> {
+
 
     public String WhoIsIt() {
-        return "Users";
+        return "Books";
     }
 
-    public void addEl(Users el) throws SQLException {
+    public void addEl(Books el) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -36,7 +38,7 @@ public class UserDAO implements InterfaceDao<Users> {
     }
 
 
-    public void updateEl(Users el) throws SQLException {
+    public void updateEl(Books el) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -53,14 +55,13 @@ public class UserDAO implements InterfaceDao<Users> {
     }
 
 
-    public Users getElById(String el) throws SQLException {
+    public Books getElById(String el) throws SQLException {
         Session session = null;
-        Users user = null;
-        Guest guest = null;
+        Books book = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             // test start
-            user = (Users) session.get(Users.class, el);
+            book = (Books) session.get(Books.class, el);
             //guest =  session.load(Guest.class, nickname);
 
             //end test
@@ -73,7 +74,7 @@ public class UserDAO implements InterfaceDao<Users> {
         }
         // user.setNickname(guest.getNickname());
         // user.setPassword(guest.getPassword());
-        return user;
+        return book;
     }
 
 
@@ -94,7 +95,7 @@ public class UserDAO implements InterfaceDao<Users> {
     }
 
 
-    public void deleteEl(Users el) throws SQLException {
+    public void deleteEl(Books el) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();

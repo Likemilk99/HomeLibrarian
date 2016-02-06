@@ -1,12 +1,16 @@
 package XMlWorker;
 
+import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
 import Data.Books;
+import org.postgresql.util.Base64;
 import org.w3c.dom.Document;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -133,6 +137,7 @@ public class Fb2OpenDOM {
              return null;
          }
     }
+
     public String getTitle() {
     if(NList.getLength() > 0) {
         Node node = NList.item(0);
@@ -148,6 +153,31 @@ public class Fb2OpenDOM {
         return null;
     }
 }
+
+    public BufferedImage getImage() {
+        if(NList.getLength() > 0) {
+            Node node = NList.item(0);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+                String encodedImage = node.getTextContent();
+                byte[] bytes = Base64.decode(encodedImage);
+                try {
+                    BufferedImage image = ImageIO.read(new ByteArrayInputStream(bytes));
+
+                return image;// element.getElementsByTagName("book-title").item(0).getChildNodes().item(0).getNodeValue();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                return null;
+            }
+            return null;
+        }
+        else {
+            return null;
+        }
+    }
 
     public String getYear() {
         if(NList.getLength() > 0) {
@@ -181,14 +211,7 @@ public class Fb2OpenDOM {
         }
     }
 
-    public void getImage() throws Exception {
-        try {
 
-        } catch (Exception exception) {
-            String message = "Cant find Image!";
-            throw new Exception(message);
-        }
-    }
 
 
 
