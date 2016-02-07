@@ -7,19 +7,27 @@ import java.util.List;
  * Created by likemilk on 04.02.2016.
  */
 public interface InterfaceDao<T>{
+
+    /**
+     *
+     * Чья реализауия.
+     * @return
+     */
+    String WhoIsIt();
+
     /**
      *
      * @param El Добавление обьекта  <b>EL<b>
      * @throws SQLException
      */
-    void addUser(T El) throws SQLException;
+    void addEl(T El) throws SQLException;
 
     /**
      *
      * @param El Обновить обьект  <b>EL<b>
      * @throws SQLException
      */
-    void updateUser(T El) throws SQLException;
+    void updateEl(T El) throws SQLException;
 
     /**
      * Получить обьекта по id
@@ -28,19 +36,19 @@ public interface InterfaceDao<T>{
      * @throws SQLException
      */
     // T getUserById(Integer id) throws SQLException;
-    T getUserById(String id) throws SQLException;
+    T getElById(String id) throws SQLException;
     /**
      * Получить список обьектов
      * @return список
      * @throws SQLException
      */
-    List getAllUsers() throws SQLException;
+    List getAllEls() throws SQLException;
 
     /**
      * Удалить элемент из БД
      * @param El
      * @throws SQLException
      */
-    void deleteUser(T El) throws SQLException;
+    void deleteEl(T El) throws SQLException;
 
 }

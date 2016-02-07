@@ -9,19 +9,27 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "\"User\"")
-public class Users{//} extends Guest{
+public class Users{
 
     private Integer id;
     private String fname;
     private String password;
     private String role;
+    private String email;
+
+    public void Users(String fname, String password, String email){
+        this.fname = fname;
+        this.password = password;
+        this.email = email;
+        this.role = "user";
+        this.id = 0;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_id")
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
 
     @Column(name = "FName")
     public String getFname() {
@@ -38,6 +46,9 @@ public class Users{//} extends Guest{
         return role;
     }
 
+    @Column(name = "Email")
+    public String getEmail() { return email; }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -46,12 +57,15 @@ public class Users{//} extends Guest{
         this.fname = fname;
     }
 
-
     public void setPassword(String password) {
         this.password = password;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
