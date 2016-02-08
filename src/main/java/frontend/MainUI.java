@@ -1,5 +1,7 @@
 package frontend;
 
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -12,52 +14,67 @@ import javax.servlet.annotation.WebServlet;
 /**
  * Created by likemilk on 29.12.2015.
  */
+@Title("login")
 @Theme("mytheme")
 @Widgetset("newtest.MyAppWidgetset")
 public class MainUI extends UI{
-    Layout HL1 = new HightLayout();
-    Layout TB = new TableBooks();
-
-    Button button_1 = new Button("Add");
-    Button button_2 = new Button("Delete");
-    Button button_3 = new Button("Search");
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        //
+        // Create a new instance of the navigator. The navigator will attach
+        // itself automatically to this view.
+        //
+        new Navigator(this, this);
 
-        CreateWindow();
+        //
+        // The initial log view where the user can login to the application
+        //
+        getNavigator().addView(SimpleLoginView.NAME, SimpleLoginView.class);//
+
+        //
+        // Add the main view of the application
+        //
+        getNavigator().addView(SimpleLoginMainView.NAME,
+                SimpleLoginMainView.class);
+
+        //
+        // We use a view change handler to ensure the user is always redirected
+        // to the login view if the user is not logged in.
+        //
+        getNavigator().addViewChangeListener(new ViewChangeListener() {
+
+            @Override
+            public boolean beforeViewChange(ViewChangeEvent event) {
+
+                // Check if a user has logged in
+                boolean isLoggedIn = getSession().getAttribute("user") != null;
+                boolean isLoginView = event.getNewView() instanceof SimpleLoginView;
+
+                if (!isLoggedIn && !isLoginView) {
+                    // Redirect to login view always if a user has not yet
+                    // logged in
+                    getNavigator().navigateTo(SimpleLoginView.NAME);
+                    return false;
+
+                } else if (isLoggedIn && isLoginView) {
+                    // If someone tries to access to login view while logged in,
+                    // then cancel
+                    return false;
+                }
+
+                return true;
+            }
+
+            @Override
+            public void afterViewChange(ViewChangeEvent event) {
+
+            }
+        });
     }
 
-    void CreateWindow(){
-
-        HorizontalLayout test= new HorizontalLayout();
-        test.addComponent(new Label("HI Hi HI"));
-        test.setHeight("70%");
-        test.setStyleName("borders");
-
-        HorizontalLayout test1 = new HorizontalLayout(button_1, button_2, button_3);
-
-        VerticalLayout mainLayout = new VerticalLayout();
-        mainLayout.setStyleName("borders");
-        mainLayout.addComponent(HL1);
-        mainLayout.addComponent(TB);
-        mainLayout.addComponent(new Label("tetstststs"));
-        setContent(mainLayout);
-
-    }
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+   @WebServlet(urlPatterns = "/*")//, name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MainUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
-    }
-
-    void CeateWindow_1() {
-        HorizontalLayout MainWin= new HorizontalLayout();
-
-        VerticalLayout HeaderLayout = new VerticalLayout();
-        MenuBar barmenu = new MenuBar();
-        barmenu.addItem("test_1",null,null);
-        barmenu.addItem("test_2",null,null);
-
-        MainWin.addComponent(barmenu) ;
     }
 }

@@ -32,14 +32,22 @@
 @mixin mytheme {
   @include valo;
 
-  // Insert your own theme rules here
 }
+  // Insert your own theme rules here
 
-.borders {
+/*.v-horizontallayout-mainScreenUpperPanel {
+  background: url(images/background_1.jpg);
+  background-repeat: no-repeat;
+  background-position: left bottom;
+}*/
+.backgroundimage {
+  background: url("Images/background_3.jpg") !important;
+}
+/*.borders {
   border-style: solid;
   border-color: black;
   border-width: 5px;
   padding: 5px;
 
-}
+}*/
 
