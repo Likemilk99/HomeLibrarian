@@ -43,11 +43,169 @@
 .backgroundimage {
   background: url("Images/background_3.jpg") !important;
 }
-/*.borders {
-  border-style: solid;
-  border-color: black;
-  border-width: 5px;
-  padding: 5px;
+  .borders {
+    border-style: solid;
+    border-color: #3f8bff;
+    border-width: 3px;
 
-}*/
+  }
+
+  // Элементы книг
+  /*.cells {
+    border-style: hidden;
+    background-color:#4682B4;
+    border-color: #3f8bff;
+    border-width: 3px;
+
+    border-radius: 20px 20px 20px 20px;
+    margin: 14px;   // после границы
+    padding: 10px;  //до границы
+  }*/
+
+  .cells {
+    margin-bottom: 5px;
+    background-color: #ccc;
+
+    border-style: hidden;
+    background-color:#4682B4;
+    border-color: #3f8bff;
+    border-width: 3px;
+
+    border-radius: 20px 20px 20px 20px;
+    margin: 14px;   // после границы
+    padding: 10px;  //до границы
+
+    text-align: center;
+    width: 200px;
+    height:100px;
+
+    text-indent: 0px;
+    -moz-transition: background-color 0.8s 0.1s ease;
+    -o-transition: background-color 0.8s 0.1s ease;
+    -webkit-transition: background-color 0.8s 0.1s ease;
+    cursor: pointer;}
+
+  .cells:hover {
+    background-color: #97CE68;
+    color: #333;
+  }
+
+  //Left sidebar
+  .mainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    flex: 1;
+    order: 1;
+    width: auto;
+  }
+
+  .sidebarContainer {
+    order: 2;
+    transition: width 1s ease;
+    -moz-transition: width 1s ease;
+  }
+
+  .sidebar-in{
+
+    background-color:#4682B4;
+    animation: sidebarAnimationFramesIn ease 1s;
+    animation-iteration-count: 1;
+    transform-origin: 100% 50%;
+    animation-fill-mode:forwards;
+    width: 100%;
+  }
+
+  .sidebar-out{
+    background-color:#4682B4;
+    animation: sidebarAnimationFramesOut ease 1s;
+    animation-iteration-count: 1;
+    transform-origin: 100% 50%;
+    animation-fill-mode:forwards;
+    width: 100%;
+  }
+
+
+  //test
+  .test {
+    background-color:#4682B4;
+    width: 100%;
+
+    -moz-transition: width 0.8s 0.1s ease;
+    -o-transition: width 0.8s 0.1s ease;
+    animation-iteration-count: 1;
+    -webkit-transition: width 0.8s 0.1s ease;
+    cursor: pointer;
+  }
+
+  .test:hover {
+    background-color:#4682B4;
+    width: 0%
+  }
+
+  .newsidebar-in{
+    background-color:#4682B4;
+    animation: sidebarAnimationFramesIn ease 1s;
+    animation-iteration-count: 1;
+    -moz-transition: width 0.8s 0.1s ease;
+    -o-transition: width 0.8s 0.1s ease;
+    -webkit-transition: width 0.8s 0.1s ease;
+    transform-origin: 100% 50%;
+    animation-fill-mode:forwards;
+    // width: 100%;
+  }
+
+  .newsidebar-out{
+    background-color:#4682B4;
+    animation: sidebarAnimationFramesOut ease 1s;
+    -moz-transition: width 0.8s 0.1s ease;
+    -o-transition: width 0.8s 0.1s ease;
+    animation-iteration-count: 1;
+    -webkit-transition: width 0.8s 0.1s ease;
+    transform-origin: 100% 50%;
+    animation-fill-mode:forwards;
+    // width: 100%;
+  }
+
+  //элементы в баре
+  .tooltip-in {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s, visibility 0s linear 0.3s;
+  }
+  .tooltip-out{
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.5s, visibility 0s linear 0.3s;
+  }
+
+  // Face
+  .circular-in  {
+    width: 200px;
+    height: 200px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s, visibility 0s linear 0.3s;
+  }
+
+  .circular-out {
+    width: 200px;
+    height: 200px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.5s, visibility 0s linear 0.3s;
+  }
+
 
