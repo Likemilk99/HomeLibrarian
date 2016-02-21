@@ -135,6 +135,11 @@
 			<artifactId>vaadin-client</artifactId>
 			<scope>provided</scope>
 		</dependency>
+        <dependency>
+            <groupId>com.vaadin.addon.responsive</groupId>
+            <artifactId>responsive</artifactId>
+            <version>1.0.0.alpha4</version>
+        </dependency>
 		<!--
 		  Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
 

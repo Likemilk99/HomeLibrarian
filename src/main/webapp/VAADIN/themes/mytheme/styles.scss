@@ -1,6 +1,8 @@
 @import "mytheme.scss";
 @import "addons.scss";
 
+@include v-font(Jura,
+        '../../../../mytheme/fonts/Jura');
 // This file prefixes all rules with the theme name to avoid causing conflicts with other themes.
 // The actual styles should be defined in mytheme.scss
 

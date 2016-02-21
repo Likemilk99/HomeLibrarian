@@ -1,9 +1,9 @@
 // Global variable overrides. Must be declared before importing Valo.
 
 // Defines the plaintext font size, weight and family. Font size affects general component sizing.
-//$v-font-size: 16px;
+$v-font-size: 25px;
 //$v-font-weight: 300;
-//$v-font-family: "Open Sans", sans-serif;
+$v-font-family: Jura;
 
 // Defines the border used by all components.
 //$v-border: 1px solid (v-shade 0.7);
@@ -16,8 +16,9 @@
 
 // Affects the visual appearance of all components
 //$v-gradient: v-linear 8%;
-//$v-bevel-depth: 30%;
-//$v-shadow-opacity: 5%;
+$v-bevel-depth: 50%;
+$v-shadow-opacity: 5%;
+//$v-bevel: inset 0 2px 2px 0 #fff, inset 0 -2px 2px 0 #ddd;
 
 // Defines colors for indicating status (focus, success, failure)
 //$v-focus-color: valo-focus-color(); // Calculates a suitable color automatically
@@ -32,23 +33,47 @@
 @mixin mytheme {
   @include valo;
 
+  .borders {
+    border-style: solid;
+    border-color: #0099ff;
+    border-width: 3px;
+    background-color: #ffffff;
+
+  }
+
+  .introlabel {
+    font-size: 100px;
+    line-height: 1.2;
+  }
+
+  /* Small size */
+  .introlabel[width-range~="0-300px"] {
+    font-size: 25px;
+  }
+
+  /* Medium size */
+  .introlabel[width-range~="301px-600px"] {
+    font-size: 50px;
+  }
+
+  /* Anything bigger */
+  .introlabel[width-range~="601px-"] {
+    font-size: 100px;
+  }
+
+  .label {
+    font-size: 100%;
+  }
+
+  .errorlabel {
+    //margin: 5px;
+    //padding: 20px;
+    color: red;
+    font-size: 100%;
+  }
 }
   // Insert your own theme rules here
 
-/*.v-horizontallayout-mainScreenUpperPanel {
-  background: url(images/background_1.jpg);
-  background-repeat: no-repeat;
-  background-position: left bottom;
-}*/
-.backgroundimage {
-  background: url("Images/background_3.jpg") !important;
-}
-  .borders {
-    border-style: solid;
-    border-color: #3f8bff;
-    border-width: 3px;
-
-  }
 
   // Элементы книг
   /*.cells {
