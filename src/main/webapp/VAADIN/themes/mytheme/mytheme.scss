@@ -233,4 +233,14 @@ $v-shadow-opacity: 5%;
     transition: opacity 1.5s, visibility 0s linear 0.3s;
   }
 
-
+// METRO
+// ScrollBar
+/*.v-scrollable {
+  overflow: hidden;
+}*/
+.ease-in-out {
+  transition-duration: 6s;
+  transition-duration: 120ms;
+  transition-duration: 1s, 15s;
+  transition-duration: 10s, 30s, 230ms;
+}

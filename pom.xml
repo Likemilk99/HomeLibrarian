@@ -13,8 +13,8 @@
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <hibernate-version>5.0.1.Final</hibernate-version>
         <jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
-		<project.source.version>1.7</project.source.version>
-		<project.target.version>1.7</project.target.version>
+		<project.source.version>8</project.source.version>
+		<project.target.version>8</project.target.version>
 		<project.encoding>UTF-8</project.encoding>
 	</properties>
 

@@ -1,17 +1,16 @@
 package frontend;
 
-import Data.Books;
-import com.google.gwt.thirdparty.guava.common.collect.Lists;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.ui.*;
 import com.vaadin.annotations.*;
+import frontend.views.MainView;
+import frontend.views.SimpleLoginView;
 
 
 import javax.servlet.annotation.WebServlet;
-import java.util.List;
-//import java.awt.*;
+
 
 /**
  * Created by likemilk on 29.12.2015.
@@ -19,8 +18,6 @@ import java.util.List;
 @Theme("mytheme")
 @Widgetset("newtest.MyAppWidgetset")
 public class MainUI extends UI{
-    Layout HL1 = new HightLayout();
-    Layout TB = new TableBooks();
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {

@@ -17,8 +17,8 @@ public class Users{
     private String role;
     private String email;
 
-    public void Users(String fname, String password, String email){
-        this.fname = fname;
+    public   Users(String fname, String password, String email){
+            this.fname = fname;
         this.password = password;
         this.email = email;
         this.role = "user";

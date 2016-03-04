@@ -1,4 +1,4 @@
-package frontend;
+package frontend.elements.gridbooks;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

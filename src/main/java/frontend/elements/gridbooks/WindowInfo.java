@@ -1,4 +1,4 @@
-package frontend;
+package frontend.elements.gridbooks;
 
 import Data.Books;
 import com.vaadin.ui.*;

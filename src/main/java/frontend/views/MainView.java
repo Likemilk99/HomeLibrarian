@@ -1,4 +1,4 @@
-package frontend;
+package frontend.views;
 
 import Data.Books;
 import com.google.gwt.thirdparty.guava.common.collect.Lists;
@@ -6,10 +6,8 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
-import com.vaadin.annotations.*;
+import frontend.elements.gridbooks.GridBooks;
 
 import java.util.List;
 

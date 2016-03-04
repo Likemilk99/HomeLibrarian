@@ -25,7 +25,7 @@ public class TestBDUsers {
     public void TestAddtoBD() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Users contactEntity = new Users();
+        Users contactEntity = new Users("Ivan", "7154255", "iround@yandex.ru");
         contactEntity.setFname("1");
        // contactEntity.SetId(15);
         session.save(contactEntity);
@@ -38,8 +38,8 @@ public class TestBDUsers {
      */
     @Test
     public void TestAddtoBDUsingFactory() throws SQLException {
-        Us = new Users();
-        Us.Users("Ivan", "7154255", "iround@yandex.ru");
+        Us = new Users("Ivan", "7154255", "iround@yandex.ru");
+      //  Us.Users("Ivan", "7154255", "iround@yandex.ru");
         F= new Factory();
         InterfaceDao InUser = F.getDAO(UserDAO.class );
         InUser.addEl(Us);
