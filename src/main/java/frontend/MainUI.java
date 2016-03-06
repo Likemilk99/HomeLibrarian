@@ -2,7 +2,10 @@ package frontend;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.*;
+import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import com.vaadin.annotations.*;
 import frontend.views.MainView;
@@ -21,7 +24,7 @@ public class MainUI extends UI{
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        Responsive.makeResponsive(this);
+        setResponsive(true);
         //
         // Create a new instance of the navigator. The navigator will attach
         // itself automatically to this view.

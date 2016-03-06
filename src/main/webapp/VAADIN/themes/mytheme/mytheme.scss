@@ -1,8 +1,8 @@
 // Global variable overrides. Must be declared before importing Valo.
 
 // Defines the plaintext font size, weight and family. Font size affects general component sizing.
-$v-font-size: 25px;
 //$v-font-weight: 300;
+$v-font-size: 20px;
 $v-font-family: Jura;
 
 // Defines the border used by all components.
@@ -30,7 +30,7 @@ $v-shadow-opacity: 5%;
 
 @import "../valo/valo.scss";
 
-@mixin mytheme {
+@mixin mytheme() {
   @include valo;
 
   .borders {
@@ -39,26 +39,6 @@ $v-shadow-opacity: 5%;
     border-width: 3px;
     background-color: #ffffff;
 
-  }
-
-  .introlabel {
-    font-size: 100px;
-    line-height: 1.2;
-  }
-
-  /* Small size */
-  .introlabel[width-range~="0-300px"] {
-    font-size: 25px;
-  }
-
-  /* Medium size */
-  .introlabel[width-range~="301px-600px"] {
-    font-size: 50px;
-  }
-
-  /* Anything bigger */
-  .introlabel[width-range~="601px-"] {
-    font-size: 100px;
   }
 
   .label {
@@ -70,6 +50,48 @@ $v-shadow-opacity: 5%;
     //padding: 20px;
     color: red;
     font-size: 100%;
+  }
+}
+
+.loginlayout {
+  min-width: 320px;
+  max-width: 25%;
+  //border-style: solid;
+  //border-color: #0099ff;
+  //border-width: 3px;
+  background-color: #ffffff;
+}
+
+.introlabel {
+  font-size: 100px;
+  line-height: 1.2;
+}
+
+@media screen and (max-width : 1400px) {
+  .introlabel {
+    font-size: 85px;
+    line-height: 1.2;
+  }
+}
+
+@media screen and (max-width : 1224px) {
+  .introlabel {
+    font-size: 70px;
+    line-height: 1.2;
+  }
+}
+
+@media screen and (max-width: 967px) {
+  .introlabel {
+    font-size: 50px;
+    line-height: 1.2;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .introlabel {
+    font-size: 35px;
+    line-height: 1.2;
   }
 }
   // Insert your own theme rules here
@@ -177,6 +199,8 @@ $v-shadow-opacity: 5%;
     -webkit-transition: width 0.8s 0.1s ease;
     transform-origin: 100% 50%;
     animation-fill-mode:forwards;
+    min-width: 320px;
+    max-width: 20%;
     // width: 100%;
   }
 

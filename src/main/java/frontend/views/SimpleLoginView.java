@@ -4,7 +4,7 @@ import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Responsive;
+import com.vaadin.server.Sizeable;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -20,7 +20,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         Button.ClickListener {
     public static final String NAME = "login";
 
-    private final Image logo =  new Image(null, new ThemeResource("Images/logo.png"));
+    //private final Image logo =  new Image(null, new ThemeResource("Images/logo.png"));
 
     private final Button loginButton;
     private final Button signupButton;
@@ -36,30 +36,46 @@ public class SimpleLoginView extends CustomComponent implements View,
         setSizeFull();
         setResponsive(true);
         // Initialize logo
-        logo.setWidth(12, Unit.PERCENTAGE);
-
+        ThemeResource resource = new ThemeResource("Images/logo.png");
+        Embedded logo = new Embedded(null, resource);
+        logo.setSizeFull();
+        //logo.setWidth(100, Unit.PERCENTAGE);
+        //logo.setHeight(100, Unit.PERCENTAGE);
+        //logo.setHeight(UI.getCurrent().getPage().getBrowserWindowHeight()/4, Unit.PIXELS);
+        VerticalLayout logo_layout = new VerticalLayout();
+        logo_layout.addComponent(logo);
+        logo_layout.setComponentAlignment(logo, Alignment.MIDDLE_CENTER);
+        logo_layout.addStyleName("loginlayout");
+        logo_layout.setWidth(100, Unit.PERCENTAGE);
+        //logo_layout.setHeight(100, Unit.PERCENTAGE);
+        //logo_layout.setSizeFull();
+        //logo_layout.setExpandRatio(logo, 1.0f);
         // Initialize lebels
         testlabel = new Label("(test@test.com/passw0rd)");
         testlabel.setWidth(null);
+        testlabel.setHeight(100, Unit.PERCENTAGE);
         testlabel.setStyleName("errorlabel");
         Label introlabel = new Label("Welcome to HomeLibrarian");
         introlabel.setWidth(null);
+        introlabel.setHeight(100, Unit.PERCENTAGE);
         introlabel.setStyleName("introlabel");
-        Responsive.makeResponsive(introlabel);
+        introlabel.setResponsive(true);
 
         Label passwordlabel = new Label("Password:");
         passwordlabel.setWidth(null);
+        passwordlabel.setHeight(100, Unit.PERCENTAGE);
         passwordlabel.setStyleName("label");
         passwordlabel.setResponsive(true);
 
         Label loginlabel = new Label("Username or email: ");
-        loginlabel.setWidth(25, Unit.PERCENTAGE);
+        loginlabel.setSizeFull();
         loginlabel.setStyleName("label");
         loginlabel.setResponsive(true);
 
         // Password forgot link
         Button passwordlink = new Button("forgot your password?");
         passwordlink.setWidth(null);
+        passwordlink.setHeight(100, Unit.PERCENTAGE);
         passwordlink.setStyleName(ValoTheme.BUTTON_LINK);
         passwordlink.setResponsive(true);
 
@@ -74,10 +90,10 @@ public class SimpleLoginView extends CustomComponent implements View,
         password_layout_components.setComponentAlignment(passwordlink, Alignment.MIDDLE_LEFT);
 
         HorizontalLayout password_layout = new HorizontalLayout(password_layout_components);
-        password_layout.setWidth(25, Unit.PERCENTAGE);
+        password_layout.setSizeFull();
         // Create the user input field
         user_field = new TextField();
-        user_field.setWidth(25, Unit.PERCENTAGE);
+        user_field.setSizeFull();
         user_field.addValidator(new EmailValidator(
                 "Username must be an email address"));
         user_field.setValue("test@test.com");
@@ -87,7 +103,7 @@ public class SimpleLoginView extends CustomComponent implements View,
 
         // Create the password input field
         password_field = new PasswordField();
-        password_field.setWidth(25, Unit.PERCENTAGE);
+        password_field.setSizeFull();
         password_field.addValidator(new PasswordValidator());
         password_field.setValue("passw0rd");
         password_field.setNullRepresentation("");
@@ -96,7 +112,7 @@ public class SimpleLoginView extends CustomComponent implements View,
 
         // Create login button
         loginButton = new Button("login", this);
-        loginButton.setWidth(100, Unit.PERCENTAGE);
+        loginButton.setSizeFull();
         loginButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 loginButtonClick();
@@ -107,7 +123,7 @@ public class SimpleLoginView extends CustomComponent implements View,
 
         // Create signup button
         signupButton = new Button("signup", this);
-        signupButton.setWidth(100, Unit.PERCENTAGE);
+        signupButton.setSizeFull();
         signupButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 signupButtonClick();
@@ -122,51 +138,65 @@ public class SimpleLoginView extends CustomComponent implements View,
         //panel.setStyleName(Reindeer.LAYOUT_BLUE);
 
         HorizontalLayout buttons_layout = new HorizontalLayout();
-        buttons_layout.setWidth(25, Unit.PERCENTAGE);
+        buttons_layout.setSizeFull();
         buttons_layout.setSpacing(true);
         buttons_layout.addComponent(loginButton);
         buttons_layout.addComponent(signupButton);
         //buttonslayot.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
         //
         VerticalLayout content = new VerticalLayout();
-        content.addStyleName("borders");
-        content.addComponent(logo);
-        content.setComponentAlignment(logo, Alignment.MIDDLE_CENTER);
-        content.addComponent(introlabel);
-        content.setComponentAlignment(introlabel, Alignment.MIDDLE_CENTER);
+        content.addStyleName("loginlayout");
+        //content.addComponent(logo_layout);
+        //content.setComponentAlignment(logo_layout, Alignment.MIDDLE_CENTER);
+        //content.setExpandRatio(logo_layout, 2.5f);
+        //content.addComponent(introlabel);
+        //content.setComponentAlignment(introlabel, Alignment.MIDDLE_CENTER);
+        //content.setExpandRatio(introlabel, 1.5f);
         content.addComponent(testlabel);
         content.setComponentAlignment(testlabel, Alignment.MIDDLE_CENTER);
+        //content.setExpandRatio(testlabel, 0.5f);
         content.addComponent(loginlabel);
         content.setComponentAlignment(loginlabel, Alignment.MIDDLE_CENTER);
+        //content.setExpandRatio(loginlabel, 0.5f);
         content.addComponent(user_field);
         content.setComponentAlignment(user_field, Alignment.MIDDLE_CENTER);
+        //content.setExpandRatio(user_field, 0.5f);
         content.addComponent(password_layout);
         content.setComponentAlignment(password_layout, Alignment.MIDDLE_CENTER);
+        //content.setExpandRatio(password_layout, 0.5f);
         content.addComponent(password_field);
         content.setComponentAlignment(password_field, Alignment.MIDDLE_CENTER);
+        //content.setExpandRatio(password_field, 0.5f);
         content.addComponent(buttons_layout);
         content.setComponentAlignment(buttons_layout, Alignment.MIDDLE_CENTER);
-        content.setMargin(new MarginInfo(true, true, true, false));
-        content.setWidth(100, Unit.PERCENTAGE);
+        //content.setExpandRatio(buttons_layout, 0.5f);
+        //content.setMargin(new MarginInfo(true, true, true, false));
+        content.setWidth(25, Unit.PERCENTAGE);
+        content.setHeight(100, Unit.PERCENTAGE);
         content.setSpacing(true);
-        Responsive.makeResponsive(content);
-        //content.setHeight(50, Unit.PERCENTAGE);
-        //content.setMargin(true);
-        //fields.setCaption("Please login to access the application. (test@test.com/passw0rd)");
-        //fields.setSpacing(true);
-        //
+        content.setResponsive(true);
 
         // The view root layout
-        VerticalLayout viewLayout = new VerticalLayout(content);
+        VerticalLayout viewLayout = new VerticalLayout();
 
-        //viewLayout.setWidth(100, Unit.PERCENTAGE);
-        //viewLayout.setHeight(100, Unit.PERCENTAGE);
-        viewLayout.setSizeFull();
-        Responsive.makeResponsive(viewLayout);
+        viewLayout.setSizeUndefined();
+        //viewLayout.setSizeFull();
+        viewLayout.setResponsive(true);
+        viewLayout.addComponent(logo_layout);
+        viewLayout.addComponent(introlabel);
+        viewLayout.addComponent(content);
+        viewLayout.setComponentAlignment(logo_layout, Alignment.MIDDLE_CENTER);
+        viewLayout.setComponentAlignment(introlabel, Alignment.MIDDLE_CENTER);
         viewLayout.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
+        //viewLayout.setSpacing(true);
+        //viewLayout.setExpandRatio(logo_layout, 3.0f);
+        //viewLayout.setExpandRatio(introlabel, 2.0f);
+        //viewLayout.setExpandRatio(content, 4.0f);
         //viewLayout.setStyleName(Reindeer.LAYOUT_BLUE);
 
-        setCompositionRoot(viewLayout);
+        Panel panel = new Panel(viewLayout);
+        panel.setSizeFull();
+        setCompositionRoot(panel);
     }
 
     @Override
