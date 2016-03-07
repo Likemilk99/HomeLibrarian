@@ -5,7 +5,6 @@
       <element id="directory" name="VAADIN">
         <element id="directory" name="widgetsets">
           <element id="gwt-compiler-output" facet="HomeLibrarian/gwt/GWT" />
-          <element id="gwt-compiler-output" facet="HomeLibrarian/gwt/GWT" />
         </element>
       </element>
     </root>
