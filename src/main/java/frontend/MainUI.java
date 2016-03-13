@@ -8,8 +8,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import com.vaadin.annotations.*;
-import frontend.views.MainView;
-import frontend.views.SimpleLoginView;
+import frontend.views.*;
 
 
 import javax.servlet.annotation.WebServlet;
@@ -37,10 +36,21 @@ public class MainUI extends UI{
         getNavigator().addView(SimpleLoginView.NAME, SimpleLoginView.class);//
 
         //
-        // Add the main view of the application
+        // Add other views
         //
-        getNavigator().addView(MainView.NAME,
-                MainView.class);
+        /*getNavigator().addView(MainView.NAME, MainView.class);
+        getNavigator().addView(AddView.NAME, AddView.class);
+        getNavigator().addView(MailView.NAME, MailView.class);
+        getNavigator().addView(ManageView.NAME, ManageView.class);
+        getNavigator().addView(ProfileView.NAME, ProfileView.class);
+        getNavigator().addView(SearchView.NAME, SearchView.class);*/
+
+        getNavigator().addView(MainView.NAME, new MainView());
+        getNavigator().addView(AddView.NAME, new AddView());
+        getNavigator().addView(MailView.NAME, new MailView());
+        getNavigator().addView(ManageView.NAME, new ManageView());
+        getNavigator().addView(ProfileView.NAME, new ProfileView());
+        getNavigator().addView(SearchView.NAME, new SearchView());
 
         //
         // We use a view change handler to ensure the user is always redirected

@@ -7,8 +7,12 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
+import frontend.elements.components.HeaderLayout;
 import frontend.elements.gridbooks.GridBooks;
 import frontend.elements.tableusers.TableUsers;
+//import org.vaadin.virkki.carousel.HorizontalCarousel;
+//import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
+//import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
 import java.util.List;
 
@@ -19,64 +23,54 @@ public class MainView extends CustomComponent implements View {
 
     public static final String NAME = "";
 
-    Label text = new Label();
-
-    Button button_logout = new Button("Logout", new Button.ClickListener() {
-
-        @Override
-        public void buttonClick(Button.ClickEvent event) {
-
-            // "Logout" the user
-            getSession().setAttribute("user", null);
-
-            // Refresh this view, should redirect to login view
-            getUI().getNavigator().navigateTo(NAME);
-        }
-    });
-
-    Button button_main = new Button("Main");
-    Button button_profile = new Button("Profile");
-    Button button_search = new Button("Search");
-
-    Button button_add = new Button("Add");
-    Button button_mail = new Button("Mail");
-
-    Button button_manage = new Button("Manage");
+    private AbsoluteLayout mainlayout;
+    private HeaderLayout header;
+    private HorizontalLayout body;
 
     public MainView() {
-        // And show the username
-        //text.setValue("Hello " + username);
-        VerticalLayout mainLayout = new VerticalLayout();
-        setCompositionRoot(mainLayout);
-        //setContent(mainLayout);
-        final HorizontalLayout body = new HorizontalLayout();
+        // Layouts
+        mainlayout = new AbsoluteLayout();
+        header = new HeaderLayout();
+        body = new HorizontalLayout(new Label("body"));
+
+        //final HorizontalCarousel carousel = new HorizontalCarousel();
+
+        // Only react to arrow keys when focused
+        //carousel.setArrowKeysMode(ArrowKeysMode.FOCUS);
+        // Fetch children lazily
+        //carousel.setLoadMode(CarouselLoadMode.LAZY);
+        // Transition animations between the children run 500 milliseconds
+        //carousel.setTransitionDuration(500);
+
+        // Add the child Components
+        //carousel.addComponent(new Button("First child"));
+        //carousel.addComponent(new Label("Second child"));
+        //carousel.addComponent(new TextField("Third child"));
+        // Add the Carousel to a parent layout
+        //body.addComponent(carousel);
+        body.addComponent(new Label("body"));
+
+        // Styles
+        header.setStyleName("v-header");
+        body.setStyleName("v-body");
+        mainlayout.setStyleName("v-main-body");
+
+        // Attributions
+        header.setMargin(true);
+
+        // Add components
+        mainlayout.addComponent(header, "left: 0px; top: 0px;");
+        mainlayout.addComponent(body, "left: 0px; top: 100px;");
+
+        //header.setSizeFull();
         body.setSizeFull();
-        final VerticalLayout leftbody = new VerticalLayout();
-        leftbody.setHeight(100, Unit.PERCENTAGE);
-        //leftbody.setWidth(20, Unit.PERCENTAGE);
-        HorizontalLayout midbody = new HorizontalLayout();
-        midbody.setHeight(100, Unit.PERCENTAGE);
-        HorizontalLayout header_basic = new HorizontalLayout(button_main, button_profile, button_search);
-        // TODO проверка прав пользователя
-        HorizontalLayout header_pro = new HorizontalLayout();
-        header_pro.addComponent(button_add);
-        header_pro.addComponent(button_mail);
-        header_pro.addComponent(button_manage);
+        mainlayout.setSizeFull();
 
-        HorizontalLayout header_logout = new HorizontalLayout(button_logout);
+        setSizeFull();
+        setCompositionRoot(mainlayout);
 
-        header_basic.setSpacing(true);
-        header_pro.setSpacing(true);
-        header_logout.setSpacing(true);
-
-        HorizontalLayout header = new HorizontalLayout(header_basic, header_pro, header_logout);
-        header.setComponentAlignment(header_basic, Alignment.MIDDLE_LEFT);
-        header.setComponentAlignment(header_pro, Alignment.MIDDLE_CENTER);
-        header.setComponentAlignment(header_logout, Alignment.MIDDLE_RIGHT);
-        header.setWidth(100, Unit.PERCENTAGE);
-        header.setSizeFull();
         //конструктор грида временно
-        Books el = new Books();
+        /*Books el = new Books();
         el.Books("test","test", "test", "test");
         List<Books> list = Lists.newArrayList();
         list.add(el);
@@ -89,32 +83,28 @@ public class MainView extends CustomComponent implements View {
         list.add(el);
         list.add(el);
         list.add(el);
-        list.add(el);
+        list.add(el);*/
 
         /*
         final GridBooks Grid = new GridBooks();
         Grid.SetBookCollection(list);
         Grid.DrowGrid((int) (UI.getCurrent().getPage().getBrowserWindowWidth() - leftbody.getWidth()));
         */
-        final TableUsers Table = new TableUsers();
+       // final TableUsers Table = new TableUsers();
         //--------------------------
 
-        // Attributions
-        mainLayout.setSpacing(true);
-        //mainLayout.setMargin(false);
-        leftbody.setSpacing(true);
-        // leftbody.setMargin(true);
+
 
         // Styles
         //mainLayout.setStyleName("borders");
         //header.setStyleName("borders");
         //body.setStyleName("borders");
-        leftbody.setStyleName("newsidebar-in");
+        //leftbody.setStyleName("newsidebar-in");
 
         // Sizes
         //mainLayout.setWidth(100, Unit.PERCENTAGE);
         //mainLayout.setHeightUndefined();
-        body.setWidth(100, Unit.PERCENTAGE);
+        //body.setWidth(100, Unit.PERCENTAGE);
         //leftbody.setWidth(20, Unit.PERCENTAGE);
         //leftbody.setWidth(306, Unit.PIXELS);
         //button_1.setWidth(102, Unit.PIXELS);
@@ -122,7 +112,7 @@ public class MainView extends CustomComponent implements View {
         //button_3.setWidth(102, Unit.PIXELS);
 
         // add companens
-        final Image Face =  new Image(null, new ThemeResource("Images/test.jpg"));
+        /*final Image Face =  new Image(null, new ThemeResource("Images/test.jpg"));
         final Label L1 = new Label("My name");
         final Button BarButton_1 = new Button("Information");
         final Button BarButton_2 = new Button("Add Book");
@@ -152,60 +142,15 @@ public class MainView extends CustomComponent implements View {
         // mainLayout.setComponentAlignment(body, Alignment.TOP_LEFT);
         mainLayout.setImmediate(true);
 
-        mainLayout.setHeight(100, Unit.PERCENTAGE);
-        UI.getCurrent().getPage().addBrowserWindowResizeListener(new Page.BrowserWindowResizeListener() {
+        mainLayout.setHeight(100, Unit.PERCENTAGE);*/
+        /*UI.getCurrent().getPage().addBrowserWindowResizeListener(new Page.BrowserWindowResizeListener() {
             @Override
             public void browserWindowResized(Page.BrowserWindowResizeEvent event) {
                 //Grid.DrowGrid((int)( UI.getCurrent().getPage().getBrowserWindowWidth()-leftbody.getWidth()));
                 //Table.setWidth(UI.getCurrent().getPage().getBrowserWindowWidth()-leftbody.getWidth());
 
             }
-        });
-
-        button_profile.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-
-                if (leftbody.getStyleName().contains("newsidebar-in")) {
-                    leftbody.removeStyleName("newsidebar-in");
-                    leftbody.setStyleName("newsidebar-out");
-                    L1.removeStyleName("tooltip-out");
-                    L1.setStyleName("tooltip-in");
-                    BarButton_1.removeStyleName("tooltip-out");
-                    BarButton_1.setStyleName("tooltip-in");
-                    BarButton_2.removeStyleName("tooltip-out");
-                    BarButton_2.setStyleName("tooltip-in");
-                    BarButton_3.removeStyleName("tooltip-out");
-                    BarButton_3.setStyleName("tooltip-in");
-                    Face.removeStyleName("circular-out");
-                    Face.setStyleName("circular-in");
-                    leftbody.setWidth(0, Unit.PIXELS);
-                    //Grid.DrowGrid((int) (UI.getCurrent().getPage().getBrowserWindowWidth() ));
-                    return;
-                }
-
-                leftbody.removeStyleName("newsidebar-out");
-                leftbody.setStyleName("newsidebar-in");
-                L1.removeStyleName("tooltip-in");
-                L1.setStyleName("tooltip-out");
-                BarButton_1.removeStyleName("tooltip-in");
-                BarButton_1.setStyleName("tooltip-out");
-                BarButton_2.removeStyleName("tooltip-in");
-                BarButton_2.setStyleName("tooltip-out");
-                BarButton_3.removeStyleName("tooltip-in");
-                BarButton_3.setStyleName("tooltip-out");
-                Face.removeStyleName("circular-in");
-                Face.setStyleName("circular-out");
-                leftbody.setWidth(306, Unit.PIXELS);
-                //Grid.DrowGrid((int) (UI.getCurrent().getPage().getBrowserWindowWidth() -leftbody.getWidth() ));
-            }
-        });
-
-        button_search.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getPage().getBrowserWindowHeight();
-                event.getButton().setCaption(String.valueOf(UI.getCurrent().getPage().getBrowserWindowWidth()));
-            }
-        });
+        });*/
     }
 
     @Override

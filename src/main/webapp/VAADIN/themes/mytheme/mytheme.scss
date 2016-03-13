@@ -53,6 +53,25 @@ $v-shadow-opacity: 5%;
   }
 }
 
+.v-header{
+  background-color: red;
+}
+
+.v-leftbody{
+  background-color: blue;
+}
+
+.v-body{
+  background-color: yellow;
+}
+.v-main-body{
+  min-height: 1000px;
+  min-width: 1000px;
+  overflow: auto;
+  background-color: black;
+
+}
+
 .loginlayout {
   min-width: 320px;
   max-width: 25%;

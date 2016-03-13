@@ -48,14 +48,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-
-        <!--driver for connection to PostgreSql database -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.4-1203-jdbc42</version>
-        </dependency>
-
         <!-- Hibernate -->
         <!-- to start need only this -->
         <dependency>
