@@ -1,23 +1,22 @@
-// Global variable overrides. Must be declared before importing Valo.
+// color talbe
+$background-color: #ffffff;
+$main-color: #0099ff;
+$admin-color: #ff001a;
+$master-color: #ff6600;
+$super-color: #ebc000;
 
-// Defines the plaintext font size, weight and family. Font size affects general component sizing.
-//$v-font-weight: 300;
+// valo
 $v-font-size: 20px;
 $v-font-family: Jura;
+$v-focus-style: none;
 
-// Defines the border used by all components.
-//$v-border: 1px solid (v-shade 0.7);
-//$v-border-radius: 4px;
+$v-focus-color: $background-color;
+$v-app-background-color: $background-color;
+$v-bevel: 0%;
+$v-bevel-depth: 0%;
+$v-shadow-opacity: 0%;
+//$v-focus-color: valo-focus-color();
 
-// Affects the color of some component elements, e.g Button, Panel title, etc
-//$v-background-color: hsl(210, 0%, 98%);
-// Affects the color of content areas, e.g  Panel and Window content, TextField input etc
-//$v-app-background-color: $v-background-color;
-
-// Affects the visual appearance of all components
-//$v-gradient: v-linear 8%;
-$v-bevel-depth: 50%;
-$v-shadow-opacity: 5%;
 //$v-bevel: inset 0 2px 2px 0 #fff, inset 0 -2px 2px 0 #ddd;
 
 // Defines colors for indicating status (focus, success, failure)
@@ -48,9 +47,128 @@ $v-shadow-opacity: 5%;
   .errorlabel {
     //margin: 5px;
     //padding: 20px;
-    color: red;
+    color: $admin-color;
     font-size: 100%;
   }
+
+  .main-button {
+    background: $main-color;
+    opacity: 1.0;
+    .v-button-caption {
+      color: $background-color;
+      font-size: 170%;
+      font-weight: bold;
+
+      //moz-transition: all 0.8s 0.1s ease;
+      //-o-transition: all 0.8s 0.1s ease;
+      //-webkit-transition: all 0.8s 0.1s ease;
+    }
+
+    //moz-transition: all 0.8s 0.1s ease;
+    //-o-transition: all 0.8s 0.1s ease;
+    //-webkit-transition: all 0.8s 0.1s ease;
+
+    cursor: pointer;
+  }
+
+  .main-button:hover {
+    background: $main-color;
+    opacity: 0.7;
+    border: .094em solid $main-color;
+    //border-width: 1px;
+    //border-color: $background-color;
+  }
+
+  .main-button:active {
+    background: #d8efff;
+    border: none;
+    .v-button-caption {
+      color: $main-color;
+    }
+  }
+
+  .super-button {
+    background: $super-color;
+    opacity: 1.0;
+
+    .v-button-caption {
+      color: $background-color;
+      font-weight: bold;
+      font-size: 170%;
+
+      //moz-transition: all 0.8s 0.1s ease;
+      //-o-transition: all 0.8s 0.1s ease;
+      //-webkit-transition: all 0.8s 0.1s ease;
+    }
+
+    //moz-transition: all 0.8s 0.1s ease;
+    //-o-transition: all 0.8s 0.1s ease;
+    //-webkit-transition: all 0.8s 0.1s ease;
+
+    cursor: pointer;
+  }
+
+  .super-button:hover {
+    background: $super-color;
+    opacity: 0.7;
+    border: .094em solid $super-color;
+  }
+
+  .super-button:active {
+    background: #fff9c4;
+    border: none;
+
+    .v-button-caption {
+      color: #eb9900;
+    }
+  }
+
+  .main-edit {
+    background: $main-color;
+    color: $background-color;
+    opacity: 1.0;
+       /*moz-transition: all 0.8s 0.1s ease;
+      -o-transition: all 0.8s 0.1s ease;
+      -webkit-transition: all 0.8s 0.1s ease;*/
+
+  }
+  .v-textfield-error {
+    background: pink !important;
+  }
+  .main-edit:hover {
+    background: $main-color;
+    color: $background-color;
+    opacity: 0.7;
+  }
+
+  .main-edit:focus {
+    background: $background-color;
+    color: $main-color;
+    opacity: 1.0;
+    border: .094em solid $main-color;
+  }
+
+  .main-select {
+    .v-select-select {
+      background: $main-color;
+      color: $background-color;
+
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      -o-box-sizing: border-box;
+
+    }
+  }
+  /*.main-select:hover {
+    .v-select-select {
+      background: $background-color;
+      color: $main-color;
+    }
+  }*/
 }
 
 .v-header{
@@ -72,7 +190,7 @@ $v-shadow-opacity: 5%;
 
 }
 
-.loginlayout {
+.mainlayout {
   min-width: 320px;
   max-width: 25%;
   //border-style: solid;
