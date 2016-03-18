@@ -15,7 +15,7 @@ import java.security.PrivateKey;
 
 public class MetroBook extends HorizontalLayout{
   private Panel metro = new Panel();
-    MetroBook() {
+    public MetroBook() {
         super();
         metro.setWidth(700, Unit.PIXELS);
         metro.setHeight(250, Unit.PIXELS);

@@ -26,65 +26,37 @@ public class HeaderLayout extends HorizontalLayout {
 
     // TODO user rights to add elements to navigation panel
     public HeaderLayout() {
-        button_main = new Button("Main", new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                // Refresh this view, should redirect
-                getUI().getNavigator().navigateTo(MainView.NAME);
-            }
+        button_main = new Button("Main", event -> {
+            // Refresh this view, should redirect
+            getUI().getNavigator().navigateTo(MainView.NAME);
         });
-        button_profile = new Button("Profile", new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                // Refresh this view, should redirect
-                getUI().getNavigator().navigateTo(ProfileView.NAME);
-            }
+        button_profile = new Button("Profile", event -> {
+            // Refresh this view, should redirect
+            getUI().getNavigator().navigateTo(ProfileView.NAME);
         });
-        button_search = new Button("Search", new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                //  should redirect
-                getUI().getNavigator().navigateTo(SearchView.NAME);
-            }
+        button_search = new Button("Search", event -> {
+            //  should redirect
+            getUI().getNavigator().navigateTo(SearchView.NAME);
         });
-        button_add = new Button("Add", new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                // should redirect
-                getUI().getNavigator().navigateTo(AddView.NAME);
-            }
+        button_add = new Button("Add", event -> {
+            // should redirect
+            getUI().getNavigator().navigateTo(AddView.NAME);
         });
-        button_mail = new Button("Mail", new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                //  should redirect
-                getUI().getNavigator().navigateTo(MailView.NAME);
-            }
+        button_mail = new Button("Mail", event -> {
+            //  should redirect
+            getUI().getNavigator().navigateTo(MailView.NAME);
         });
-        button_manage = new Button("Manage", new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                //  should redirect
-                getUI().getNavigator().navigateTo(ManageView.NAME);
-            }
+        button_manage = new Button("Manage", event -> {
+            //  should redirect
+            getUI().getNavigator().navigateTo(ManageView.NAME);
         });
-        button_logout = new Button("Logout", new Button.ClickListener() {
+        button_logout = new Button("Logout", event -> {
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
+            // "Logout" the user
+            getSession().setAttribute("user", null);
 
-                // "Logout" the user
-                getSession().setAttribute("user", null);
-
-                // Refresh this view, should redirect to login view
-                getUI().getNavigator().navigateTo(SimpleLoginView.NAME);
-            }
+            // Refresh this view, should redirect to login view
+            getUI().getNavigator().navigateTo(SimpleLoginView.NAME);
         });
 
         header_basic = new HorizontalLayout();

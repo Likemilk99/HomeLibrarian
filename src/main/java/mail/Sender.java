@@ -22,6 +22,10 @@ public class Sender {
             " " +
             "<p>Код подтверждения: <b>";
 
+    public Sender() {
+        this("smirnovivan944","Iround!1");
+    }
+
     /**
      *
      * @param username логин почты-отправителя

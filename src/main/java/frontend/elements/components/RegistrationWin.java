@@ -1,5 +1,6 @@
 package frontend.elements.components;
 
+import Data.Users;
 import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.ui.*;
@@ -19,6 +20,8 @@ public class RegistrationWin extends Window {
     private NativeSelect year;
     private TextField email;
     private Button signup;
+
+    private Users user;
     public RegistrationWin() {
         setCaption("Registration");
 
@@ -126,6 +129,7 @@ public class RegistrationWin extends Window {
                         //secret.getValue(),
                         //answer.getValue()
                 )) {
+
                     password.setValue("");
                     reenter.setValue("");
                 }
@@ -161,6 +165,7 @@ public class RegistrationWin extends Window {
         addStyleName("mainlayout");
     }
 
+
     private final class PasswordReenterValidator extends
             AbstractValidator<String> {
 
@@ -187,7 +192,11 @@ public class RegistrationWin extends Window {
         }
     }
 
-    protected boolean newuserButtonClick(String user,
+    public Users getUser() {
+        return user;
+    }
+
+    protected boolean newuserButtonClick(String username,
                                          String pass,
                                          String day,
                                          String month,
@@ -196,6 +205,10 @@ public class RegistrationWin extends Window {
                                          //String secret,
                                          // String answer
     ) {
+        //TODO closing windows if-else
+        //TO TABLE
+        user  = new Users(username, pass, email);
+        this.close();
         // TODO SQL
         return false;
     }
