@@ -52,29 +52,29 @@ public class SimpleLoginView extends CustomComponent implements View,
         testlabel = new Label("(test@test.com/passw0rd)");
         testlabel.setWidth(null);
         testlabel.setHeight(100, Unit.PERCENTAGE);
-        testlabel.setStyleName("errorlabel");
+        testlabel.addStyleName("errorlabel");
         Label introlabel = new Label("Welcome to HomeLibrarian");
         introlabel.setWidth(null);
         introlabel.setHeight(100, Unit.PERCENTAGE);
-        introlabel.setStyleName("introlabel");
+        introlabel.addStyleName("introlabel");
         introlabel.setResponsive(true);
 
         Label passwordlabel = new Label("Password:");
         passwordlabel.setWidth(null);
         passwordlabel.setHeight(100, Unit.PERCENTAGE);
-        passwordlabel.setStyleName("label");
+        passwordlabel.addStyleName("label");
         passwordlabel.setResponsive(true);
 
         Label loginlabel = new Label("Username or email: ");
         loginlabel.setSizeFull();
-        loginlabel.setStyleName("label");
+        loginlabel.addStyleName("label");
         loginlabel.setResponsive(true);
 
         // Password forgot link
         Button passwordlink = new Button("forgot your password?");
         passwordlink.setWidth(null);
         passwordlink.setHeight(100, Unit.PERCENTAGE);
-        passwordlink.setStyleName(ValoTheme.BUTTON_LINK);
+        passwordlink.addStyleName(ValoTheme.BUTTON_LINK);
         passwordlink.setResponsive(true);
         //passwordlink.setStyleName("buttonlink");
 
@@ -96,7 +96,7 @@ public class SimpleLoginView extends CustomComponent implements View,
                 "Username must be an email address"));
         user_field.setValue("test@test.com");
         user_field.setInvalidAllowed(false);
-        user_field.setStyleName("main-edit");
+        user_field.addStyleName("main-edit");
         user_field.setResponsive(true);
 
         // Create the password input field
@@ -105,7 +105,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         password_field.addValidator(new PasswordValidator());
         password_field.setValue("passw0rd");
         password_field.setNullRepresentation("");
-        password_field.setStyleName("main-edit");
+        password_field.addStyleName("main-edit");
         password_field.setResponsive(true);
 
         // Create login button
@@ -116,7 +116,7 @@ public class SimpleLoginView extends CustomComponent implements View,
                 loginButtonClick();
             }
         });
-        loginButton.setStyleName("main-button");
+        loginButton.addStyleName("main-button");
         loginButton.setResponsive(true);
 
         // Create signup button
@@ -127,7 +127,7 @@ public class SimpleLoginView extends CustomComponent implements View,
                 signupButtonClick();
             }
         });
-        signupButton.setStyleName("super-button");
+        signupButton.addStyleName("super-button");
         signupButton.setResponsive(true);
 
         // Add both to a panel
@@ -143,7 +143,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         //buttonslayot.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
         //
         VerticalLayout content = new VerticalLayout();
-        content.addStyleName("loginlayout");
+        content.addStyleName("mainlayout");
         //content.addComponent(logo_layout);
         //content.setComponentAlignment(logo_layout, Alignment.MIDDLE_CENTER);
         //content.setExpandRatio(logo_layout, 2.5f);
@@ -192,7 +192,9 @@ public class SimpleLoginView extends CustomComponent implements View,
         //viewLayout.setExpandRatio(content, 4.0f);
         //viewLayout.setStyleName(Reindeer.LAYOUT_BLUE);
 
-        Panel panel = new Panel(viewLayout);
+        VerticalLayout panel = new VerticalLayout(viewLayout);
+        panel.setComponentAlignment(viewLayout, Alignment.TOP_CENTER);
+        //panel.setStyleName("mainlayout");
         panel.setSizeFull();
         setCompositionRoot(panel);
     }

@@ -2,6 +2,9 @@ package frontend.elements.tableusers;
 
 import Data.Users;
 
+import com.vaadin.annotations.Theme;
+import com.vaadin.client.widget.grid.CellReference;
+import com.vaadin.client.widget.grid.CellStyleGenerator;
 import com.vaadin.data.Item;
 
 import com.vaadin.data.Property;
@@ -21,6 +24,7 @@ import java.util.Collection;
 /**
  * Created by likemilk on 24.02.2016.
  */
+@Theme("mytheme")
 public class TableUsers extends VerticalLayout {
     private Grid grid;
     private BeanItemContainer<Users> users = new BeanItemContainer<>(Users.class);
@@ -67,6 +71,7 @@ public class TableUsers extends VerticalLayout {
 
 // Create a grid bound to it
         grid = new Grid(gpc);
+
         grid.getColumn("delete")
                 .setRenderer(new ButtonRenderer(e -> {
                     //Grid.deselect(e.getItemId());
@@ -79,7 +84,6 @@ public class TableUsers extends VerticalLayout {
                            grid.select(el);
                     }
                 }));
-
 
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
@@ -110,6 +114,8 @@ public class TableUsers extends VerticalLayout {
                                         change.getText(), true, false));
                 });
                 cell.setComponent(filterField);
+                filterField.setHeight(90, Unit.PERCENTAGE);
+                filterField.setWidth(80, Unit.PERCENTAGE);
             }
         }
 
@@ -117,6 +123,15 @@ public class TableUsers extends VerticalLayout {
         this.addComponent(grid);
         grid.setSizeFull();
         this.setSizeFull();
+
+        grid.setCellStyleGenerator(new Grid.CellStyleGenerator() {
+            @Override
+            public String getStyle(Grid.CellReference cellReference) {
+                if ("delete".equals(cellReference.getPropertyId().toString()) &&
+                        "mail".equals(getUI().getNavigator().getState())) return "invisible";
+                return null;
+            }
+        });
     }
 
     public void addRow(Users row){

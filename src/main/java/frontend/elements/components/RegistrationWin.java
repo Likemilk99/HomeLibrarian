@@ -25,34 +25,37 @@ public class RegistrationWin extends Window {
     public RegistrationWin() {
         setCaption("Registration");
 
+        //setSizeFull();
         content = new VerticalLayout();
-        content.setWidth(100, Unit.PERCENTAGE);
+        //content.setSizeFull();
+        content.setWidth(60, Unit.PERCENTAGE);
         content.setMargin(true);
         content.setSpacing(true);
+        content.setStyleName("mainlayout");
         setContent(content);
 
         username = new TextField("Username:");
         username.setRequired(true);
-        username.setWidth(50, Unit.PERCENTAGE);
+        username.setWidth(100, Unit.PERCENTAGE);
         username.setStyleName("main-edit");
         username.setResponsive(true);
 
         password = new PasswordField("Password:");
         password.addValidator(new PasswordReenterValidator());
         password.setRequired(true);
-        password.setWidth(50, Unit.PERCENTAGE);
+        password.setWidth(100, Unit.PERCENTAGE);
         password.setStyleName("main-edit");
         password.setResponsive(true);
 
         reenter = new PasswordField("Reenter password:");
         reenter.addValidator(new PasswordReenterValidator());
         reenter.setRequired(true);
-        reenter.setWidth(50, Unit.PERCENTAGE);
+        reenter.setWidth(100, Unit.PERCENTAGE);
         reenter.setStyleName("main-edit");
         reenter.setResponsive(true);
 
         date = new Label("Date of birth:");
-        date.setWidth(50, Unit.PERCENTAGE);
+        date.setWidth(100, Unit.PERCENTAGE);
         date.setStyleName("label");
         date.setResponsive(true);
 
@@ -94,13 +97,13 @@ public class RegistrationWin extends Window {
         date_layout.addComponent(month);
         date_layout.addComponent(year);
         date_layout.setSpacing(true);
-        date_layout.setWidth(50, Unit.PERCENTAGE);
+        date_layout.setWidth(100, Unit.PERCENTAGE);
 
         email = new TextField("Email:");
         email.addValidator(new EmailValidator(
                 "Username must be an email address"));
         email.setRequired(true);
-        email.setWidth(50, Unit.PERCENTAGE);
+        email.setWidth(100, Unit.PERCENTAGE);
         email.setStyleName("main-edit");
         email.setResponsive(true);
 
@@ -117,7 +120,7 @@ public class RegistrationWin extends Window {
         answer.setResponsive(true);*/
 
         signup = new Button("SIGNUP");
-        signup.setWidth(40, Unit.PERCENTAGE);
+        signup.setWidth(80, Unit.PERCENTAGE);
         signup.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 if (!newuserButtonClick(username.getValue(),
@@ -160,9 +163,8 @@ public class RegistrationWin extends Window {
         content.setComponentAlignment(signup, Alignment.MIDDLE_CENTER);
         // Center it in the browser window
         center();
-        setWidth(100, Unit.PERCENTAGE);
+        setWidth(320, Unit.PIXELS);
         setModal(true);
-        addStyleName("mainlayout");
     }
 
 

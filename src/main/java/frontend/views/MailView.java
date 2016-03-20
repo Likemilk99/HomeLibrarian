@@ -8,6 +8,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import frontend.elements.components.HeaderLayout;
+import frontend.elements.tableusers.MenuMail;
 import frontend.elements.tableusers.MenuTable;
 import frontend.elements.tableusers.TableUsers;
 
@@ -23,7 +24,7 @@ public class MailView extends CustomComponent implements View {
     private HeaderLayout header;
     private HorizontalLayout body;
     private TableUsers table;
-    MenuTable menu;
+    MenuMail menu;
     private HorizontalSplitPanel hSplitBar;
 
     private static MailView instance;
@@ -47,20 +48,19 @@ public class MailView extends CustomComponent implements View {
         body = new HorizontalLayout();
         table = TableUsers.getInstance();
         hSplitBar = new HorizontalSplitPanel();
-        hSplitBar.setSplitPosition(300, Unit.PIXELS);
-        menu = MenuTable.getInstance();
+        hSplitBar.setSplitPosition(320, Unit.PIXELS);
+        hSplitBar.setMaxSplitPosition(320, Unit.PIXELS);
+        hSplitBar.setMinSplitPosition(20, Unit.PIXELS);
+        menu = MenuMail.getInstance();
         // Styles
         mainlayout.setStyleName("v-main-body");
-
-        // Attributions
-        header.setMargin(true);
 
         // Add components
         hSplitBar.setFirstComponent(menu);
         hSplitBar.setSecondComponent(table);
         body.addComponent(hSplitBar);
         mainlayout.addComponent(header, "left: 0px; top: 0px;");
-        mainlayout.addComponent(body, "left: 0px; top: 100px;");
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
 
         //header.setSizeFull();
         body.setSizeFull();

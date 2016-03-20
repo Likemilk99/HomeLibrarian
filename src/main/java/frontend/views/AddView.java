@@ -1,5 +1,6 @@
 package frontend.views;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.AbsoluteLayout;
@@ -10,6 +11,7 @@ import frontend.elements.components.HeaderLayout;
 /**
  * Created by Александр on 13.03.2016.
  */
+@Theme("mytheme")
 public class AddView extends CustomComponent implements View {
 
     public static final String NAME = "add";
@@ -26,12 +28,9 @@ public class AddView extends CustomComponent implements View {
         // Styles
         mainlayout.setStyleName("v-main-body");
 
-        // Attributions
-        header.setMargin(true);
-
         // Add components
         mainlayout.addComponent(header, "left: 0px; top: 0px;");
-        mainlayout.addComponent(body, "left: 0px; top: 100px;");
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
 
         //header.setSizeFull();
         body.setSizeFull();

@@ -4,17 +4,19 @@ $main-color: #0099ff;
 $admin-color: #ff001a;
 $master-color: #ff6600;
 $super-color: #ebc000;
+$super-color-light: #ffdb3a;
 
 // valo
 $v-font-size: 20px;
 $v-font-family: Jura;
 $v-focus-style: none;
-
-$v-focus-color: $background-color;
+$v-focus-color: $main-color;
 $v-app-background-color: $background-color;
 $v-bevel: 0%;
 $v-bevel-depth: 0%;
 $v-shadow-opacity: 0%;
+$v-grid-header-background-color: #62c0ff;
+$v-grid-row-stripe-background-color: #e7f5ff;
 //$v-focus-color: valo-focus-color();
 
 //$v-bevel: inset 0 2px 2px 0 #fff, inset 0 -2px 2px 0 #ddd;
@@ -32,14 +34,6 @@ $v-shadow-opacity: 0%;
 @mixin mytheme() {
   @include valo;
 
-  .borders {
-    border-style: solid;
-    border-color: #0099ff;
-    border-width: 3px;
-    background-color: #ffffff;
-
-  }
-
   .label {
     font-size: 100%;
   }
@@ -54,34 +48,33 @@ $v-shadow-opacity: 0%;
   .main-button {
     background: $main-color;
     opacity: 1.0;
+    border: none;
+    outline: none;
+
+    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+    moz-transition: box-shadow 0.2s 0.1s ease;
+    -o-transition: box-shadow 0.2s 0.1s ease;
+    -webkit-transition: box-shadow 0.2s 0.1s ease;
+
     .v-button-caption {
       color: $background-color;
       font-size: 170%;
-      font-weight: bold;
-
-      //moz-transition: all 0.8s 0.1s ease;
-      //-o-transition: all 0.8s 0.1s ease;
-      //-webkit-transition: all 0.8s 0.1s ease;
+      //font-weight: bold;
     }
-
-    //moz-transition: all 0.8s 0.1s ease;
-    //-o-transition: all 0.8s 0.1s ease;
-    //-webkit-transition: all 0.8s 0.1s ease;
 
     cursor: pointer;
   }
 
   .main-button:hover {
     background: $main-color;
+    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
     opacity: 0.7;
-    border: .094em solid $main-color;
-    //border-width: 1px;
-    //border-color: $background-color;
+    //border: .094em solid $main-color;
   }
 
   .main-button:active {
     background: #d8efff;
-    border: none;
+    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
     .v-button-caption {
       color: $main-color;
     }
@@ -90,46 +83,50 @@ $v-shadow-opacity: 0%;
   .super-button {
     background: $super-color;
     opacity: 1.0;
+    border: none;
+    outline: none;
+
+    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+    moz-transition: box-shadow 0.2s 0.1s ease;
+    -o-transition: box-shadow 0.2s 0.1s ease;
+    -webkit-transition: box-shadow 0.2s 0.1s ease;
 
     .v-button-caption {
       color: $background-color;
-      font-weight: bold;
+      //font-weight: bold;
       font-size: 170%;
-
-      //moz-transition: all 0.8s 0.1s ease;
-      //-o-transition: all 0.8s 0.1s ease;
-      //-webkit-transition: all 0.8s 0.1s ease;
     }
-
-    //moz-transition: all 0.8s 0.1s ease;
-    //-o-transition: all 0.8s 0.1s ease;
-    //-webkit-transition: all 0.8s 0.1s ease;
 
     cursor: pointer;
   }
 
   .super-button:hover {
-    background: $super-color;
-    opacity: 0.7;
-    border: .094em solid $super-color;
+    background: $super-color-light;
+    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
   }
 
   .super-button:active {
     background: #fff9c4;
-    border: none;
-
+    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
     .v-button-caption {
       color: #eb9900;
     }
+  }
+
+  .super-button:focus {
+    border: none;
   }
 
   .main-edit {
     background: $main-color;
     color: $background-color;
     opacity: 1.0;
-       /*moz-transition: all 0.8s 0.1s ease;
-      -o-transition: all 0.8s 0.1s ease;
-      -webkit-transition: all 0.8s 0.1s ease;*/
+    border: none;
+
+    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+    moz-transition: box-shadow 0.2s 0.1s ease;
+    -o-transition: box-shadow 0.2s 0.1s ease;
+    -webkit-transition: box-shadow 0.2s 0.1s ease;
 
   }
   .v-textfield-error {
@@ -139,23 +136,32 @@ $v-shadow-opacity: 0%;
     background: $main-color;
     color: $background-color;
     opacity: 0.7;
+    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
   }
 
   .main-edit:focus {
     background: $background-color;
     color: $main-color;
     opacity: 1.0;
-    border: .094em solid $main-color;
+    border: solid $main-color;
   }
 
   .main-select {
+    border: none;
+
+    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+    moz-transition: box-shadow 0.2s 0.1s ease;
+    -o-transition: box-shadow 0.2s 0.1s ease;
+    -webkit-transition: box-shadow 0.2s 0.1s ease;
+
     .v-select-select {
+      border: none;
       background: $main-color;
       color: $background-color;
 
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      -ms-appearance: none;
+      //-webkit-appearance: none;
+      //-moz-appearance: none;
+      //-ms-appearance: none;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       -ms-box-sizing: border-box;
@@ -163,12 +169,81 @@ $v-shadow-opacity: 0%;
 
     }
   }
-  /*.main-select:hover {
-    .v-select-select {
-      background: $background-color;
+
+  .navigation-button {
+    background: $background-color;
+    outline: none;
+    border: none;
+
+    .v-button-caption {
       color: $main-color;
+      font-size: 170%;
     }
-  }*/
+    cursor: pointer;
+  }
+
+  .navigation-button:hover {
+    background: $background-color;
+  }
+
+  .navigation-button:active {
+    background: #d8efff;
+  }
+
+  .navigation-button:focus {
+    //opacity: 1.0;
+  }
+}
+
+.v-grid-cell.invisible {
+  visibility: hidden;
+}
+
+.v-nativebutton {
+  bevel: 0;
+  background: $super-color;
+  opacity: 1.0;
+  border: none;
+  outline: none;
+
+  box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+
+  .v-button-caption {
+    color: $background-color;
+    font-weight: bold;
+    font-size: 170%;
+  }
+
+  cursor: pointer;
+}
+
+.v-nativebutton:hover {
+  background: $super-color;
+  box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+}
+
+.v-nativebutton:active {
+  background: #fff9c4;
+  box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+  .v-button-caption {
+    color: #eb9900;
+  }
+}
+
+.v-nativebutton:focus {
+  border: none;
+}
+
+@font-face {
+  font-family: 'Flaticon';
+  src: url('fonts/Flaticon.eot');
+  src: url('fonts/Flaticon.eot?#iefix') format('embedded-opentype'),
+  url('fonts/Flaticon.woff') format('woff'),
+  url('fonts/Flaticon.ttf') format('truetype'),
+  url('fonts/Flaticon.svg#icomoon') format('svg');
+}
+.Flaticon {
+  font-family: 'Flaticon';
 }
 
 .v-header{
@@ -183,11 +258,14 @@ $v-shadow-opacity: 0%;
   background-color: yellow;
 }
 .v-main-body{
-  min-height: 1000px;
-  min-width: 1000px;
+  //min-height: 1000px;
+  //min-width: 1000px;
   overflow: auto;
   background-color: black;
 
+}
+.headerlayout {
+  background-color: $background-color;
 }
 
 .mainlayout {
@@ -196,38 +274,68 @@ $v-shadow-opacity: 0%;
   //border-style: solid;
   //border-color: #0099ff;
   //border-width: 3px;
-  background-color: #ffffff;
+  background-color: $background-color;
+}
+
+.menulayout {
+  //border-style: solid;
+  //border-color: #0099ff;
+  //border-width: 3px;
+  background-color: $main-color;
+}
+
+.menu-button {
+  background: $background-color;
+  outline: none;
+  border: none;
+
+  box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+  moz-transition: box-shadow 0.2s 0.1s ease;
+  -o-transition: box-shadow 0.2s 0.1s ease;
+  -webkit-transition: box-shadow 0.2s 0.1s ease;
+
+  .v-button-caption {
+    color: $main-color;
+    font-size: 170%;
+  }
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  background: $background-color;
+  box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+}
+
+.menu-button:active {
+  box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+}
+
+.menu-button:focus {
+  border: none;
 }
 
 .introlabel {
-  font-size: 100px;
+  font-size: 70px;
   line-height: 1.2;
 }
 
-@media screen and (max-width : 1400px) {
+@media screen and (max-width : 980px) {
   .introlabel {
-    font-size: 85px;
+    font-size: 52px;
     line-height: 1.2;
   }
 }
 
-@media screen and (max-width : 1224px) {
+@media screen and (max-width: 650px) {
   .introlabel {
-    font-size: 70px;
+    font-size: 40px;
     line-height: 1.2;
   }
 }
 
-@media screen and (max-width: 967px) {
+@media screen and (max-width: 480px) {
   .introlabel {
-    font-size: 50px;
-    line-height: 1.2;
-  }
-}
-
-@media screen and (max-width: 700px) {
-  .introlabel {
-    font-size: 35px;
+    font-size: 25px;
     line-height: 1.2;
   }
 }

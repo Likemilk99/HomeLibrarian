@@ -48,7 +48,7 @@ public class MainUI extends UI{
         getNavigator().addView(MainView.NAME, new MainView());
         getNavigator().addView(AddView.NAME, new AddView());
         getNavigator().addView(MailView.NAME, MailView.getInstance());
-        getNavigator().addView(ManageView.NAME, new ManageView());
+        getNavigator().addView(ManageView.NAME, ManageView.getInstance());
         getNavigator().addView(ProfileView.NAME, new ProfileView());
         getNavigator().addView(SearchView.NAME, new SearchView());
 

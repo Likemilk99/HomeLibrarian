@@ -22,10 +22,8 @@ import java.util.Objects;
 public class MenuTable extends VerticalLayout {
     private VerticalLayout menu;
     private Button button_delete;
-    private Button button_send;
     private Button button_block;
     private Button button_add;
-    private ComboBox box_mails;
     private TableUsers tableinstance;
     private static MenuTable instance;
     private Sender sender;
@@ -52,7 +50,7 @@ public class MenuTable extends VerticalLayout {
         button_delete = new Button("Delete", event -> {
             tableinstance.deleteSelectedRows();
         });
-        button_delete.setWidth(100, Unit.PIXELS);
+        button_delete.setWidth(200, Unit.PIXELS);
 
         button_add = new Button("Add", event -> {
             RegistrationWin subWindow = new RegistrationWin();
@@ -66,39 +64,28 @@ public class MenuTable extends VerticalLayout {
             });
         });
 
-        button_add.setWidth(100, Unit.PIXELS);
-
-        button_send = new Button("Send", event -> {
-                ArrayList <String> mails = tableinstance.getMails();
-                for(String obj : mails)
-                    sender.send(new BigInteger(130,  new SecureRandom()).toString(32),obj);
-
-        });
-        button_send.setWidth(100, Unit.PIXELS);
+        button_add.setWidth(200, Unit.PIXELS);
 
         button_block = new Button("Block", event -> {
 
         });
-        button_block.setWidth(100, Unit.PIXELS);
+        button_block.setWidth(200, Unit.PIXELS);
 
-        box_mails = new ComboBox("zero");
-        box_mails.addItem("one");
-        box_mails.addItem("two");
-        box_mails.addItem("three");
-        menu.addComponent(button_delete);
-        menu.setComponentAlignment(button_delete, Alignment.TOP_CENTER);
         menu.addComponent(button_add);
         menu.setComponentAlignment(button_add, Alignment.TOP_CENTER);
         menu.addComponent(button_block);
         menu.setComponentAlignment(button_block, Alignment.TOP_CENTER);
-        menu.addComponent(box_mails);
-        menu.setComponentAlignment(box_mails, Alignment.TOP_CENTER);
-        menu.addComponent(button_send);
-        menu.setComponentAlignment(button_send, Alignment.TOP_CENTER);
+        menu.addComponent(button_delete);
+        menu.setComponentAlignment(button_delete, Alignment.TOP_CENTER);
+
+
         this.addComponent(menu);
         this.setComponentAlignment(menu, Alignment.TOP_CENTER);
 
-
+        button_add.setStyleName("super-button");
+        button_block.setStyleName("menu-button");
+        button_delete.setStyleName("menu-button");
+        this.setStyleName("menulayout");
         this.setSizeFull();
     }
 

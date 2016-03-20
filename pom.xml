@@ -63,6 +63,11 @@
             <version>${hibernate-version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.vaadin.icons</groupId>
+            <artifactId>vaadin-icons</artifactId>
+            <version>1.0.1</version>
+        </dependency>
         <!-- optional -->
         <dependency>
             <groupId>org.hibernate</groupId>

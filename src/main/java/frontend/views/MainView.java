@@ -2,6 +2,7 @@ package frontend.views;
 
 import Data.Books;
 import com.google.gwt.thirdparty.guava.common.collect.Lists;
+import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * Created by Александр on 07.02.2016.
  */
+@Theme("mytheme")
 public class MainView extends CustomComponent implements View {
 
     public static final String NAME = "";
@@ -51,16 +53,16 @@ public class MainView extends CustomComponent implements View {
         body.addComponent(new Label("body"));
 
         // Styles
-        header.setStyleName("v-header");
+        //header.setStyleName("v-header");
         body.setStyleName("v-body");
         mainlayout.setStyleName("v-main-body");
 
         // Attributions
-        header.setMargin(true);
+        //header.setMargin(true);
 
         // Add components
         mainlayout.addComponent(header, "left: 0px; top: 0px;");
-        mainlayout.addComponent(body, "left: 0px; top: 100px;");
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
 
         //header.setSizeFull();
         body.setSizeFull();
