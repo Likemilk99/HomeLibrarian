@@ -2,8 +2,6 @@ package frontend;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Page;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
@@ -50,7 +48,7 @@ public class MainUI extends UI{
         getNavigator().addView(MailView.NAME, MailView.getInstance());
         getNavigator().addView(ManageView.NAME, ManageView.getInstance());
         getNavigator().addView(ProfileView.NAME, new ProfileView());
-        getNavigator().addView(SearchView.NAME, new SearchView());
+        getNavigator().addView(SearchView.NAME, SearchView.getInstance());
 
         //
         // We use a view change handler to ensure the user is always redirected

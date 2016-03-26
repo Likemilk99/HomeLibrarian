@@ -255,17 +255,30 @@ $v-grid-row-stripe-background-color: #e7f5ff;
 }
 
 .v-body{
-  background-color: yellow;
+  background-color: blue;//yellow;
 }
 .v-main-body{
   //min-height: 1000px;
   //min-width: 1000px;
   overflow: auto;
-  background-color: black;
+  //background-color: black;
 
 }
 .headerlayout {
   background-color: $background-color;
+  background: $background-color;
+  outline: none;
+  border: none;
+
+  box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+  moz-transition: box-shadow 0.2s 0.1s ease;
+  -o-transition: box-shadow 0.2s 0.1s ease;
+  -webkit-transition: box-shadow 0.2s 0.1s ease;
+
+  .v-button {
+    color: $main-color;
+    font-size: 170%;
+  }
 }
 
 .mainlayout {

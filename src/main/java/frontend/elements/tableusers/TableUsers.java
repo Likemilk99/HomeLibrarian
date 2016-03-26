@@ -75,9 +75,10 @@ public class TableUsers extends VerticalLayout {
         grid.getColumn("delete")
                 .setRenderer(new ButtonRenderer(e -> {
                     //Grid.deselect(e.getItemId());
-                     grid.getSelectedRows().remove(e.getItemId());
+                    grid.getSelectedRows().remove(e.getItemId());
                       Collection<Object> seletedList = grid.getSelectedRows();
-                    // seletedList.remove(e.getItemId());
+
+                    seletedList.remove(e.getItemId());
                     grid.getContainerDataSource().removeItem(e.getItemId());
                     grid.getSelectionModel().reset();
                     for (Object el : seletedList) {

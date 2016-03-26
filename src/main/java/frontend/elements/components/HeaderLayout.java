@@ -120,16 +120,17 @@ public class HeaderLayout extends HorizontalLayout {
         button_manage.setHeight(90, Unit.PERCENTAGE);
         button_logout.setHeight(90, Unit.PERCENTAGE);
 
-        button_main.setStyleName("navigation-button");
+       /* button_main.setStyleName("navigation-button");
         button_profile.setStyleName("navigation-button");
         button_search.setStyleName("navigation-button");
         button_add.setStyleName("navigation-button");
         button_mail.setStyleName("navigation-button");
         button_manage.setStyleName("navigation-button");
-        button_logout.setStyleName("navigation-button");
+        button_logout.setStyleName("navigation-button");*/
 
-        setStyleName("headerlayout");
-
+       setStyleName("headerlayout");
+      //  setMargin(true);
+        setSpacing(true);
         setWidth(100, Unit.PERCENTAGE);
         setHeight(10, Unit.PERCENTAGE);
         //setSizeFull();
