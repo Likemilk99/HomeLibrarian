@@ -1,116 +1,78 @@
 package frontend.elements.metro;
 
+import Data.Books;
 import com.google.gwt.dom.client.NativeEvent;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
+import frontend.elements.gridbooks.BookImage;
 import javafx.scene.layout.Pane;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
 
 /**
  * Created by likemilk on 22.02.2016.
  */
 
 public class MetroBook extends HorizontalLayout{
-  private Panel metro = new Panel();
+  //private Panel metro = new Panel();
     public MetroBook() {
         super();
-        metro.setWidth(700, Unit.PIXELS);
-        metro.setHeight(250, Unit.PIXELS);
-        metro.setStyleName("borders");
-
-        HorizontalLayout hl = new HorizontalLayout();
-        hl.setHeight(100, Unit.PERCENTAGE);
-        hl.setWidthUndefined();
-        hl.setSpacing(true);
-
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-        hl.addComponent(new Label("test"));
-
-        FormLayout content = new FormLayout();
-        content.addComponent(hl);
-
         Button button_1 = new Button("Left");
+        Button button_2 = new Button("Right");
+        Panel p = new Panel();
+        HorizontalLayout hl = new HorizontalLayout();
 
-        metro.addClickListener(new PanelClick() {
-          /*  public void buttonClick(MouseEvents.ClickEvent event) {
-                //  if(metro.getScrollLeft() > 40 )
-                metro.setScrollLeft(metro.getScrollLeft()-100);
-                metro.setStyleName("ease-in-out");
-            }*/
+        /////////////////////////////////////////
+        ArrayList<BookImage> list = new ArrayList<>();
+        //TESTING
+        for (int i=0; i < 50; i++) {
+            list.add(new BookImage(new Books()));
+        }
+
+        for (BookImage el: list) {
+            hl.addComponent(el);
+            hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
+        }
+
+        //////////////////////////////////////
+        hl.setSpacing(true);
+        hl.setMargin(true);
+        hl.setHeight(100, Unit.PERCENTAGE);
+        p.setContent(hl);
+        p.setHeight(100, Unit.PERCENTAGE);
+        p.setWidth(100, Unit.PERCENTAGE);
+
+        button_1.setHeight(100, Unit.PERCENTAGE);
+        button_2.setHeight(100, Unit.PERCENTAGE);
+
+        button_1.setWidth(10, Unit.PERCENTAGE);
+        button_2.setWidth(10, Unit.PERCENTAGE);
+
+        button_1.setWidth(100, Unit.PIXELS);
+        button_2.setWidth(100, Unit.PIXELS);
+
+        addComponent(button_1);
+        addComponent(p);
+        addComponent(button_2);
+        setSizeFull();
+
+        setExpandRatio(p, 20);
+        setExpandRatio(button_1, 1);
+        setExpandRatio(button_2, 1);
+
+        button_1.addClickListener(event -> {
+            //if(metro.getScrollLeft() > 40 )
+            p.setScrollLeft(p.getScrollLeft() - 100);
         });
 
-        Button button_2 = new Button("Right");
-        button_1.setHeight(250, Unit.PIXELS);
-        button_2.setHeight(250, Unit.PIXELS);
-        button_1.addClickListener(new Button.ClickListener() {
-          public void buttonClick(Button.ClickEvent event) {
-        //  if(metro.getScrollLeft() > 40 )
-            metro.setScrollLeft(metro.getScrollLeft()-100);
-       //     metro.setStyleName("ease-in-out");
-         }
-         });
+        button_2.addClickListener(event -> {
+            //   if (metro.getScrollLeft() < metro.getWidth() - 40)
+            p.setScrollLeft(p.getScrollLeft() + 100);
 
-        button_2.addClickListener(new Button.ClickListener() {
-          public void buttonClick(Button.ClickEvent event) {
-           //  if(metro.getScrollLeft() < metro.getWidth()-40)
-           metro.setScrollLeft(metro.getScrollLeft() + 100);
-        //   metro.setStyleName("ease-in-out");
-          }
-         });
-
-
-        content.setSizeUndefined(); // Shrink to fit
-        content.setMargin(true);
-          //this.getContent().setSizeUndefined();
-        metro.setContent(content);
-        this.addComponent(button_1);
-        this.addComponent(metro);
-        this.addComponent(button_2);
-
-   //  content.setStyleName("v-scrollable");
+        });
      }
 
 

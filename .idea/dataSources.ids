@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="PostgreSQL - homelibbd@localhost" uuid="41e2ab0f-3012-404b-ab51-1e16840e8cc0">
-    <database-info product="PostgreSQL" version="9.4.4" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.4 JDBC4 (build 1201)">
-      <identifier-quote-string>&quot;</identifier-quote-string>
-    </database-info>
-    <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact"/>
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
   <data-source name="PostgreSQL - postgres@localhost" uuid="483cb87c-e39b-470b-99e3-1f51dd942dc1">
-    <database-info product="PostgreSQL" version="9.4.5" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.4 JDBC4 (build 1201)">
-      <identifier-quote-string>&quot;</identifier-quote-string>
-    </database-info>
-    <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact"/>
-    <database-model serializer="dbm" rdbms="POSTGRES" format-version="2.4">
-      <database id="1" name="postgres"/>
-      <schema id="2" parent="1" name="public">
-        <object-id>2200</object-id>
-        <comment>standard public schema</comment>
-        <introspection-timestamp>2016-02-06.12:55:36.225</introspection-timestamp>
-      </schema>
-    </database-model>
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
 </component>

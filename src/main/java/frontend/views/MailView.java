@@ -24,7 +24,8 @@ public class MailView extends CustomComponent implements View {
     private HeaderLayout header;
     private HorizontalLayout body;
     private TableUsers table;
-    MenuMail menu;
+    private MenuMail menu;
+
     private HorizontalSplitPanel hSplitBar;
 
     private static MailView instance;

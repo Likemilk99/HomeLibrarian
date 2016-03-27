@@ -60,8 +60,11 @@ public class SearchView extends CustomComponent implements View {
         hSplitBar.setFirstComponent(menu);
         hSplitBar.setSecondComponent(grid);
 
-        for (int i=0; i < 40; i++)
+        for (int i=0; i < 40; i++) {
             grid.addComponent(new BookImage(new Books()));
+
+        }
+
         mainlayout.addComponent(header, "left: 0px; top: 0px;");
        // mainlayout.addComponent(body, "left: 0px; top: 10%;");
         mainlayout.addComponent(hSplitBar, "left: 0px; top: 10%;");

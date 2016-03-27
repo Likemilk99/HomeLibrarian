@@ -20,8 +20,8 @@ public class HeaderLayout extends HorizontalLayout {
     private Button button_profile;
     private Button button_search;
 
-    private Button button_add;
-    private Button button_mail;
+   // private Button button_add;
+ //   private Button button_mail;
 
     private Button button_manage;
 
@@ -50,14 +50,14 @@ public class HeaderLayout extends HorizontalLayout {
             //  should redirect
             getUI().getNavigator().navigateTo(SearchView.NAME);
         });
-        button_add = new Button("Add", event -> {
+       /* button_add = new Button("Add", event -> {
             // should redirect
             getUI().getNavigator().navigateTo(AddView.NAME);
-        });
-        button_mail = new Button("Mail", event -> {
+        });*/
+       /* button_mail = new Button("Mail", event -> {
             //  should redirect
             getUI().getNavigator().navigateTo(MailView.NAME);
-        });
+        });*/
         button_manage = new Button("Manage", event -> {
             //  should redirect
             getUI().getNavigator().navigateTo(ManageView.NAME);
@@ -88,12 +88,12 @@ public class HeaderLayout extends HorizontalLayout {
         header_basic.setComponentAlignment(button_profile, Alignment.MIDDLE_CENTER);
         header_basic.setComponentAlignment(button_search, Alignment.MIDDLE_CENTER);
         // TODO
-        header_pro.addComponent(button_add);
-        header_pro.addComponent(button_mail);
+       // header_pro.addComponent(button_add);
+       // header_pro.addComponent(button_mail);
         header_pro.addComponent(button_manage);
 
-        header_pro.setComponentAlignment(button_add, Alignment.MIDDLE_CENTER);
-        header_pro.setComponentAlignment(button_mail, Alignment.MIDDLE_CENTER);
+      //  header_pro.setComponentAlignment(button_add, Alignment.MIDDLE_CENTER);
+      //  header_pro.setComponentAlignment(button_mail, Alignment.MIDDLE_CENTER);
         header_pro.setComponentAlignment(button_manage, Alignment.MIDDLE_CENTER);
 
         header_basic.setSpacing(true);
@@ -115,8 +115,8 @@ public class HeaderLayout extends HorizontalLayout {
         button_main.setHeight(90, Unit.PERCENTAGE);
         button_profile.setHeight(90, Unit.PERCENTAGE);
         button_search.setHeight(90, Unit.PERCENTAGE);
-        button_add.setHeight(90, Unit.PERCENTAGE);
-        button_mail.setHeight(90, Unit.PERCENTAGE);
+    //    button_add.setHeight(90, Unit.PERCENTAGE);
+     //   button_mail.setHeight(90, Unit.PERCENTAGE);
         button_manage.setHeight(90, Unit.PERCENTAGE);
         button_logout.setHeight(90, Unit.PERCENTAGE);
 
