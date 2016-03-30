@@ -20,8 +20,8 @@ public class MetroBook extends HorizontalLayout{
   //private Panel metro = new Panel();
     public MetroBook() {
         super();
-        Button button_1 = new Button("Left");
-        Button button_2 = new Button("Right");
+        Button button_1 = new Button("<");
+        Button button_2 = new Button(">");
         Panel p = new Panel();
         HorizontalLayout hl = new HorizontalLayout();
 
@@ -34,6 +34,8 @@ public class MetroBook extends HorizontalLayout{
 
         for (BookImage el: list) {
             hl.addComponent(el);
+            el.setHeight(568, Unit.PIXELS);
+            el.setWidth(320, Unit.PIXELS);
             hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
         }
 
@@ -44,6 +46,9 @@ public class MetroBook extends HorizontalLayout{
         p.setContent(hl);
         p.setHeight(100, Unit.PERCENTAGE);
         p.setWidth(100, Unit.PERCENTAGE);
+
+        button_1.setStyleName("menu-button");
+        button_2.setStyleName("menu-button");
 
         button_1.setHeight(100, Unit.PERCENTAGE);
         button_2.setHeight(100, Unit.PERCENTAGE);
@@ -64,8 +69,10 @@ public class MetroBook extends HorizontalLayout{
         setExpandRatio(button_2, 1);
 
         button_1.addClickListener(event -> {
-            //if(metro.getScrollLeft() > 40 )
-            p.setScrollLeft(p.getScrollLeft() - 100);
+            if(p.getScrollLeft() > 100 )
+                p.setScrollLeft(p.getScrollLeft() - 100);
+            else
+                p.setScrollLeft(0);
         });
 
         button_2.addClickListener(event -> {

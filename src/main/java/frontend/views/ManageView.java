@@ -5,7 +5,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import frontend.elements.components.HeaderLayout;
-import frontend.elements.tableusers.MenuMail;
 import frontend.elements.tableusers.MenuTable;
 import frontend.elements.tableusers.TableUsers;
 
@@ -52,6 +51,7 @@ public class ManageView extends CustomComponent implements View {
         menu = MenuTable.getInstance();
         // Styles
         mainlayout.setStyleName("v-main-body");
+        body.setStyleName("bodylayout");
 
         // Add components
         hSplitBar.setFirstComponent(menu);

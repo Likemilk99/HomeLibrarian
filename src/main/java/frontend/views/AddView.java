@@ -27,7 +27,7 @@ public class AddView extends CustomComponent implements View {
 
         // Styles
         mainlayout.setStyleName("v-main-body");
-
+        body.setStyleName("bodylayout");
         // Add components
         mainlayout.addComponent(header, "left: 0px; top: 0px;");
         mainlayout.addComponent(body, "left: 0px; top: 10%;");

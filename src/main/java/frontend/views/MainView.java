@@ -41,7 +41,7 @@ public class MainView extends CustomComponent implements View {
 
         //body.setStyleName("v-body");
         mainlayout.setStyleName("v-main-body");
-
+        body.setStyleName("bodylayout");
 
         body.addComponent(metro);
         // Add components

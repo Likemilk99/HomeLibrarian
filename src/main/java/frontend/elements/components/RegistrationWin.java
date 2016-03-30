@@ -31,32 +31,28 @@ public class RegistrationWin extends Window {
         content.setWidth(60, Unit.PERCENTAGE);
         content.setMargin(true);
         content.setSpacing(true);
-        content.setStyleName("mainlayout");
+        content.setStyleName("loginlayout");
         setContent(content);
 
         username = new TextField("Username:");
         username.setRequired(true);
         username.setWidth(100, Unit.PERCENTAGE);
-        username.setStyleName("main-edit");
         username.setResponsive(true);
 
         password = new PasswordField("Password:");
         password.addValidator(new PasswordReenterValidator());
         password.setRequired(true);
         password.setWidth(100, Unit.PERCENTAGE);
-        password.setStyleName("main-edit");
         password.setResponsive(true);
 
         reenter = new PasswordField("Reenter password:");
         reenter.addValidator(new PasswordReenterValidator());
         reenter.setRequired(true);
         reenter.setWidth(100, Unit.PERCENTAGE);
-        reenter.setStyleName("main-edit");
         reenter.setResponsive(true);
 
         date = new Label("Date of birth:");
         date.setWidth(100, Unit.PERCENTAGE);
-        date.setStyleName("label");
         date.setResponsive(true);
 
         date_layout = new HorizontalLayout();
@@ -68,7 +64,6 @@ public class RegistrationWin extends Window {
         day.setValue(1);
         day.setNullSelectionAllowed(false);
         day.setWidth(100, Unit.PERCENTAGE);
-        day.setStyleName("main-select");
         day.setResponsive(true);
 
         month = new NativeSelect("Month: ");
@@ -79,7 +74,6 @@ public class RegistrationWin extends Window {
         month.setValue(1);
         month.setNullSelectionAllowed(false);
         month.setWidth(100, Unit.PERCENTAGE);
-        month.setStyleName("main-select");
         month.setResponsive(true);
 
         year = new NativeSelect("Year: ");
@@ -90,7 +84,6 @@ public class RegistrationWin extends Window {
         year.setValue(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
         year.setNullSelectionAllowed(false);
         year.setWidth(100, Unit.PERCENTAGE);
-        year.setStyleName("main-select");
         year.setResponsive(true);
 
         date_layout.addComponent(day);
@@ -104,7 +97,6 @@ public class RegistrationWin extends Window {
                 "Username must be an email address"));
         email.setRequired(true);
         email.setWidth(100, Unit.PERCENTAGE);
-        email.setStyleName("main-edit");
         email.setResponsive(true);
 
         /*final TextField secret = new TextField("Secret question:");
