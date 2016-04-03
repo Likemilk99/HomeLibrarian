@@ -7,4 +7,6 @@
     <inherits name="com.vaadin.addon.responsive.ResponsiveWidgetSet" />
 
     
+
+    <inherits name="org.vaadin.teemu.ratingstars.gwt.RatingStarsWidgetset" />
 </module>

@@ -96,9 +96,9 @@ public class HeaderLayout extends HorizontalLayout {
       //  header_pro.setComponentAlignment(button_mail, Alignment.MIDDLE_CENTER);
         header_pro.setComponentAlignment(button_manage, Alignment.MIDDLE_CENTER);
 
-        header_basic.setSpacing(true);
-        header_pro.setSpacing(true);
-        header_logout.setSpacing(true);
+        //header_basic.setSpacing(true);
+        //header_pro.setSpacing(true);
+        //header_logout.setSpacing(true);
 
         addComponent(header_basic);
         addComponent(header_pro);
@@ -112,25 +112,25 @@ public class HeaderLayout extends HorizontalLayout {
         header_pro.setHeight(100, Unit.PERCENTAGE);
         header_logout.setHeight(100, Unit.PERCENTAGE);
 
-        button_main.setHeight(90, Unit.PERCENTAGE);
-        button_profile.setHeight(90, Unit.PERCENTAGE);
-        button_search.setHeight(90, Unit.PERCENTAGE);
-    //    button_add.setHeight(90, Unit.PERCENTAGE);
-     //   button_mail.setHeight(90, Unit.PERCENTAGE);
-        button_manage.setHeight(90, Unit.PERCENTAGE);
-        button_logout.setHeight(90, Unit.PERCENTAGE);
+        button_main.setHeight(100, Unit.PERCENTAGE);
+        button_profile.setHeight(100, Unit.PERCENTAGE);
+        button_search.setHeight(100, Unit.PERCENTAGE);
+    //    button_add.setHeight(100, Unit.PERCENTAGE);
+     //   button_mail.setHeight(100, Unit.PERCENTAGE);
+        button_manage.setHeight(100, Unit.PERCENTAGE);
+        button_logout.setHeight(100, Unit.PERCENTAGE);
 
-        //button_main.setStyleName("navigation-button");
-        //button_profile.setStyleName("navigation-button");
-        //button_search.setStyleName("navigation-button");
+        button_main.setStyleName("headerlayout");
+        button_profile.setStyleName("headerlayout");
+        button_search.setStyleName("headerlayout");
         //button_add.setStyleName("navigation-button");
         //button_mail.setStyleName("navigation-button");
-        //button_manage.setStyleName("navigation-button");
-        //button_logout.setStyleName("navigation-button");
+        button_manage.setStyleName("headerlayout");
+        button_logout.setStyleName("headerlayout");
 
        setStyleName("headerlayout");
       //  setMargin(true);
-        setSpacing(true);
+      //  setSpacing(true);
         setWidth(100, Unit.PERCENTAGE);
         setHeight(10, Unit.PERCENTAGE);
         //setSizeFull();

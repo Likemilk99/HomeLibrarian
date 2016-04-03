@@ -5,6 +5,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
  * Created by likemilk on 14.02.2016.
@@ -13,6 +14,7 @@ import com.vaadin.ui.themes.BaseTheme;
 public class BookImage extends VerticalLayout {
     private final Books Book;
     private Button button_1 = new Button("rate it !");
+    private RatingStars rating = new RatingStars();
     private Button  button_2 = new Button("Upload");
     private Button  button_3 = new Button();
     private Label   name = new Label("NAME");
@@ -36,13 +38,13 @@ public class BookImage extends VerticalLayout {
         button_3.setWidth("100%");
         button_3.setHeight("100%");
 
-        this.addComponent(button_1);
+        this.addComponent(rating);
         this.addComponent(name);
         this.addComponent(author);
         this.addComponent(button_3);
         this.addComponent(button_2);
 
-        this.setComponentAlignment(button_1, Alignment.TOP_CENTER);
+        this.setComponentAlignment(rating, Alignment.TOP_CENTER);
         this.setComponentAlignment(button_3, Alignment.MIDDLE_CENTER);
         this.setComponentAlignment(button_2, Alignment.BOTTOM_CENTER);
 
@@ -60,13 +62,17 @@ public class BookImage extends VerticalLayout {
         this.setHeight("250px");
         this.setWidth("200px");
 
+        rating.setAnimated(true);
+        rating.setCaption(null);
+        rating.setMaxValue(5);
+
         button_2.setWidth("80%");
         button_3.setWidth("100%");
         name.setWidth(null);
         author.setWidth(null);
 
-        VerticalLayout top = new VerticalLayout(button_1, name, author);
-        top.setComponentAlignment(button_1, Alignment.TOP_CENTER);
+        VerticalLayout top = new VerticalLayout(rating, name, author);
+        top.setComponentAlignment(rating, Alignment.TOP_CENTER);
         top.setComponentAlignment(name, Alignment.MIDDLE_CENTER);
         top.setComponentAlignment(author, Alignment.BOTTOM_CENTER);
 

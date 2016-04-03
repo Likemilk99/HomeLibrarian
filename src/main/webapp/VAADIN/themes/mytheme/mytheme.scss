@@ -192,33 +192,60 @@ $v-grid-row-stripe-background-color: #def1ff;
 
     outline: none;
 
-    .v-button {
+    .v-button  {
       background-color: $main-color-lighter;
       background: $main-color-lighter;
-
+      color: $main-color-lighter;
       box-shadow: none;
 
-      border: none;
+      float:left;
+      margin:0 5px 0;
+
+      border-top: none;
+      border-radius: 0px;
+      padding: -1px;
+      outline: none;
 
       .v-button-caption {
         color: $background-color;
-
         font-size: 170%;
       }
     }
 
     .v-button:hover {
-      background-color: $main-color-lighter;
-      background: $main-color-lighter;
+      background-color: $main-color !important;
+      background: $main-color !important;
+      color: $main-color !important;
 
-      padding-bottom: 0px;
-      margin-bottom: 0px;
-      border-bottom: 2px;
-      border-bottom-color: $background-color;
+      border-bottom: 4px;
+      border-color: $background-color !important;
       border-bottom-style: solid;
+
+      outline: none;
     }
 
     .v-button:focus {
+      background-color: $main-color-lighter;
+      background: $main-color-lighter;
+      color: $main-color-lighter;
+
+      border-bottom: 4px;
+      border-color: $background-color !important;
+      border-bottom-style: solid;
+
+      outline: none;
+    }
+
+    .v-button:active,
+    .v-button.v-pressed {
+      background-color: $main-color;
+      background: $main-color;
+      color: $main-color;
+
+      border-bottom: 4px;
+      border-color: $background-color;
+      border-bottom-style: solid;
+
       outline: none;
     }
 
@@ -344,13 +371,11 @@ $v-grid-row-stripe-background-color: #def1ff;
   visibility: hidden;
 }
 
-.v-button {
+/*.v-button {
   bevel: 0;
   background: $background-color;
-  opacity: 1.0;
   border: none;
   outline: none;
-  box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
 
   .v-button-caption {
     color: $main-color;
@@ -362,12 +387,13 @@ $v-grid-row-stripe-background-color: #def1ff;
 
 .v-button:hover {
   background: $background-color;
-  padding: 12px;
-  border: 2px;
   border-color: $background-color;
-  border-style: solid;
-  margin: -1px;
-  //box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+  //border-style: solid;
+  //margin: -1px;
+} */
+
+.v-ratingstars-wrapper-large .v-ratingstars-bar:hover {
+
 }
 
 .v-nativebutton {

@@ -17,6 +17,7 @@
           <element id="library" level="project" name="Maven: dom4j:dom4j:1.6.1" />
           <element id="library" level="project" name="Maven: org.hibernate.common:hibernate-commons-annotations:5.0.0.Final" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-entitymanager:5.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.vaadin.addons:ratingstars:2.1" />
           <element id="library" level="project" name="Maven: org.vaadin.icons:vaadin-icons:1.0.1" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-osgi:5.0.1.Final" />
           <element id="library" level="project" name="Maven: org.osgi:org.osgi.core:4.3.1" />
