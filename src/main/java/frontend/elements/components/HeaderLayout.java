@@ -35,7 +35,6 @@ public class HeaderLayout extends HorizontalLayout {
 
     // Mobile
 
-
     // TODO user rights to add elements to navigation panel
     public HeaderLayout() {
         button_main = new Button("Main", event -> {
@@ -71,7 +70,7 @@ public class HeaderLayout extends HorizontalLayout {
             getUI().getNavigator().navigateTo(SimpleLoginView.NAME);
         });
 
-        //button_main.setIcon( new ThemeResource( "Images/logo_icon.png" ) );
+        //button_main.setIcon( new ThemeResource( "Images/Logo_icon.ico" ) );
         //button_profile.setIcon(new ThemeResource( "Images/vaadin-icons-png/user.png" ));
 
         header_basic = new HorizontalLayout();
@@ -106,7 +105,6 @@ public class HeaderLayout extends HorizontalLayout {
         setComponentAlignment(header_basic, Alignment.MIDDLE_LEFT);
         setComponentAlignment(header_pro, Alignment.MIDDLE_CENTER);
         setComponentAlignment(header_logout, Alignment.MIDDLE_RIGHT);
-        setWidth(100, Unit.PERCENTAGE);
 
         header_basic.setHeight(100, Unit.PERCENTAGE);
         header_pro.setHeight(100, Unit.PERCENTAGE);
@@ -120,19 +118,9 @@ public class HeaderLayout extends HorizontalLayout {
         button_manage.setHeight(100, Unit.PERCENTAGE);
         button_logout.setHeight(100, Unit.PERCENTAGE);
 
-        button_main.setStyleName("headerlayout");
-        button_profile.setStyleName("headerlayout");
-        button_search.setStyleName("headerlayout");
-        //button_add.setStyleName("navigation-button");
-        //button_mail.setStyleName("navigation-button");
-        button_manage.setStyleName("headerlayout");
-        button_logout.setStyleName("headerlayout");
-
-       setStyleName("headerlayout");
+        setStyleName("cssmenu");
       //  setMargin(true);
       //  setSpacing(true);
-        setWidth(100, Unit.PERCENTAGE);
-        setHeight(10, Unit.PERCENTAGE);
-        //setSizeFull();
+        setSizeFull();
     }
 }

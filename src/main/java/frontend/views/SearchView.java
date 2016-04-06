@@ -70,8 +70,8 @@ public class SearchView extends CustomComponent implements View {
         }
         body.addComponent(hSplitBar);
 
-        mainlayout.addComponent(header, "left: 0px; top: 0px;");
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
         //mainlayout.addComponent(hSplitBar, "left: 0px; top: 10%;");
 
         //header.setSizeFull();

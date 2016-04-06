@@ -187,7 +187,7 @@ $v-grid-row-stripe-background-color: #def1ff;
     }
   }
 
-  .headerlayout {
+  /*.headerlayout {
     background-color: $main-color-lighter;
 
     outline: none;
@@ -266,51 +266,133 @@ $v-grid-row-stripe-background-color: #def1ff;
       border-bottom-color: $background-color;
       border-bottom-style: solid;
     }
-  }
+  }*/
+}
 
-  .menu-button {
-    background-color: $menu-hover-color;
-    color: $menu-hover-color;
-    opacity: 0.5;
-    outline: none;
-    border: none;
-
-    .v-button-caption {
-      font-color: $background-color;
-      font-size: 200%;
+// main
+@mixin on-event($self: false) {
+  @if $self {
+    &,
+    &:hover,
+    &:active {
+      @content;
     }
-    cursor: pointer;
-  }
-
-  .menu-button:hover {
-    .v-button-caption {
-      font-size: 240%;
+  } @else {
+    &:hover,
+    &:active {
+      @content;
     }
   }
 }
 
-// main
 .loginlayout {
   min-width: 320px;
   max-width: 25%;
 
   background-color: $background-color;
 }
-.bodylayout {
+
+.cssmenu {
+  background: $main-color-lighter;
+  width: auto;
+  height: 10%;
+
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+  border-radius: 0px;
+
+  z-index:999;
+
+  .v-horizontallayout .v-button {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+
+    background-image: none;
+    background-color: $main-color-lighter;
+    color: $background-color;
+    font-size: 170%;
+
+    outline: none;
+    border: none;
+
+    @include on-event {
+      background-color: $background-color;
+      color: $main-color-lighter;
+
+      /*-webkit-box-shadow-left: 0 0 10px rgba(0,0,0,0.5) inset, 0 0 -10px rgba(0,0,0,0.5) inset;
+      -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5) inset, 0 0 -10px rgba(0,0,0,0.5) inset;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5) inset, 0 0 -10px rgba(0,0,0,0.5) inset;*/
+
+      /*box-shadow: 0 9px 0px 0px white,
+      0 -9px 0px 0px white,
+      12px 0 15px -4px rgba(31, 73, 125, 0.8),
+      -12px 0 15px -4px rgba(31, 73, 125, 0.8);*/
+
+      box-shadow: inset 25px 0px 25px -25px rgba(0,0,0,0.5), inset -25px 0px 25px -25px rgba(0,0,0,0.5);
+    }
+    &:hover:after {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+}
+
+.metrolayout {
   min-width: 320px;
 
-  background-color: #def1ff;
+  background-color: $background-color;
+
+  z-index:100;
+
+  .metro-panel {
+    overflow: hidden;
+    z-index:101;
+  }
+  .scroll-button {
+    background-image: none;
+    background-color: #def1ff;
+    color: $main-color-darker;
+    font-size: 170%;
+
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+
+    outline: none;
+    border: none;
+
+    opacity: 0.5;
+    &:hover{
+        font-size: 400%;
+
+      opacity: 0.9;
+    }
+
+    &:hover:after {
+      background-color: rgba(0, 0, 0, 0);
+    }
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+    z-index:102;
+  }
 }
 
 .menulayout {
   //border-style: solid;
   //border-color: #0099ff;
   //border-width: 3px;
-  background-color: $menu-color;
+  background-color: #def1ff;
+  border-right: 4px;
+  border-right-style: solid;
+  border-right-color: $main-color-lighter;
 }
 
 // bookimage\
 .cells {
+  z-index:100;
   background-color: #ccc;
 
   border-style: hidden;
@@ -358,6 +440,7 @@ $v-grid-row-stripe-background-color: #def1ff;
 }
 
 .cells:hover {
+  z-index:101;
   background-color: $main-color;
 
   -webkit-transform:scale(1.15); /* Safari and Chrome */

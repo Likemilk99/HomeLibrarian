@@ -39,14 +39,16 @@ public class MainView extends CustomComponent implements View {
         header = new HeaderLayout();
         body = new VerticalLayout();
 
+        //header.setHeight(10, Unit.PERCENTAGE);
+
         //body.setStyleName("v-body");
         mainlayout.setStyleName("v-main-body");
         body.setStyleName("bodylayout");
 
         body.addComponent(metro);
         // Add components
-        mainlayout.addComponent(header, "left: 0px; top: 0px;");
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
 
        // mainlayout.addComponent(header);
        //mainlayout.addComponent(body);

@@ -16,15 +16,24 @@ import java.util.ArrayList;
  * Created by likemilk on 22.02.2016.
  */
 
-public class MetroBook extends HorizontalLayout{
+@JavaScript({"vaadin://themes/mytheme/js/SmoothScroll.js"})
+public class MetroBook extends AbsoluteLayout{
   //private Panel metro = new Panel();
     public MetroBook() {
         super();
+        setStyleName("metrolayout");
+
         Button button_1 = new Button("<");
         Button button_2 = new Button(">");
+
+        button_1.setStyleName("scroll-button");
+        button_2.setStyleName("scroll-button");
+
         Panel p = new Panel();
         HorizontalLayout hl = new HorizontalLayout();
-
+        p.setStyleName("metro-panel");
+        p.setId("panelScroll");
+        hl.setId("anchor");
         /////////////////////////////////////////
         ArrayList<BookImage> list = new ArrayList<>();
         //TESTING
@@ -43,42 +52,39 @@ public class MetroBook extends HorizontalLayout{
         hl.setSpacing(true);
         hl.setMargin(true);
         hl.setHeight(100, Unit.PERCENTAGE);
+
         p.setContent(hl);
         p.setHeight(100, Unit.PERCENTAGE);
         p.setWidth(100, Unit.PERCENTAGE);
 
-        button_1.setStyleName("menu-button");
-        button_2.setStyleName("menu-button");
-
         button_1.setHeight(100, Unit.PERCENTAGE);
         button_2.setHeight(100, Unit.PERCENTAGE);
 
-        button_1.setWidth(10, Unit.PERCENTAGE);
-        button_2.setWidth(10, Unit.PERCENTAGE);
+        button_1.setWidth(100, Unit.PERCENTAGE);
+        button_2.setWidth(100, Unit.PERCENTAGE);
 
-        button_1.setWidth(100, Unit.PIXELS);
-        button_2.setWidth(100, Unit.PIXELS);
+        addComponent(p, "left: 0px; top: 0%;");
+        addComponent(button_1, "left: 0%; right: 90%;");
+        addComponent(button_2, "left: 90%; right: 0%;");
 
-        addComponent(button_1);
-        addComponent(p);
-        addComponent(button_2);
         setSizeFull();
 
-        setExpandRatio(p, 20);
-        setExpandRatio(button_1, 1);
-        setExpandRatio(button_2, 1);
+        //setExpandRatio(p, 20);
+        //setExpandRatio(button_1, 1);
+        //setExpandRatio(button_2, 1);
 
         button_1.addClickListener(event -> {
-            if(p.getScrollLeft() > 100 )
-                p.setScrollLeft(p.getScrollLeft() - 100);
+            if(p.getScrollLeft() > 1000 )
+                p.setScrollLeft(p.getScrollLeft() - 1000);
             else
                 p.setScrollLeft(0);
         });
 
         button_2.addClickListener(event -> {
             //   if (metro.getScrollLeft() < metro.getWidth() - 40)
-            p.setScrollLeft(p.getScrollLeft() + 100);
-
+            p.setScrollLeft(p.getScrollLeft() + 1000);
+            //Page.getCurrent().getJavaScript().execute(
+            //        "smoothScroll('panelScroll', 'anchor')");
         });
      }
 

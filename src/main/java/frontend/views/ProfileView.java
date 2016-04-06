@@ -28,8 +28,8 @@ public class ProfileView extends CustomComponent implements View {
         body.setStyleName("bodylayout");
 
         // Add components
-        mainlayout.addComponent(header, "left: 0px; top: 0px;");
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
 
         VerticalLayout content = new VerticalLayout();
         TextField username = new TextField("Username");

@@ -42,6 +42,7 @@ public class ManageView extends CustomComponent implements View {
     private ManageView() {
         mainlayout = new AbsoluteLayout();
         header = new HeaderLayout();
+
         body = new HorizontalLayout();
         table = TableUsers.getInstance();
         hSplitBar = new HorizontalSplitPanel();
@@ -57,8 +58,9 @@ public class ManageView extends CustomComponent implements View {
         hSplitBar.setFirstComponent(menu);
         hSplitBar.setSecondComponent(table);
         body.addComponent(hSplitBar);
-        mainlayout.addComponent(header, "left: 0px; top: 0px;");
+
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
 
         //header.setSizeFull();
         body.setSizeFull();
