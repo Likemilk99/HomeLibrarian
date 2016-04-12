@@ -80,7 +80,7 @@ public class MetroBook extends AbsoluteLayout{
                 p.setScrollLeft(0);
         });
 
-        button_2.addClickListener(event -> {
+        button_2.addClickListener((Button.ClickEvent event) -> {
             //   if (metro.getScrollLeft() < metro.getWidth() - 40)
             p.setScrollLeft(p.getScrollLeft() + 1000);
             //Page.getCurrent().getJavaScript().execute(

@@ -1,5 +1,7 @@
 package frontend.views;
 
+import DAO.UserDAO;
+import Data.Users;
 import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
@@ -12,6 +14,10 @@ import com.vaadin.annotations.*;
 import com.vaadin.ui.themes.ValoTheme;
 import frontend.elements.components.RegistrationWin;
 import frontend.views.MainView;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Александр on 07.02.2016.
@@ -92,7 +98,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         user_field.setSizeFull();
         user_field.addValidator(new EmailValidator(
                 "Username must be an email address"));
-        user_field.setValue("test@test.com");
+    //    user_field.setValue("test@test.com");
         user_field.setInvalidAllowed(false);
         user_field.setResponsive(true);
 
@@ -100,7 +106,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         password_field = new PasswordField();
         password_field.setSizeFull();
         password_field.addValidator(new PasswordValidator());
-        password_field.setValue("passw0rd");
+       // password_field.setValue("passw0rd");
         password_field.setNullRepresentation("");
         password_field.setResponsive(true);
 
@@ -251,8 +257,21 @@ public class SimpleLoginView extends CustomComponent implements View,
         //
 
         // TODO SQL
-        boolean isValid = username.equals("test@test.com")
-                && password.equals("passw0rd");
+
+        UserDAO InUser = new UserDAO();
+        Users user = new Users();
+        try {
+         user = InUser.getElById(username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        boolean isValid;
+        //isValid = username.equals("test@test.com")
+       //             && password.equals("passw0rd");
+        isValid = user.getNickName().equals(username)
+                && user.getPassword().equals(password);
+
+
         String status = "admin";
         if (isValid) {
 

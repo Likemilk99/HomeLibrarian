@@ -201,7 +201,7 @@ public class RegistrationWin extends Window {
     ) {
         //TODO closing windows if-else
         //TO TABLE
-        user  = new Users(username, pass, email);
+        user  = new Users(username, username, pass, email);
         this.close();
         // TODO SQL
         return false;

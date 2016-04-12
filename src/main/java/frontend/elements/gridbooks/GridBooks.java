@@ -29,12 +29,10 @@ public class GridBooks extends GridLayout {
     }
 
    public GridBooks(List<Books> list, String style, int width) {
-        super(5,5);
+       this();
         this.width = width;
         this.n = width/263;
-        this.setSpacing(true);
-        this.setMargin(true);
-        this.setStyleName(style.toString());
+        this.setStyleName(style);
         this.setWidth(100, Unit.PERCENTAGE);
 
         for(Books el : list)

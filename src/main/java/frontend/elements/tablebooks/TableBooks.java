@@ -1,12 +1,7 @@
-package frontend.elements.tableusers;
+package frontend.elements.tablebooks;
 
-import Data.Users;
-
-import com.vaadin.annotations.Theme;
-import com.vaadin.client.widget.grid.CellReference;
-import com.vaadin.client.widget.grid.CellStyleGenerator;
+import Data.Books;
 import com.vaadin.data.Item;
-
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
@@ -14,7 +9,6 @@ import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.renderers.ButtonRenderer;
 
@@ -22,36 +16,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by likemilk on 24.02.2016.
+ * Created by LikeMilk on 12.04.2016.
  */
-@Theme("mytheme")
-public class TableUsers extends VerticalLayout {
+public class TableBooks extends VerticalLayout {
     private Grid grid;
-    private BeanItemContainer<Users> users = new BeanItemContainer<>(Users.class);
+    private BeanItemContainer<Books> users = new BeanItemContainer<>(Books.class);
     private GeneratedPropertyContainer gpc;
     Grid.MultiSelectionModel selection ;
-    private static TableUsers instance;
+    private static TableBooks instance;
 
-    public static  TableUsers getInstance() {
-        TableUsers localInstance = instance;
+    public static  TableBooks getInstance() {
+        TableBooks localInstance = instance;
         if (localInstance == null) {
-            synchronized (TableUsers.class) {
+            synchronized (TableBooks.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new TableUsers();
+                    instance = localInstance = new TableBooks();
                 }
             }
         }
         return localInstance;
     }
 
-    private TableUsers() {
-        users = new BeanItemContainer<>(Users.class);
+    private TableBooks() {
+        users = new BeanItemContainer<>(Books.class);
         for(int i =0; i < 10; i++)
-            users.addBean(new Users("ss",""+i, "ss", "iround2@yandex.ru"));
-            users.addBean(new Users("ss","", "ss", "likemilk99@gmail.com"));
-        users.addBean(new Users("ss","", "ss", "azure49@ya.ru"));
-               gpc = new GeneratedPropertyContainer(users);
+            users.addBean(new Books());
+        users.addBean(new Books());
+        users.addBean(new Books());
+        gpc = new GeneratedPropertyContainer(users);
         gpc.addGeneratedProperty("delete",
                 new PropertyValueGenerator<String>() {
 
@@ -76,13 +69,13 @@ public class TableUsers extends VerticalLayout {
                 .setRenderer(new ButtonRenderer(e -> {
                     //Grid.deselect(e.getItemId());
                     grid.getSelectedRows().remove(e.getItemId());
-                      Collection<Object> seletedList = grid.getSelectedRows();
+                    Collection<Object> seletedList = grid.getSelectedRows();
 
                     seletedList.remove(e.getItemId());
                     grid.getContainerDataSource().removeItem(e.getItemId());
                     grid.getSelectionModel().reset();
                     for (Object el : seletedList) {
-                           grid.select(el);
+                        grid.select(el);
                     }
                 }));
 
@@ -135,7 +128,7 @@ public class TableUsers extends VerticalLayout {
         });
     }
 
-    public void addRow(Users row){
+    public void addRow(Books row){
         users.addBean(row);
     }
 

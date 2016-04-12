@@ -55,7 +55,7 @@ public class UserDAO implements InterfaceDao<Users> {
 
     public Users getElById(String el) throws SQLException {
         Session session = null;
-        Users user = null;
+        Users user = new Users();
         Guest guest = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -67,6 +67,7 @@ public class UserDAO implements InterfaceDao<Users> {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
+          //  user = new Users();
             if (session != null && session.isOpen()) {
                 session.close();
             }
@@ -101,6 +102,22 @@ public class UserDAO implements InterfaceDao<Users> {
             session.beginTransaction();
             session.delete(el);
             session.getTransaction().commit();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public void getByName(String name) throws SQLException {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.getNamedProcedureCall(name);
+                    //createQuery("select fname from Users as Ivan");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {

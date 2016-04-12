@@ -11,25 +11,44 @@ import javax.persistence.*;
 @Table(name = "\"User\"")
 public class Users{
 
-    private Integer id;
+  //  private Integer id;
     private String fname;
     private String password;
     private String role;
     private String email;
+    private String nickName;
+    public Users() {}
 
-    public   Users(String fname, String password, String email){
-            this.fname = fname;
+    public Users(Integer id, String fname, String password, String role, String email) {
+    //    this.id = id;
+        this.fname = fname;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+    }
+
+    public   Users(String nickName, String fname, String password, String email){
+        this.nickName = nickName;
+        this.fname = fname;
         this.password = password;
         this.email = email;
         this.role = "user";
-        this.id = 0;
+      //  this.id = 0;
     }
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "emp_id")
-    public Integer getId() { return id; }
+   // @Id
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @Column(name = "emp_id")
+  //  public Integer getId() { return id; }
+
+   //
+   @Id
+  // @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "emp_id")
+   public String getNickName() {
+       return nickName;
+   }
 
     @Column(name = "FName")
     public String getFname() {
@@ -49,10 +68,13 @@ public class Users{
     @Column(name = "Email")
     public String getEmail() { return email; }
 
-    public void setId(Integer id) {
+  /*  public void setId(Integer id) {
         this.id = id;
-    }
+    }*/
 
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
     public void setFname(String fname) {
         this.fname = fname;
     }
