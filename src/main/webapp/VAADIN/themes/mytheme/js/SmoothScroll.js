@@ -9,7 +9,7 @@ function smoothScroll(panelID, targetID) {
 
     var panelChildren = panel.childNodes;
     var panelSub = panelChildren[1];
-    var startScroll = panelSub.scrollTop;
+    var startScroll = panelSub.scrollLeft;
 
     // time when scroll starts
     var start = new Date().getTime(),
@@ -19,12 +19,12 @@ function smoothScroll(panelID, targetID) {
             // calculate the step, i.e the degree of completion of the smooth scroll
             var step = Math.min(1, (new Date().getTime() - start) / time);
 
-            panelSub.scrollTop = startScroll + (step * target.offsetTop);
+            panelSub.scrollLeft = startScroll + (step * target.offsetLeft);
             // document.body['scrollTop'] = (step * target.offsetTop);
 
             // end interval if the scroll is completed
-            if (panelSub.scrollTop > target.offsetTop) {
-                panelSub.scrollTop = target.offsetTop
+            if (panelSub.scrollLeft > target.offsetLeft) {
+                panelSub.scrollLeft = target.offsetLeft
                 clearInterval(timer);
             }
         }, 25);

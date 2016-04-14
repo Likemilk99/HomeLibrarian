@@ -49,224 +49,150 @@ $v-grid-row-stripe-background-color: #def1ff;
 @mixin mytheme() {
   @include valo;
 
-  .errorlabel {
-    //margin: 5px;
-    //padding: 20px;
-    color: $admin-color;
-    font-size: 100%;
-  }
+  .loginlayout {
+    min-width: 320px;
+    max-width: 25%;
 
-  .main-button {
-    background: $main-color;
-    border: none;
-    outline: none;
+    background-color: $background-color;
 
-    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-    moz-transition: box-shadow 0.2s 0.1s ease;
-    -o-transition: box-shadow 0.2s 0.1s ease;
-    -webkit-transition: box-shadow 0.2s 0.1s ease;
-
-    .v-button-caption {
-      color: $background-color;
-      font-size: 170%;
-      //font-weight: bold;
+    .errorlabel {
+      //margin: 5px;
+      //padding: 20px;
+      color: $admin-color;
+      font-size: 100%;
     }
 
-    cursor: pointer;
-  }
-
-  .main-button:hover {
-    background: $main-color-lighter;
-    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-    //border: .094em solid $main-color;
-  }
-
-  .main-button:active {
-    background: #d8efff;
-    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-    .v-button-caption {
-      color: $main-color;
-    }
-  }
-
-  .super-button {
-    background: $super-color;
-    border: none;
-    outline: none;
-
-    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-    moz-transition: box-shadow 0.2s 0.1s ease;
-    -o-transition: box-shadow 0.2s 0.1s ease;
-    -webkit-transition: box-shadow 0.2s 0.1s ease;
-
-    .v-button-caption {
-      color: $background-color;
-      //font-weight: bold;
-      font-size: 170%;
-    }
-
-    cursor: pointer;
-  }
-
-  .super-button:hover {
-    background: $super-color-light;
-    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-  }
-
-  .super-button:active {
-    background: #fff9c4;
-    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-    .v-button-caption {
-      color: #eb9900;
-    }
-  }
-
-  .super-button:focus {
-    border: none;
-  }
-
-  .v-textfield {
-    background: $main-color;
-    color: $background-color;
-    opacity: 1.0;
-    border: none;
-
-    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-    moz-transition: box-shadow 0.2s 0.1s ease;
-    -o-transition: box-shadow 0.2s 0.1s ease;
-    -webkit-transition: box-shadow 0.2s 0.1s ease;
-
-  }
-  .v-textfield-error {
-    background: pink !important;
-  }
-  .v-textfield:hover {
-    background: $main-color;
-    color: $background-color;
-    opacity: 0.7;
-    box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-  }
-
-  .v-textfield:focus {
-    background: $background-color;
-    color: $main-color;
-    opacity: 1.0;
-    border: solid $main-color;
-  }
-
-  .v-checkbox {
-    flood-color: $main-color;
-  }
-  .v-checkbox > input {
-    color: $main-color;
-    background-color: $main-color;
-    border-color: $main-color;
-  }
-
-  .v-select {
-    border: none;
-
-    box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-    moz-transition: box-shadow 0.2s 0.1s ease;
-    -o-transition: box-shadow 0.2s 0.1s ease;
-    -webkit-transition: box-shadow 0.2s 0.1s ease;
-
-    .v-select-select {
-      border: none;
+    .main-button {
       background: $main-color;
-      color: $background-color;
-
-      //-webkit-appearance: none;
-      //-moz-appearance: none;
-      //-ms-appearance: none;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -ms-box-sizing: border-box;
-      -o-box-sizing: border-box;
-
-    }
-  }
-
-  /*.headerlayout {
-    background-color: $main-color-lighter;
-
-    outline: none;
-
-    .v-button  {
-      background-color: $main-color-lighter;
-      background: $main-color-lighter;
-      color: $main-color-lighter;
-      box-shadow: none;
-
-      float:left;
-      margin:0 5px 0;
-
-      border-top: none;
-      border-radius: 0px;
-      padding: -1px;
+      border: none;
       outline: none;
+
+      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+      moz-transition: box-shadow 0.2s 0.1s ease;
+      -o-transition: box-shadow 0.2s 0.1s ease;
+      -webkit-transition: box-shadow 0.2s 0.1s ease;
 
       .v-button-caption {
         color: $background-color;
         font-size: 170%;
+        //font-weight: bold;
       }
-    }
 
-    .v-button:hover {
-      background-color: $main-color !important;
-      background: $main-color !important;
-      color: $main-color !important;
-
-      border-bottom: 4px;
-      border-color: $background-color !important;
-      border-bottom-style: solid;
-
-      outline: none;
-    }
-
-    .v-button:focus {
-      background-color: $main-color-lighter;
-      background: $main-color-lighter;
-      color: $main-color-lighter;
-
-      border-bottom: 4px;
-      border-color: $background-color !important;
-      border-bottom-style: solid;
-
-      outline: none;
-    }
-
-    .v-button:active,
-    .v-button.v-pressed {
-      background-color: $main-color;
-      background: $main-color;
-      color: $main-color;
-
-      border-bottom: 4px;
-      border-color: $background-color;
-      border-bottom-style: solid;
-
-      outline: none;
-    }
-
-    .navigation-button-active {
-      background: $main-color;
-      outline: none;
-      border: none;
-
-      .v-button-caption {
-        color: $background-color;
-        font-size: 140%;
-      }
       cursor: pointer;
     }
 
-    .navigation-button-active:hover {
-      border-bottom: 4px;
-      border-bottom-color: $background-color;
-      border-bottom-style: solid;
+    .main-button:hover {
+      background: $main-color-lighter;
+      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+      //border: .094em solid $main-color;
     }
-  }*/
+
+    .main-button:active {
+      background: #d8efff;
+      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+      .v-button-caption {
+        color: $main-color;
+      }
+    }
+
+    .super-button {
+      background: $super-color;
+      border: none;
+      outline: none;
+
+      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+      moz-transition: box-shadow 0.2s 0.1s ease;
+      -o-transition: box-shadow 0.2s 0.1s ease;
+      -webkit-transition: box-shadow 0.2s 0.1s ease;
+
+      .v-button-caption {
+        color: $background-color;
+        //font-weight: bold;
+        font-size: 170%;
+      }
+
+      cursor: pointer;
+    }
+
+    .super-button:hover {
+      background: $super-color-light;
+      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+    }
+
+    .super-button:active {
+      background: #fff9c4;
+      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+      .v-button-caption {
+        color: #eb9900;
+      }
+    }
+
+    .super-button:focus {
+      border: none;
+    }
+
+    .v-textfield {
+      background: $main-color;
+      color: $background-color;
+      opacity: 1.0;
+      border: none;
+
+      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+      moz-transition: box-shadow 0.2s 0.1s ease;
+      -o-transition: box-shadow 0.2s 0.1s ease;
+      -webkit-transition: box-shadow 0.2s 0.1s ease;
+
+    }
+    .v-textfield-error {
+      background: pink !important;
+    }
+    .v-textfield:hover {
+      background: $main-color;
+      color: $background-color;
+      opacity: 0.7;
+      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
+    }
+
+    .v-textfield:focus {
+      background: $background-color;
+      color: $main-color;
+      opacity: 1.0;
+      border: solid $main-color;
+    }
+
+    .v-checkbox {
+      flood-color: $main-color;
+    }
+    .v-checkbox > input {
+      color: $main-color;
+      background-color: $main-color;
+      border-color: $main-color;
+    }
+
+    .v-select {
+      border: none;
+
+      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
+      moz-transition: box-shadow 0.2s 0.1s ease;
+      -o-transition: box-shadow 0.2s 0.1s ease;
+      -webkit-transition: box-shadow 0.2s 0.1s ease;
+
+      .v-select-select {
+        border: none;
+        background: $main-color;
+        color: $background-color;
+
+        //-webkit-appearance: none;
+        //-moz-appearance: none;
+        //-ms-appearance: none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -o-box-sizing: border-box;
+
+      }
+    }
+  }
 }
 
 // main
@@ -283,13 +209,6 @@ $v-grid-row-stripe-background-color: #def1ff;
       @content;
     }
   }
-}
-
-.loginlayout {
-  min-width: 320px;
-  max-width: 25%;
-
-  background-color: $background-color;
 }
 
 .cssmenu {
