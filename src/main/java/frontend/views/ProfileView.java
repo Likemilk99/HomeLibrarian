@@ -60,6 +60,7 @@ public class ProfileView extends CustomComponent implements View {
 
         setSizeFull();
         setCompositionRoot(mainlayout);
+
     }
 
     @Override

@@ -1,5 +1,8 @@
 package mail;
 
+import com.vaadin.server.Page;
+import com.vaadin.ui.Notification;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -23,7 +26,7 @@ public class Sender {
             "<p>Код подтверждения: <b>";
 
     public Sender() {
-        this("smirnovivan944","Iround!1");
+        this("smirnovivan944", "Iround!1");
     }
 
     /**
@@ -63,11 +66,44 @@ public class Sender {
             //тема сообщения
             message.setSubject("Notification");
             //текст
-            message.setText(text + code + "</b>", "utf-8", "html");
+            message.setText(TemplateMails.MAIL_REG + code + "</b>", "utf-8", "html");
+            //отправляем сообщение
+            Transport.send(message);
+
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } finally {
+            new Notification("Success","Mail sended! ",
+                    Notification.TYPE_WARNING_MESSAGE, true)
+                    .show(Page.getCurrent());
+        }
+    }
+
+    public void send(TemplateMails mail, String toEmail){
+        Session session = Session.getDefaultInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        try {
+            MimeMessage message = new MimeMessage(session);
+            //от кого
+            message.setFrom(new InternetAddress(username));
+            //кому
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            //тема сообщения
+            message.setSubject("Notification");
+            //текст
+            message.setText(mail.getMail(), "utf-8", "html");
             //отправляем сообщение
             Transport.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
+        }finally {
+            new Notification("Success","Mails sended! ",
+                    Notification.TYPE_TRAY_NOTIFICATION, true)
+                    .show(Page.getCurrent());
         }
     }
 }

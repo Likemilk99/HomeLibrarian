@@ -22,11 +22,13 @@ public class TestBDBooks {
      */
     @Test
     public void TestAddtoBDUsingFactory() throws SQLException {
-        B = new Books();
-        B.Books("Пришлый", "2006", "Иван Иванович", "C://test//pic//1.png");
-        F= new Factory();
-        InterfaceDao InUser = F.getDAO(BookDAO.class );
-        InUser.addEl(B);
-        //test
+      for (int i=0; i<1000 ; i++) {
+          B = new Books();
+          B.Books("Пришлый", "2006", "Иван Иванович", "C://test//pic//1.png");
+          F = new Factory();
+          InterfaceDao InUser = F.getDAO(BookDAO.class);
+          InUser.addEl(B);
+          //test
+      }
     }
 }

@@ -1,6 +1,5 @@
 package Data;
 
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -9,31 +8,29 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "\"User\"")
-public class Users{
+public class Users extends Address{
 
   //  private Integer id;
-    private String fname;
+    private String nickName;
     private String password;
     private String role;
-    private String email;
-    private String nickName;
-    public Users() {}
+
+
+    public  Users() {}
 
     public Users(Integer id, String fname, String password, String role, String email) {
     //    this.id = id;
-        this.fname = fname;
+        this.nickName = fname;
         this.password = password;
         this.role = role;
-        this.email = email;
+     //   this.email = email;
     }
 
     public   Users(String nickName, String fname, String password, String email){
+        super(fname, email);
         this.nickName = nickName;
-        this.fname = fname;
         this.password = password;
-        this.email = email;
         this.role = "user";
-      //  this.id = 0;
     }
 
 
@@ -43,16 +40,11 @@ public class Users{
   //  public Integer getId() { return id; }
 
    //
-   @Id
-  // @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "emp_id")
-   public String getNickName() {
-       return nickName;
-   }
 
-    @Column(name = "FName")
-    public String getFname() {
-        return fname;
+    //@Id
+    @Column(name = "Nickname")
+    public String getNickName() {
+        return nickName;
     }
 
     @Column(name = "Password")
@@ -65,8 +57,7 @@ public class Users{
         return role;
     }
 
-    @Column(name = "Email")
-    public String getEmail() { return email; }
+
 
   /*  public void setId(Integer id) {
         this.id = id;
@@ -74,9 +65,6 @@ public class Users{
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-    public void setFname(String fname) {
-        this.fname = fname;
     }
 
     public void setPassword(String password) {
@@ -87,7 +75,5 @@ public class Users{
         this.role = role;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
 }

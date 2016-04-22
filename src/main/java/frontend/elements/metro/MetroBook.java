@@ -1,5 +1,8 @@
 package frontend.elements.metro;
 
+import DAO.BookDAO;
+import DAO.Factory;
+import DAO.InterfaceDao;
 import Data.Books;
 import com.google.gwt.dom.client.NativeEvent;
 import com.vaadin.annotations.JavaScript;
@@ -10,7 +13,9 @@ import frontend.elements.gridbooks.BookImage;
 import javafx.scene.layout.Pane;
 
 import java.security.PrivateKey;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by likemilk on 22.02.2016.
@@ -18,9 +23,14 @@ import java.util.ArrayList;
 
 @JavaScript({"vaadin://themes/mytheme/js/SmoothScroll.js"})
 public class MetroBook extends AbsoluteLayout{
-  //private Panel metro = new Panel();
+    private InterfaceDao bookInterface;
+    private int position;
     public MetroBook() {
         super();
+        position = 0;
+        Factory factory = new Factory();
+        bookInterface = factory.getDAO(BookDAO.class);
+
         setStyleName("metrolayout");
 
         Button button_1 = new Button("<");
@@ -36,12 +46,23 @@ public class MetroBook extends AbsoluteLayout{
         hl.setId("anchor");
         /////////////////////////////////////////
         ArrayList<BookImage> list = new ArrayList<>();
-        //TESTING
-        for (int i=0; i < 50; i++) {
-            list.add(new BookImage(new Books()));
+
+        try {
+            List<Books> subList = bookInterface.getSubList(position);
+            for (Books el : subList)
+                list.add(new BookImage(el));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            position = position + 8;
         }
 
-        for (BookImage el: list) {
+        //TESTING
+        for (int i = 0; i < 50; i++) {
+            //  list.add(new BookImage(new Books()));
+        }
+
+        for (BookImage el : list) {
             hl.addComponent(el);
             el.setHeight(568, Unit.PIXELS);
             el.setWidth(320, Unit.PIXELS);
@@ -73,20 +94,52 @@ public class MetroBook extends AbsoluteLayout{
         //setExpandRatio(button_1, 1);
         //setExpandRatio(button_2, 1);
 
-        button_1.addClickListener(event -> {
-            if(p.getScrollLeft() > 1000 )
-                p.setScrollLeft(p.getScrollLeft() - 1000);
-            else
-                p.setScrollLeft(0);
+        button_1.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                if (p.getScrollLeft() - 100 <= 0) {
+                    p.setScrollLeft(0);
+                    new Notification("Success","Left! ",
+                            Notification.TYPE_WARNING_MESSAGE, true)
+                            .show(Page.getCurrent());
+
+                } else
+                    p.setScrollLeft(p.getScrollLeft() - 100);
+
+            }
         });
 
-        button_2.addClickListener((Button.ClickEvent event) -> {
-            //   if (metro.getScrollLeft() < metro.getWidth() - 40)
-            p.setScrollLeft(p.getScrollLeft() + 1000);
-            //Page.getCurrent().getJavaScript().execute(
-            //        "smoothScroll('panelScroll', 'anchor')");
+        button_2.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                //TODO change condition
+                if(p.getScrollLeft() + 100 <= UI.getCurrent().getWidth()) {
+                    p.setScrollLeft(p.getScrollLeft() + 100);
+                    new Notification("Success","Right ",
+                            Notification.TYPE_WARNING_MESSAGE, true)
+                            .show(Page.getCurrent());
+                } else {
+                    try {
+                        final List<Books> subList = bookInterface.getSubList(position);
+                        for (Books el : subList)
+                            list.add(new BookImage(el));
+                        for (BookImage el : list) {
+                            hl.addComponent(el);
+                            el.setHeight(568, Unit.PIXELS);
+                            el.setWidth(320, Unit.PIXELS);
+                            hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
+                        }
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } finally {
+                        position = position + 8;
+                    }
+                }
+            }
+
         });
-     }
+    }
 
 
 

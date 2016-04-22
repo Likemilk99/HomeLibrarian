@@ -1,5 +1,6 @@
 package frontend.elements.tableusers;
 
+import Data.Address;
 import Data.Users;
 import com.vaadin.server.LegacyApplication;
 import com.vaadin.server.Sizeable;
@@ -59,11 +60,8 @@ public class MenuTable extends VerticalLayout {
             RegistrationWin subWindow = new RegistrationWin();
             // Open it in the UI
             getUI().addWindow(subWindow);
-            subWindow.addListener(new Window.CloseListener() {
-                // inline close-listener
-                public void windowClose(Window.CloseEvent e) {
-                    tableinstance.addRow(subWindow.getUser());
-                }
+            subWindow.addListener((Window.CloseEvent e) -> {
+                tableinstance.addRow(subWindow.getUser());
             });
         });
 
@@ -75,9 +73,12 @@ public class MenuTable extends VerticalLayout {
         button_block.setWidth(200, Unit.PIXELS);
 
         button_send = new Button("Send", event -> {
-            ArrayList<String> mails = tableinstance.getMails();
-            for (String obj : mails)
-                sender.send(new BigInteger(130, new SecureRandom()).toString(32), obj);
+
+            getUI().addWindow(new MailWindow(tableinstance.getSRows()));
+
+           // ArrayList<String> mails = tableinstance.getMails();
+            //for (String obj : mails)
+               // sender.send(new BigInteger(130, new SecureRandom()).toString(32), obj);
 
         });
         button_send.setWidth(200, Sizeable.Unit.PIXELS);

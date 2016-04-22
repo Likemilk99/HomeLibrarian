@@ -1,5 +1,6 @@
 package frontend.elements.tableusers;
 
+import Data.Address;
 import Data.Users;
 
 import com.vaadin.annotations.Theme;
@@ -18,8 +19,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.renderers.ButtonRenderer;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Created by likemilk on 24.02.2016.
@@ -31,7 +31,7 @@ public class TableUsers extends VerticalLayout {
     private GeneratedPropertyContainer gpc;
     Grid.MultiSelectionModel selection ;
     private static TableUsers instance;
-
+    private ArrayList<Users> listUsers ;
     public static  TableUsers getInstance() {
         TableUsers localInstance = instance;
         if (localInstance == null) {
@@ -46,11 +46,12 @@ public class TableUsers extends VerticalLayout {
     }
 
     private TableUsers() {
+
         users = new BeanItemContainer<>(Users.class);
-        for(int i =0; i < 10; i++)
-            users.addBean(new Users("ss",""+i, "ss", "iround2@yandex.ru"));
-            users.addBean(new Users("ss","", "ss", "likemilk99@gmail.com"));
-        users.addBean(new Users("ss","", "ss", "azure49@ya.ru"));
+           for(int i =0; i < 10; i++)
+               users.addBean(new Users("ss",""+i, "ss", "iround2@yandex.ru"));
+       //     users.addBean(new Users("ss","", "ss", "likemilk99@gmail.com"));
+      //  users.addBean(new Users("ss","", "ss", "azure49@ya.ru"));
                gpc = new GeneratedPropertyContainer(users);
         gpc.addGeneratedProperty("delete",
                 new PropertyValueGenerator<String>() {
@@ -157,5 +158,14 @@ public class TableUsers extends VerticalLayout {
             emails.add((String) o.getValue());
         }
         return emails;
+    }
+
+    public List<Address> getSRows() {
+       Collection <Object> list = grid.getSelectedRows();
+        List <Address> subList = new LinkedList<>();
+        for (Object el : list) {
+            subList.add(users.getItem(el).getBean());
+        }
+        return subList;
     }
 }

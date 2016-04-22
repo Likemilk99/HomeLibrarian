@@ -7,7 +7,7 @@ import java.util.List;
  * Created by likemilk on 04.02.2016.
  */
 public interface InterfaceDao<T>{
-
+    int COUNT_ROWS = 8;
     /**
      *
      * Чья реализауия.
@@ -51,4 +51,7 @@ public interface InterfaceDao<T>{
      */
     void deleteEl(T El) throws SQLException;
 
+    long getCount() throws  SQLException;
+
+    List getSubList(int position) throws SQLException;
 }

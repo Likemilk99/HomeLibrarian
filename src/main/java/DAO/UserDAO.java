@@ -3,11 +3,13 @@ package DAO;
 import Data.Guest;
 import Data.Users;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import util.HibernateUtil;
 
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -55,7 +57,7 @@ public class UserDAO implements InterfaceDao<Users> {
 
     public Users getElById(String el) throws SQLException {
         Session session = null;
-        Users user = new Users();
+        Users user = new Users("LikeMilk", "Ivan", "7154255", "iround@yandex.ru");
         Guest guest = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -124,6 +126,46 @@ public class UserDAO implements InterfaceDao<Users> {
             if (session != null && session.isOpen()) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public long getCount() throws SQLException {
+        Session session = null;
+        long count = 0;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            count = (long) session.createCriteria(Users.class).setProjection(Projections.rowCount()).uniqueResult();
+            session.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+                return count;
+            }
+            return count;
+        }
+    }
+
+    @Override
+    public List getSubList(int position) throws SQLException {
+        Session session = null;
+        List<Users> users =  new LinkedList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            users = session.createCriteria(Users.class)
+                    .setMaxResults(COUNT_ROWS)
+                    .setFirstResult(position)
+                    .list();
+        }catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+                return users;
+            }
+            return users;
         }
     }
 }
