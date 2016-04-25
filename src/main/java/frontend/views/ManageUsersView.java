@@ -12,9 +12,9 @@ import frontend.elements.tableusers.TableUsers;
  * Created by Александр on 13.03.2016.
  */
 @Theme("mytheme")
-public class ManageView extends CustomComponent implements View {
+public class ManageUsersView extends CustomComponent implements View {
 
-    public static final String NAME = "manage";
+    public static final String NAME = "manageusers";
 
     AbsoluteLayout mainlayout;
     HeaderLayout header;
@@ -24,22 +24,22 @@ public class ManageView extends CustomComponent implements View {
     MenuTable menu;
     private HorizontalSplitPanel hSplitBar;
 
-    private static ManageView instance;
+    private static ManageUsersView instance;
 
-    public static  ManageView getInstance() {
-        ManageView localInstance = instance;
+    public static  ManageUsersView getInstance() {
+        ManageUsersView localInstance = instance;
         if (localInstance == null) {
             synchronized (TableUsers.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ManageView();
+                    instance = localInstance = new ManageUsersView();
                 }
             }
         }
         return localInstance;
     }
 
-    private ManageView() {
+    private ManageUsersView() {
         mainlayout = new AbsoluteLayout();
         header = new HeaderLayout();
 

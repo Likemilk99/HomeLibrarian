@@ -61,136 +61,73 @@ $v-grid-row-stripe-background-color: #def1ff;
       color: $admin-color;
       font-size: 100%;
     }
-
-    .main-button {
-      background: $main-color;
-      border: none;
-      outline: none;
-
-      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-      moz-transition: box-shadow 0.2s 0.1s ease;
-      -o-transition: box-shadow 0.2s 0.1s ease;
-      -webkit-transition: box-shadow 0.2s 0.1s ease;
-
-      .v-button-caption {
-        color: $background-color;
-        font-size: 170%;
-        //font-weight: bold;
-      }
-
-      cursor: pointer;
-    }
-
-    .main-button:hover {
-      background: $main-color-lighter;
-      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-      //border: .094em solid $main-color;
-    }
-
-    .main-button:active {
-      background: #d8efff;
-      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-      .v-button-caption {
-        color: $main-color;
-      }
-    }
-
     .super-button {
-      background: $super-color;
       border: none;
-      outline: none;
-
-      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-      moz-transition: box-shadow 0.2s 0.1s ease;
-      -o-transition: box-shadow 0.2s 0.1s ease;
-      -webkit-transition: box-shadow 0.2s 0.1s ease;
-
+      background-image: none;
+      background-color: #EBC000 !important;
       .v-button-caption {
-        color: $background-color;
-        //font-weight: bold;
-        font-size: 170%;
+        color: white;
+        font-size: 32px;
       }
-
-      cursor: pointer;
     }
+    .main-button {
+      border: none;
+      background-image: none;
+      background-color: #4db8ff;
 
-    .super-button:hover {
-      background: $super-color-light;
-      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-    }
-
-    .super-button:active {
-      background: #fff9c4;
-      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
       .v-button-caption {
-        color: #eb9900;
+        color: white;
+        font-size: 32px;
       }
     }
 
-    .super-button:focus {
+    .v-select-select {
       border: none;
+      background-color: #4db8ff;
+      background-image: none;
+
+      color: #FFFFFF;
+    }
+
+    .v-filterselect {
+      .v-filterselect-input {
+        border: none;
+        background: #4db8ff;
+
+        color: #FFFFFF;
+      }
     }
 
     .v-textfield {
-      background: $main-color;
-      color: $background-color;
-      opacity: 1.0;
-      border: none;
+      border: 0px solid #4db8ff;
+      background: #4db8ff;
+      color: white;
 
-      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-      moz-transition: box-shadow 0.2s 0.1s ease;
-      -o-transition: box-shadow 0.2s 0.1s ease;
-      -webkit-transition: box-shadow 0.2s 0.1s ease;
-
+      box-shadow: none;
     }
-    .v-textfield-error {
-      background: pink !important;
-    }
-    .v-textfield:hover {
-      background: $main-color;
-      color: $background-color;
-      opacity: 0.7;
-      box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-    }
+  }
+  .v-caption {
+    font-size: 26px;
+  }
+  .v-label {
+    font-size: 26px;
+  }
 
-    .v-textfield:focus {
-      background: $background-color;
-      color: $main-color;
-      opacity: 1.0;
-      border: solid $main-color;
-    }
+  /*.v-textfield {
+    border: 0px solid #4db8ff;
+    background: #4db8ff;
+    color: white;
 
-    .v-checkbox {
-      flood-color: $main-color;
-    }
-    .v-checkbox > input {
-      color: $main-color;
-      background-color: $main-color;
-      border-color: $main-color;
-    }
-
-    .v-select {
-      border: none;
-
-      box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-      moz-transition: box-shadow 0.2s 0.1s ease;
-      -o-transition: box-shadow 0.2s 0.1s ease;
-      -webkit-transition: box-shadow 0.2s 0.1s ease;
-
-      .v-select-select {
-        border: none;
-        background: $main-color;
-        color: $background-color;
-
-        //-webkit-appearance: none;
-        //-moz-appearance: none;
-        //-ms-appearance: none;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-        -o-box-sizing: border-box;
-
-      }
+    box-shadow: none;
+  }*/
+  .v-nativebutton {
+    border: none;
+    background-image: none;
+    background-color: #EBC000;
+    color: white;
+    .v-button-caption {
+      color: white;
+      font-size: 26px;
     }
   }
 }
@@ -222,6 +159,31 @@ $v-grid-row-stripe-background-color: #def1ff;
 
   z-index:999;
 
+  .v-horizontallayout .v-menubar {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+
+    background-image: none;
+    background-color: $main-color-lighter;
+    color: $background-color;
+    font-size: 170%;
+
+    line-height: 105px;
+
+    outline: none;
+    border: none;
+
+    @include on-event {
+      background-color: $background-color;
+      color: $main-color-lighter;
+
+      box-shadow: inset 25px 0px 25px -25px rgba(0,0,0,0.5), inset -25px 0px 25px -25px rgba(0,0,0,0.5);
+    }
+    &:hover:after {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
   .v-horizontallayout .v-button {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
@@ -238,15 +200,6 @@ $v-grid-row-stripe-background-color: #def1ff;
     @include on-event {
       background-color: $background-color;
       color: $main-color-lighter;
-
-      /*-webkit-box-shadow-left: 0 0 10px rgba(0,0,0,0.5) inset, 0 0 -10px rgba(0,0,0,0.5) inset;
-      -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5) inset, 0 0 -10px rgba(0,0,0,0.5) inset;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5) inset, 0 0 -10px rgba(0,0,0,0.5) inset;*/
-
-      /*box-shadow: 0 9px 0px 0px white,
-      0 -9px 0px 0px white,
-      12px 0 15px -4px rgba(31, 73, 125, 0.8),
-      -12px 0 15px -4px rgba(31, 73, 125, 0.8);*/
 
       box-shadow: inset 25px 0px 25px -25px rgba(0,0,0,0.5), inset -25px 0px 25px -25px rgba(0,0,0,0.5);
     }
@@ -300,13 +253,115 @@ $v-grid-row-stripe-background-color: #def1ff;
 }
 
 .menulayout {
-  //border-style: solid;
-  //border-color: #0099ff;
-  //border-width: 3px;
   background-color: #def1ff;
   border-right: 4px;
   border-right-style: solid;
   border-right-color: $main-color-lighter;
+
+  .v-verticallayout {
+    .v-caption {
+      font-size: 26px;
+    }
+    .v-label {
+      font-size: 26px;
+    }
+
+    .v-textfield {
+      border: 0px solid #4db8ff;
+      background: #4db8ff;
+      color: white;
+
+      box-shadow: none;
+    }
+
+    .v-select-select {
+      border: none;
+      background-color: #4db8ff;
+      background-image: none;
+
+      color: #FFFFFF;
+    }
+
+    .v-filterselect {
+      .v-filterselect-input {
+        border: none;
+        background: #4db8ff;
+
+        color: #FFFFFF;
+      }
+    }
+
+    .super-button {
+      background-color: #EBC000 !important;
+    }
+    .v-button {
+      border: none;
+      background-image: none;
+      background-color: #4db8ff;
+
+      .v-button-caption {
+        color: white;
+        font-size: 26px;
+      }
+    }
+  }
+}
+
+.settingslayout {
+  background-color: white;
+
+  .v-verticallayout {
+    .v-caption {
+      font-size: 26px;
+    }
+    .v-label {
+      font-size: 26px;
+    }
+
+    .v-textfield {
+      border: 0px solid #4db8ff;
+      background: #4db8ff;
+      color: white;
+
+      box-shadow: none;
+    }
+
+    .v-select-select {
+      border: none;
+      background-color: #4db8ff;
+      background-image: none;
+
+      color: #FFFFFF;
+    }
+
+    .v-filterselect {
+      .v-filterselect-input {
+        border: none;
+        background: #4db8ff;
+
+        color: #FFFFFF;
+      }
+    }
+
+    .super-button {
+      background-color: #EBC000 !important;
+    }
+    .v-button {
+      border: none;
+      background-image: none;
+      background-color: #4db8ff;
+
+      .v-button-caption {
+        color: white;
+        font-size: 26px;
+      }
+    }
+
+    .v-checkbox input[type="checkbox"]+label::before,.myradio input[type="radio"]+label::before
+    {
+      border: 1px solid #4db8ff;
+    }
+  }
 }
 
 // bookimage\
@@ -356,11 +411,30 @@ $v-grid-row-stripe-background-color: #def1ff;
     padding-top: 0px;
     padding-bottom: 0px;
   }
+
+
+  .super-button {
+    border: none !important;
+    background-image: none !important;
+    background-color: #EBC000 !important;
+    .v-button-caption {
+      color: white;
+      font-size: 32px;
+    }
+  }
+
+  .v-ratingstars-star {
+    background-image: url('./Images/star_19x18.png');
+  }
+  .v-ratingstars-wrapper {
+    background: $main-color-lighter;
+    border: none;
+  }
 }
 
 .cells:hover {
   z-index:101;
-  background-color: $main-color;
+  //background-color: $main-color;
 
   -webkit-transform:scale(1.15); /* Safari and Chrome */
   -moz-transform:scale(1.15); /* Firefox */
@@ -373,67 +447,8 @@ $v-grid-row-stripe-background-color: #def1ff;
   visibility: hidden;
 }
 
-/*.v-button {
-  bevel: 0;
-  background: $background-color;
-  border: none;
-  outline: none;
-
-  .v-button-caption {
-    color: $main-color;
-    font-size: 120%;
-  }
-
-  cursor: pointer;
-}
-
-.v-button:hover {
-  background: $background-color;
-  border-color: $background-color;
-  //border-style: solid;
-  //margin: -1px;
-} */
-
 .v-ratingstars-wrapper-large .v-ratingstars-bar:hover {
 
-}
-
-.v-nativebutton {
-  bevel: 0;
-  background: $super-color;
-  opacity: 1.0;
-  border: none;
-  outline: none;
-  box-shadow: 0 0 10px 0px rgba(0,0,0,0.5);
-  .v-button-caption {
-    color: $background-color;
-    font-weight: bold;
-    font-size: 170%;
-  }
-
-  cursor: pointer;
-}
-
-.v-nativebutton:hover {
-  background: $super-color-light;
-  //padding: 2px;
-  border: 2px;
-  border-color: $super-color-light;
-  border-style: solid;
-  margin: -1px;
-  //box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-}
-
-.v-nativebutton:active {
-  background: #fff9c4;
-  box-shadow: 0 0 10px 4px rgba(0,0,0,0.5);
-  .v-button-caption {
-    color: #eb9900;
-  }
-}
-
-.v-nativebutton:focus {
-  border: none;
 }
 
 .v-main-body{

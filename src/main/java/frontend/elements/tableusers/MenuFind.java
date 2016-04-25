@@ -3,6 +3,7 @@ package frontend.elements.tableusers;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
 import frontend.elements.components.RegistrationWin;
+import frontend.elements.tablebooks.TableBooks;
 import mail.Sender;
 
 import java.math.BigInteger;
@@ -15,19 +16,24 @@ import java.util.ArrayList;
 public class MenuFind extends VerticalLayout {
     private VerticalLayout menu;
 
-    private TableUsers tableinstance;
     private static MenuFind instance;
     private Sender sender;
+
+    private TextField name;
+    private TextField author;
+    private Label rating_label;
+    private NativeSelect rating_min;
+    private NativeSelect rating_max;
+    private HorizontalLayout rating_layout;
+    private NativeSelect year;
 
     public static MenuFind getInstance() {
         MenuFind localInstance = instance;
         if (localInstance == null) {
-            synchronized (TableUsers.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     instance = localInstance = new MenuFind();
                 }
-            }
         }
         return localInstance;
     }
@@ -39,14 +45,55 @@ public class MenuFind extends VerticalLayout {
         menu.setMargin(true);
         menu.setSpacing(true);
 
+        name = new TextField("Name");
+        name.setWidth(200, Sizeable.Unit.PIXELS);
+
+        author = new TextField("Author");
+        author.setWidth(200, Sizeable.Unit.PIXELS);
+
+        year = new NativeSelect("Year");
+        for (int i=java.util.Calendar.getInstance().get(java.util.Calendar.YEAR); i>1900; --i) {
+            year.addItem(i);
+            year.setItemCaption(i, Integer.toString(i));
+        }
+        year.setValue(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
+        year.setNullSelectionAllowed(true);
+        year.setWidth(200, Sizeable.Unit.PIXELS);
+
+        rating_label = new Label("Rating");
+
+        rating_min = new NativeSelect();
+        for (int i=5; i>0; --i) {
+            rating_min.addItem(i);
+            rating_min.setItemCaption(i, Integer.toString(i));
+        }
+        rating_min.setValue(1);
+        rating_min.setNullSelectionAllowed(true);
+        rating_min.setWidth(100, Unit.PERCENTAGE);
+
+        rating_max = new NativeSelect();
+        for (int i=5; i>0; --i) {
+            rating_max.addItem(i);
+            rating_max.setItemCaption(i, Integer.toString(i));
+        }
+        rating_max.setValue(5);
+        rating_max.setNullSelectionAllowed(true);
+        rating_max.setWidth(100, Unit.PERCENTAGE);
+
+        rating_layout = new HorizontalLayout(rating_min, rating_max);
+        rating_layout.setSpacing(true);
+        rating_layout.setWidth(200, Sizeable.Unit.PIXELS);
+
+        menu.addComponent(name);
+        menu.addComponent(author);
+        menu.addComponent(year);
+        menu.addComponent(rating_label);
+        menu.addComponent(rating_layout);
+
         this.addComponent(menu);
         this.setComponentAlignment(menu, Alignment.TOP_CENTER);
 
         this.setStyleName("menulayout");
         this.setSizeFull();
-    }
-
-    public void setTable(TableUsers tableinstance) {
-        this.tableinstance = tableinstance;
     }
 }

@@ -3,10 +3,7 @@ package frontend.elements.components;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.*;
 import frontend.views.*;
 import org.vaadin.teemu.VaadinIcons;
 
@@ -24,6 +21,27 @@ public class HeaderLayout extends HorizontalLayout {
  //   private Button button_mail;
 
     private Button button_manage;
+    private MenuBar menu_manage;
+    private final MenuBar.Command menuCommand_users = new MenuBar.Command() {
+        @Override
+        public void menuSelected(final MenuBar.MenuItem selectedItem) {
+            getUI().getNavigator().navigateTo(ManageUsersView.NAME);
+        }
+    };
+
+    private final MenuBar.Command menuCommand_books = new MenuBar.Command() {
+        @Override
+        public void menuSelected(final MenuBar.MenuItem selectedItem) {
+            getUI().getNavigator().navigateTo(ManageBooksView.NAME);
+        }
+    };
+
+    private final MenuBar.Command menuCommand_settings = new MenuBar.Command() {
+        @Override
+        public void menuSelected(final MenuBar.MenuItem selectedItem) {
+            getUI().getNavigator().navigateTo(ManageSettingsView.NAME);
+        }
+    };
 
     private Button button_logout;
 
@@ -57,10 +75,6 @@ public class HeaderLayout extends HorizontalLayout {
             //  should redirect
             getUI().getNavigator().navigateTo(MailView.NAME);
         });*/
-        button_manage = new Button("Manage", event -> {
-            //  should redirect
-            getUI().getNavigator().navigateTo(ManageView.NAME);
-        });
         button_logout = new Button("Logout", event -> {
 
             // "Logout" the user
@@ -69,6 +83,11 @@ public class HeaderLayout extends HorizontalLayout {
             // Refresh this view, should redirect to login view
             getUI().getNavigator().navigateTo(SimpleLoginView.NAME);
         });
+        menu_manage = new MenuBar();
+        MenuBar.MenuItem child = menu_manage.addItem("Manage", null);
+        child.addItem("Users", menuCommand_users);
+        child.addItem("Content", menuCommand_books);
+        child.addItem("Settings", menuCommand_settings);
 
         //button_main.setIcon( new ThemeResource( "Images/Logo_icon.ico" ) );
         //button_profile.setIcon(new ThemeResource( "Images/vaadin-icons-png/user.png" ));
@@ -86,14 +105,15 @@ public class HeaderLayout extends HorizontalLayout {
         header_basic.setComponentAlignment(button_main, Alignment.MIDDLE_CENTER);
         header_basic.setComponentAlignment(button_profile, Alignment.MIDDLE_CENTER);
         header_basic.setComponentAlignment(button_search, Alignment.MIDDLE_CENTER);
-        // TODO
+
+        // TODO on user status add or not
        // header_pro.addComponent(button_add);
        // header_pro.addComponent(button_mail);
-        header_pro.addComponent(button_manage);
+        header_pro.addComponent(menu_manage);
 
       //  header_pro.setComponentAlignment(button_add, Alignment.MIDDLE_CENTER);
       //  header_pro.setComponentAlignment(button_mail, Alignment.MIDDLE_CENTER);
-        header_pro.setComponentAlignment(button_manage, Alignment.MIDDLE_CENTER);
+        header_pro.setComponentAlignment(menu_manage, Alignment.MIDDLE_CENTER);
 
         //header_basic.setSpacing(true);
         //header_pro.setSpacing(true);
@@ -115,7 +135,8 @@ public class HeaderLayout extends HorizontalLayout {
         button_search.setHeight(100, Unit.PERCENTAGE);
     //    button_add.setHeight(100, Unit.PERCENTAGE);
      //   button_mail.setHeight(100, Unit.PERCENTAGE);
-        button_manage.setHeight(100, Unit.PERCENTAGE);
+        menu_manage.setHeight(100, Unit.PERCENTAGE);
+
         button_logout.setHeight(100, Unit.PERCENTAGE);
 
         setStyleName("cssmenu");

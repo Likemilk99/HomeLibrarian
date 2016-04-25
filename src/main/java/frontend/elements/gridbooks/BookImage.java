@@ -15,7 +15,7 @@ public class BookImage extends VerticalLayout {
     private final Books Book;
     private Button button_1 = new Button("rate it !");
     private RatingStars rating = new RatingStars();
-    private Button  button_2 = new Button("Upload");
+    private Button  button_2 = new Button("Download");
     private Button  button_3 = new Button();
     private Label   name = new Label("NAME");
     private Label   author = new Label("Author");

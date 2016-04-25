@@ -108,8 +108,6 @@ public class MenuTable extends VerticalLayout {
         this.setComponentAlignment(menu, Alignment.TOP_CENTER);
 
         button_add.setStyleName("super-button");
-        button_block.setStyleName("main-button");
-        button_delete.setStyleName("main-button");
         button_send.setStyleName("super-button");
 
         this.setStyleName("menulayout");

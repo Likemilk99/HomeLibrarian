@@ -25,7 +25,7 @@ public class ProfileView extends CustomComponent implements View {
 
         // Styles
         mainlayout.setStyleName("v-main-body");
-        body.setStyleName("bodylayout");
+        body.setStyleName("settingslayout");
 
         // Add components
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
