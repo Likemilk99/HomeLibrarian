@@ -21,10 +21,12 @@ import java.util.List;
  * Created by likemilk on 22.02.2016.
  */
 
-@JavaScript({"vaadin://themes/mytheme/js/SmoothScroll.js"})
+@JavaScript({"vaadin://themes/mytheme/js/SmoothScroll_14.js"})
 public class MetroBook extends AbsoluteLayout{
     private InterfaceDao bookInterface;
     private int position;
+    private static int width;
+
     public MetroBook() {
         super();
         position = 0;
@@ -77,6 +79,7 @@ public class MetroBook extends AbsoluteLayout{
         p.setContent(hl);
         p.setHeight(100, Unit.PERCENTAGE);
         p.setWidth(100, Unit.PERCENTAGE);
+       // p.setSizeFull();
 
         button_1.setHeight(100, Unit.PERCENTAGE);
         button_2.setHeight(100, Unit.PERCENTAGE);
@@ -93,52 +96,55 @@ public class MetroBook extends AbsoluteLayout{
         //setExpandRatio(p, 20);
         //setExpandRatio(button_1, 1);
         //setExpandRatio(button_2, 1);
+        //width = UI.getCurrent().getWidth();
 
-        button_1.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                if (p.getScrollLeft() - 100 <= 0) {
-                    p.setScrollLeft(0);
-                    new Notification("Success","Left! ",
-                            Notification.TYPE_WARNING_MESSAGE, true)
-                            .show(Page.getCurrent());
+        button_1.addClickListener(lambda ->
+                    Page.getCurrent().getJavaScript().execute(
+                            "smoothScroll('panelScroll', 'left')")
+        );
 
-                } else
-                    p.setScrollLeft(p.getScrollLeft() - 100);
+        button_2.addClickListener(lambda -> {
+                    int oldScrollLeft = p.getScrollLeft();
+                    Page.getCurrent().getJavaScript().execute(
+                            "smoothScroll('panelScroll', 'right')");
+                    if(oldScrollLeft == p.getScrollLeft()) {
+                        try {
+                            final List<Books> subList = bookInterface.getSubList(position);
+                            for (Books el : subList)
+                                list.add(new BookImage(el));
+                            for (BookImage el : list) {
+                                hl.addComponent(el);
+                                el.setHeight(568, Unit.PIXELS);
+                                el.setWidth(320, Unit.PIXELS);
+                                hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
+                            }
 
-            }
-        });
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        } finally {
+                            position = position + 8;
+                        }
+                    }
+                }
+        );
 
-        button_2.addClickListener(new Button.ClickListener() {
+
+        /*button_2.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 //TODO change condition
+
+                new Notification("Values",String.valueOf(p.getScrollLeft()),
+                        Notification.TYPE_WARNING_MESSAGE, true)
+                        .show(Page.getCurrent());
                 if(p.getScrollLeft() + 100 <= UI.getCurrent().getWidth()) {
                     p.setScrollLeft(p.getScrollLeft() + 100);
-                    new Notification("Success","Right ",
-                            Notification.TYPE_WARNING_MESSAGE, true)
-                            .show(Page.getCurrent());
                 } else {
-                    try {
-                        final List<Books> subList = bookInterface.getSubList(position);
-                        for (Books el : subList)
-                            list.add(new BookImage(el));
-                        for (BookImage el : list) {
-                            hl.addComponent(el);
-                            el.setHeight(568, Unit.PIXELS);
-                            el.setWidth(320, Unit.PIXELS);
-                            hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
-                        }
 
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } finally {
-                        position = position + 8;
-                    }
                 }
             }
 
-        });
+        });*/
     }
 
 

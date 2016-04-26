@@ -26,6 +26,7 @@ public class SimpleLoginView extends CustomComponent implements View,
 
     private final Button loginButton;
     private final Button signupButton;
+    private final Button forgotButton;
 
     private final TextField user_field;
     private final PasswordField password_field;
@@ -70,11 +71,14 @@ public class SimpleLoginView extends CustomComponent implements View,
         loginlabel.setResponsive(true);
 
         // Password forgot link
-        Button passwordlink = new Button("forgot your password?");
-        passwordlink.setWidth(null);
-        passwordlink.setHeight(100, Unit.PERCENTAGE);
-        passwordlink.setStyleName(ValoTheme.BUTTON_LINK);
-        passwordlink.setResponsive(true);
+        forgotButton = new Button("forgot your password?");
+        forgotButton.addClickListener(e ->
+                forgotButtonClick()
+        );
+        forgotButton.setWidth(null);
+        forgotButton.setHeight(100, Unit.PERCENTAGE);
+        forgotButton.setStyleName(ValoTheme.BUTTON_LINK);
+        forgotButton.setResponsive(true);
         //passwordlink.setStyleName("buttonlink");
 
         // Password layout
@@ -83,8 +87,8 @@ public class SimpleLoginView extends CustomComponent implements View,
         password_layout_components.setSpacing(true);
         password_layout_components.addComponent(passwordlabel);
         password_layout_components.setComponentAlignment(passwordlabel, Alignment.MIDDLE_LEFT);
-        password_layout_components.addComponent(passwordlink);
-        password_layout_components.setComponentAlignment(passwordlink, Alignment.MIDDLE_LEFT);
+        password_layout_components.addComponent(forgotButton);
+        password_layout_components.setComponentAlignment(forgotButton, Alignment.MIDDLE_LEFT);
 
         HorizontalLayout password_layout = new HorizontalLayout(password_layout_components);
         password_layout.setSizeFull();
@@ -294,5 +298,11 @@ public class SimpleLoginView extends CustomComponent implements View,
         Window subWindow = new RegistrationWin();
         // Open it in the UI
         getUI().addWindow(subWindow);
+    }
+
+    protected void forgotButtonClick() {
+        //Window subWindow = new Window("Try to remember");
+        // Open it in the UI
+        //getUI().addWindow(subWindow);
     }
 }
