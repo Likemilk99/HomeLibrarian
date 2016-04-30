@@ -26,7 +26,7 @@ public class Users extends Address{
      //   this.email = email;
     }
 
-    public   Users(String nickName, String fname, String password, String email){
+    public Users(String nickName, String fname, String password, String email){
         super(fname, email);
         this.nickName = nickName;
         this.password = password;

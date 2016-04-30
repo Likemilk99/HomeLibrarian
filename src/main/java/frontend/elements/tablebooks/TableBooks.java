@@ -40,10 +40,11 @@ public class TableBooks extends VerticalLayout {
 
     private TableBooks() {
         users = new BeanItemContainer<>(Books.class);
+        //TODO SQL
         for(int i =0; i < 10; i++)
-            users.addBean(new Books());
-        users.addBean(new Books());
-        users.addBean(new Books());
+            users.addBean(new Books(""+i, ""+i, ""+i, ""+i));
+        //users.addBean(new Books());
+        //users.addBean(new Books());
         gpc = new GeneratedPropertyContainer(users);
         gpc.addGeneratedProperty("delete",
                 new PropertyValueGenerator<String>() {

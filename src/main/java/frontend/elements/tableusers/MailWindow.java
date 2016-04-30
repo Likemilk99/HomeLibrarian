@@ -140,6 +140,8 @@ public class MailWindow extends Window {
 
         });
 
+        setStyleName("sebdmaillayout");
+
         setClosable(false);
     }
 

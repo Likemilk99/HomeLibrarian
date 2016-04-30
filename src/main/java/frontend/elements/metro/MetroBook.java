@@ -21,10 +21,11 @@ import java.util.List;
  * Created by likemilk on 22.02.2016.
  */
 
-@JavaScript({"vaadin://themes/mytheme/js/SmoothScroll_14.js"})
+@JavaScript({"vaadin://themes/mytheme/js/SmoothScroll_17.js"})
 public class MetroBook extends AbsoluteLayout{
     private InterfaceDao bookInterface;
     private int position;
+    private int oldScroll = -1;
     private static int width;
 
     public MetroBook() {
@@ -104,10 +105,7 @@ public class MetroBook extends AbsoluteLayout{
         );
 
         button_2.addClickListener(lambda -> {
-                    int oldScrollLeft = p.getScrollLeft();
-                    Page.getCurrent().getJavaScript().execute(
-                            "smoothScroll('panelScroll', 'right')");
-                    if(oldScrollLeft == p.getScrollLeft()) {
+                    if(oldScroll == p.getScrollLeft()) {
                         try {
                             final List<Books> subList = bookInterface.getSubList(position);
                             for (Books el : subList)
@@ -125,6 +123,9 @@ public class MetroBook extends AbsoluteLayout{
                             position = position + 8;
                         }
                     }
+                    oldScroll = p.getScrollLeft();
+                    Page.getCurrent().getJavaScript().execute(
+                            "smoothScroll('panelScroll', 'right')");
                 }
         );
 

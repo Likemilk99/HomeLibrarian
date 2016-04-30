@@ -5,6 +5,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import frontend.elements.components.HeaderLayout;
+import frontend.elements.gridbooks.HightLayout;
 import frontend.elements.tableusers.MenuTable;
 import frontend.elements.tableusers.TableUsers;
 
@@ -16,12 +17,17 @@ public class ManageUsersView extends CustomComponent implements View {
 
     public static final String NAME = "manageusers";
 
-    AbsoluteLayout mainlayout;
-    HeaderLayout header;
-    HorizontalLayout body;
+    private AbsoluteLayout mainlayout;
+    private HeaderLayout header;
+    private HorizontalLayout body;
 
     private TableUsers table;
-    MenuTable menu;
+    private VerticalLayout tablecontent = new VerticalLayout();
+    private HorizontalLayout buttons = new HorizontalLayout();
+    private Button back = new Button("<");
+    private Button forward = new Button(">");
+
+    private MenuTable menu;
     private HorizontalSplitPanel hSplitBar;
 
     private static ManageUsersView instance;
@@ -45,6 +51,17 @@ public class ManageUsersView extends CustomComponent implements View {
 
         body = new HorizontalLayout();
         table = TableUsers.getInstance();
+        table.setSizeFull();
+
+        buttons.addComponent(back);
+        buttons.addComponent(forward);
+
+        tablecontent.addComponent(buttons);
+        tablecontent.addComponent(table);
+        tablecontent.setSizeFull();
+        tablecontent.setExpandRatio(buttons, 5);
+        tablecontent.setExpandRatio(table, 95);
+
         hSplitBar = new HorizontalSplitPanel();
         hSplitBar.setSplitPosition(320, Unit.PIXELS);
         hSplitBar.setMaxSplitPosition(320, Unit.PIXELS);
@@ -56,7 +73,7 @@ public class ManageUsersView extends CustomComponent implements View {
 
         // Add components
         hSplitBar.setFirstComponent(menu);
-        hSplitBar.setSecondComponent(table);
+        hSplitBar.setSecondComponent(tablecontent);
         body.addComponent(hSplitBar);
 
         mainlayout.addComponent(body, "left: 0px; top: 10%;");

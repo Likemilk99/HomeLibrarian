@@ -17,7 +17,7 @@ public class HeaderLayout extends HorizontalLayout {
     private Button button_profile;
     private Button button_search;
 
-   // private Button button_add;
+    private Button button_add;
  //   private Button button_mail;
 
     private Button button_manage;
@@ -67,10 +67,12 @@ public class HeaderLayout extends HorizontalLayout {
             //  should redirect
             getUI().getNavigator().navigateTo(SearchView.NAME);
         });
-       /* button_add = new Button("Add", event -> {
+       button_add = new Button("Add", event -> {
             // should redirect
-            getUI().getNavigator().navigateTo(AddView.NAME);
-        });*/
+           BookWin subWindow = new BookWin();
+           // Open it in the UI
+           getUI().addWindow(subWindow);
+        });
        /* button_mail = new Button("Mail", event -> {
             //  should redirect
             getUI().getNavigator().navigateTo(MailView.NAME);
@@ -107,11 +109,11 @@ public class HeaderLayout extends HorizontalLayout {
         header_basic.setComponentAlignment(button_search, Alignment.MIDDLE_CENTER);
 
         // TODO on user status add or not
-       // header_pro.addComponent(button_add);
+        header_pro.addComponent(button_add);
        // header_pro.addComponent(button_mail);
         header_pro.addComponent(menu_manage);
 
-      //  header_pro.setComponentAlignment(button_add, Alignment.MIDDLE_CENTER);
+        header_pro.setComponentAlignment(button_add, Alignment.MIDDLE_CENTER);
       //  header_pro.setComponentAlignment(button_mail, Alignment.MIDDLE_CENTER);
         header_pro.setComponentAlignment(menu_manage, Alignment.MIDDLE_CENTER);
 
@@ -133,11 +135,17 @@ public class HeaderLayout extends HorizontalLayout {
         button_main.setHeight(100, Unit.PERCENTAGE);
         button_profile.setHeight(100, Unit.PERCENTAGE);
         button_search.setHeight(100, Unit.PERCENTAGE);
-    //    button_add.setHeight(100, Unit.PERCENTAGE);
+        button_add.setHeight(100, Unit.PERCENTAGE);
      //   button_mail.setHeight(100, Unit.PERCENTAGE);
         menu_manage.setHeight(100, Unit.PERCENTAGE);
-
         button_logout.setHeight(100, Unit.PERCENTAGE);
+
+        button_main.setWidth(140, Unit.PIXELS);
+        button_profile.setWidth(140, Unit.PIXELS);
+        button_search.setWidth(140, Unit.PIXELS);
+        button_add.setWidth(140, Unit.PIXELS);
+        menu_manage.setWidth(185, Unit.PIXELS);
+        button_logout.setWidth(140, Unit.PIXELS);
 
         setStyleName("cssmenu");
       //  setMargin(true);

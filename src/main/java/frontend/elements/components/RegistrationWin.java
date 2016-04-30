@@ -117,9 +117,9 @@ public class RegistrationWin extends Window {
             public void buttonClick(Button.ClickEvent event) {
                 if (!newuserButtonClick(username.getValue(),
                         password.getValue(),
-                        day.getCaption(),
-                        month.getCaption(),
-                        year.getCaption(),
+                        day.getItemCaption(day.getValue()),
+                        month.getItemCaption(month.getValue()),
+                        year.getItemCaption(year.getValue()),
                         email.getValue()
                         //secret.getValue(),
                         //answer.getValue()
@@ -155,6 +155,7 @@ public class RegistrationWin extends Window {
         content.setComponentAlignment(signup, Alignment.MIDDLE_CENTER);
         // Center it in the browser window
         center();
+        setDraggable(false);
         setWidth(320, Unit.PIXELS);
         setModal(true);
     }

@@ -1,10 +1,7 @@
 package frontend.elements.tablebooks;
 
-import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
-import frontend.elements.components.RegistrationWin;
-import frontend.elements.tableusers.MailWindow;
-import frontend.elements.tableusers.TableUsers;
+import frontend.elements.components.BookWin;
 import mail.Sender;
 
 /**
@@ -44,12 +41,12 @@ public class MenuTableBooks extends VerticalLayout {
         button_delete.setWidth(200, Unit.PIXELS);
 
         button_add = new Button("Add", event -> {
-            //RegistrationWin subWindow = new RegistrationWin();
+            BookWin subWindow = new BookWin();
             // Open it in the UI
-            //getUI().addWindow(subWindow);
-            //subWindow.addListener((Window.CloseEvent e) -> {
-            //    tableinstance.addRow(subWindow.getUser());
-            //});
+            getUI().addWindow(subWindow);
+            subWindow.addListener((Window.CloseEvent e) -> {
+                tableinstance.addRow(subWindow.getBook());
+            });
         });
 
         button_add.setWidth(200, Unit.PIXELS);

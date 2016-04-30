@@ -169,7 +169,7 @@ $v-grid-row-stripe-background-color: #def1ff;
     color: $background-color;
     font-size: 170%;
 
-    line-height: 105px;
+    line-height: 110px !important;
 
     outline: none;
     border: none;
@@ -252,6 +252,182 @@ $v-grid-row-stripe-background-color: #def1ff;
       outline: none;
     }
     z-index:102;
+  }
+}
+
+.bookinfolayout {
+  min-width: 320px !important;
+
+  .v-csslayout {
+    .v-verticallayout {
+      .v-ratingstars-wrapper {
+        border: none;
+      }
+
+      .v-upload {
+        input button  {
+          border: none;
+          background-image: none;
+          background-color: #EBC000 !important;
+        }
+        .gwt-FileUpload {
+          //background-color: blue;
+
+          input button  {
+            border: none;
+            background-image: none;
+            background-color: #EBC000 !important;
+          }
+        }
+
+        .v-button {
+          border: none;
+          background-image: none;
+          background-color: #EBC000 !important;
+
+          .v-button-caption {
+            color: white;
+            font-size: 26px;
+          }
+        }
+      }
+
+      .v-textarea {
+        background: $main-color-lighter;
+        border: 0px solid #4db8ff;
+        color: white;
+      }
+
+      .v-caption {
+        font-size: 26px;
+      }
+      .v-label {
+        font-size: 26px;
+      }
+
+      .v-textfield {
+        border: 0px solid #4db8ff;
+        background: #4db8ff;
+        color: white;
+
+        box-shadow: none;
+      }
+
+      .v-select-select {
+        border: none;
+        background-color: #4db8ff;
+        background-image: none;
+
+        color: #FFFFFF;
+      }
+
+      .v-filterselect {
+        .v-filterselect-input {
+          border: none;
+          background: #4db8ff;
+
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+
+  .v-horizontallayout {
+    .super-button {
+      background-color: #EBC000 !important;
+    }
+    .v-button {
+      border: none;
+      background-image: none;
+      background-color: #4db8ff;
+
+      .v-button-caption {
+        color: white;
+        font-size: 26px;
+      }
+    }
+  }
+}
+
+.sebdmaillayout {
+  //background-color: black;
+
+  .v-horizontallayout {
+    .v-verticallayout {
+      .v-horizontallayout {
+        .v-panel {
+          .v-panel-content {
+            .v-table {
+              background: $main-color-lighter;
+              color: white;
+              .v-table-header-wrap {
+                background-image: none;
+                background-color: $main-color-lighter;
+              }
+              .v-table-body {
+                .v-table-table {
+                  .v-table-row {
+                    background-color: $main-color-lighter;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .super-button {
+          background-color: #EBC000 !important;
+        }
+
+        .v-button {
+          border: none;
+          background-image: none;
+          background-color: #4db8ff;
+
+          .v-button-caption {
+            color: white;
+            font-size: 26px;
+          }
+        }
+
+        .v-textarea {
+          background: $main-color-lighter;
+          border: 0px solid #4db8ff;
+          color: white;
+        }
+
+        .v-caption {
+          font-size: 26px;
+        }
+        .v-label {
+          font-size: 26px;
+        }
+
+        .v-textfield {
+          border: 0px solid #4db8ff;
+          background: #4db8ff;
+          color: white;
+
+          box-shadow: none;
+        }
+
+        .v-select-select {
+          border: none;
+          background-color: #4db8ff;
+          background-image: none;
+
+          color: #FFFFFF;
+        }
+
+        .v-filterselect {
+          .v-filterselect-input {
+            border: none;
+            background: #4db8ff;
+
+            color: #FFFFFF;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -437,10 +613,17 @@ $v-grid-row-stripe-background-color: #def1ff;
 
   .v-ratingstars-star {
     background-image: url('./Images/star_19x18.png');
+    border: 1px solid;
+    border-color: $main-color-lighter;
+    background-repeat: inherit !important;
+    overflow: inherit !important;
   }
   .v-ratingstars-wrapper {
     background: $main-color-lighter;
-    border: none;
+    border: 1px solid;
+    border-color: $main-color-lighter;
+    background-repeat: no-repeat;
+    overflow: inherit !important;
   }
 }
 
@@ -641,4 +824,31 @@ $v-grid-row-stripe-background-color: #def1ff;
   transition-duration: 120ms;
   transition-duration: 1s, 15s;
   transition-duration: 10s, 30s, 230ms;
+}
+
+.dropdisplaywindow img{
+  max-height: 300px;
+  max-width: 500px;
+}
+
+.dropdisplaywindow .v-label{
+  max-width: 500px;
+  white-space: normal;
+}
+
+.drop-area {
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+
+  padding: 40px;
+  border: 8px dashed $main-color-lighter;
+}
+
+.drop-area .v-label {
+  color: $main-color-lighter;
+  font-weight: bold;
+  font-size: 17px;
 }

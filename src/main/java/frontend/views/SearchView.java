@@ -61,8 +61,9 @@ public class SearchView extends CustomComponent implements View {
         hSplitBar.setFirstComponent(menu);
         hSplitBar.setSecondComponent(grid);
 
+        // TODO SQL
         for (int i=0; i < 40; i++) {
-            BookImage el = new BookImage(new Books());
+            BookImage el = new BookImage(new Books(""+i, ""+i, ""+i, ""+i));
             el.setHeight(400, Unit.PIXELS);
             el.setWidth(250, Unit.PIXELS);
 

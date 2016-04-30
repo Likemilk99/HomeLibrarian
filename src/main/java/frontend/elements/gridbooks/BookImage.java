@@ -24,7 +24,8 @@ public class BookImage extends VerticalLayout {
      * @param path
      */
     BookImage(String path) {
-        this.Book = new Books();//!!!!!!!!!!!!!!!!!!!!!!
+        // TODO SQL
+        this.Book = new Books("i", "i", "i", "i");//!!!!!!!!!!!!!!!!!!!!!!
 
         this.setStyleName("cells");
         this.setHeight("250px");

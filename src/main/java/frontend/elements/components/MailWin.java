@@ -108,6 +108,7 @@ public class MailWin extends Window {
         content.setSizeFull();
         content.setSpacing(true);
 
+        content.setStyleName("sebdmaillayout");
         setContent(content);
         setModal(true);
         setResizable(false);

@@ -33,7 +33,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="HomeLibrarian" target="1.8" />
+      <module name="HomeLibrarian" target="8" />
       <module name="newtest" target="1.7" />
     </bytecodeTargetLevel>
   </component>

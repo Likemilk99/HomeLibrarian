@@ -21,11 +21,14 @@ function smoothScroll(panelID, direction) {
 
     var panelChildren = panel.childNodes;
     var panelSub = panelChildren[1];
+
+    panelSub.scrollLeft = panelSub.scrollLeft + 1;
+
     var startScroll = panelSub.scrollLeft;
 
     // time when scroll starts
-    var start = new Date().getTime();
     clearInterval(Timer.timer);
+    var start = new Date().getTime();
     // set an interval to update scrollTop attribute every 1 ms
     Timer.timer = setInterval(function() {
             // calculate the step, i.e the degree of completion of the smooth scroll

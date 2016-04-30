@@ -17,7 +17,14 @@ public class Books {
     private String Author; // FName + SName
     private String Res; // ссылка на обложку книги
 
-    public void Books (String Title, String Year, String Author, String Res){
+    public Books() {
+        this.Title = "empty";
+        this.Year = "empty";
+        this.Author = "empty";
+        this.Res = "empty";
+        this.Id = 0;
+    }
+    public Books (String Title, String Year, String Author, String Res){
         this.Title = Title;
         this.Year  = Year;
         this.Author = Author;
