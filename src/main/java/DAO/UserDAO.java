@@ -40,7 +40,6 @@ public class UserDAO implements InterfaceDao<Users> {
         }
     }
 
-
     public void updateEl(Users el) throws SQLException {
         Session session = null;
         try {

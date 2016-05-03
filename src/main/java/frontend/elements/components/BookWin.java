@@ -1,5 +1,8 @@
 package frontend.elements.components;
 
+import DAO.BookDAO;
+import DAO.Factory;
+import DAO.InterfaceDao;
 import Data.Books;
 import Data.Users;
 import com.vaadin.annotations.StyleSheet;
@@ -14,12 +17,15 @@ import com.vaadin.server.StreamVariable;
 import com.vaadin.ui.*;
 import frontend.views.AddView;
 import org.apache.tika.Tika;
+import org.apache.tika.io.FilenameUtils;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import java.awt.print.Book;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 
 /**
  * Created by Александр on 30.04.2016.
@@ -35,26 +41,27 @@ public class BookWin extends Window {
     private final ProgressBar progress = new ProgressBar();
     private final ImageDropBox dropBox = new ImageDropBox(dropImagePane);
 
-    private Embedded embedded = new Embedded();
-    // right is author, name, year, rating
-    //  ?tags?, description
-    private VerticalLayout fieldsPane = new VerticalLayout();
     private RatingStars rating = new RatingStars();
+    private Embedded imageEmbedded = new Embedded();
 
-    private final LineBreakCounter bookLineBreakCounter = new LineBreakCounter();
+    private VerticalLayout fieldsPane = new VerticalLayout();
+
+    private final bookUploader bookLineBreakCounter = new bookUploader();
     private final Upload bookUpload = new Upload(null, bookLineBreakCounter);
+    private File bookFile = new File("");
 
-    private final ImageUploader imageLineBreakCounter = new ImageUploader();
+    private final imageUploader imageLineBreakCounter = new imageUploader();
     private final Upload imageUpload = new Upload(null, imageLineBreakCounter);
+    private File imageFile = new File("./resource/default/Logo.png");
 
     //private UploadInfoWindow imageUploadInfoWindow = new UploadInfoWindow(imageUpload, imageLineBreakCounter);
-    private UploadInfoWindow bookUploadInfoWindow = new UploadInfoWindow(bookUpload, bookLineBreakCounter);
+    //private UploadInfoWindow bookUploadInfoWindow = new UploadInfoWindow(bookUpload, bookLineBreakCounter);
 
-    private TextField authorField = new TextField("Author");
-    private TextField nameField = new TextField("Name");
+    private TextField nameField = new TextField("Title");
     private TextField seriesField = new TextField("Series");
     private NativeSelect yearSelect = new NativeSelect("Year");
     private TextField yearField = new TextField("Year");
+    private TextField authorField = new TextField("Author");
 
     private TextArea descArea = new TextArea("Description");
 
@@ -77,27 +84,30 @@ public class BookWin extends Window {
         setDraggable(false);
 
         setStyleName("bookinfolayout");
-        // TODO SQL
-        //embedded = new Embedded()
-        embedded.setVisible(true);
 
-        filesPane.addComponent(rating);
-        filesPane.addComponent(embedded);
+        // get rating from rating element?
+
+        imageEmbedded.setSource(new FileResource(new File(book.getImage())));
+        imageEmbedded.setWidth(310, Unit.PIXELS);
+        imageEmbedded.setHeight(460, Unit.PIXELS);
+        imageEmbedded.setVisible(true);
+
+        filesPane.addComponent(imageEmbedded);
 
         filesPane.setWidth(320, Unit.PIXELS);
-        //
+
+        authorField.setValue(book.getAuthor());
+        nameField.setValue(book.getTitle());
+        yearField.setValue(book.getYear());
+
+        seriesField.setValue(book.getSeries());
+        descArea.setValue(book.getDescription());
+
         authorField.setReadOnly(true);
         nameField.setReadOnly(true);
         yearField.setReadOnly(true);
         seriesField.setReadOnly(true);
         descArea.setReadOnly(true);
-
-        authorField.setValue(book.getAuthor());
-        nameField.setValue(book.getTitle());
-        yearField.setValue(book.getYear());
-        // TODO SQL
-        seriesField.setValue("");
-        descArea.setValue("");
 
         authorField.setWidth(310, Unit.PIXELS);
         nameField.setWidth(310, Unit.PIXELS);
@@ -130,6 +140,7 @@ public class BookWin extends Window {
         buttons.setSpacing(true);
 
         //
+        contentLayout.addComponent(rating);
         contentLayout.addComponent(dataLayout);
         contentLayout.addComponent(buttons);
         contentLayout.setComponentAlignment(dataLayout, Alignment.MIDDLE_CENTER);
@@ -138,6 +149,7 @@ public class BookWin extends Window {
         contentLayout.setMargin(true);
         //contentLayout.setHeight(100, Unit.PERCENTAGE);
     }
+
     public BookWin() {
         setModal(true);
         setCaption("Add book");
@@ -147,9 +159,6 @@ public class BookWin extends Window {
         setDraggable(false);
 
         setStyleName("bookinfolayout");
-        // images + files
-        bookLineBreakCounter.setSlow(true);
-        //imageLineBreakCounter.setSlow(true);
 
         dropImagePane.setComponentAlignment(imageLabel, Alignment.MIDDLE_CENTER);
         dropImagePane.setWidth(310, Unit.PIXELS);
@@ -158,12 +167,11 @@ public class BookWin extends Window {
 
         dropBox.setSizeUndefined();
 
-        embedded.setVisible(false);
+        imageEmbedded.setVisible(false);
 
         bookUpload.setImmediate(false);
-
         bookUpload.setWidth(310, Unit.PIXELS);
-
+        bookUpload.addSucceededListener(bookLineBreakCounter);
         bookUpload.setButtonCaption(null);
 
         bookUpload.addChangeListener(new Upload.ChangeListener()
@@ -175,42 +183,23 @@ public class BookWin extends Window {
                     Tika tika = new Tika();
                     String mimeType = tika.detect(event.getFilename());
 
-                    if (mimeType != null) {// && mimeType.startsWith("image/")) {
-                        //imageUpload.setButtonCaption("UPLOAD BOOK");
+                    if (mimeType != null && mimeType.startsWith("application/x-fictionbook+xml")) {
+                        bookFile = new File("./tmp/uploads/" + event.getFilename());
+                        bookUpload.submitUpload();
                     } else {
                         new Notification("File type is not supported  \n" + mimeType,
                                 Notification.Type.ERROR_MESSAGE)
                                 .show(Page.getCurrent());
-                        bookUpload.setButtonCaption(null);
                     }
                 }
             }
         });
 
-        bookUpload.addStartedListener(new Upload.StartedListener() {
-            @Override
-            public void uploadStarted(final Upload.StartedEvent event) {
-                if (bookUploadInfoWindow.getParent() == null) {
-                    UI.getCurrent().addWindow(bookUploadInfoWindow);
-                }
-                bookUploadInfoWindow.setClosable(false);
-            }
-        });
-        bookUpload.addFinishedListener(new Upload.FinishedListener() {
-            @Override
-            public void uploadFinished(final Upload.FinishedEvent event) {
-                bookUploadInfoWindow.setClosable(true);
-            }
-        });
-
         imageUpload.setImmediate(false);
-
         imageUpload.setWidth(310, Unit.PIXELS);
-
         imageUpload.addSucceededListener(imageLineBreakCounter);
-        //imageUpload.interruptUpload();
-
         imageUpload.setButtonCaption(null);
+
         imageUpload.addChangeListener(new Upload.ChangeListener()
         {
             @Override
@@ -220,21 +209,23 @@ public class BookWin extends Window {
                     Tika tika = new Tika();
                     String mimeType = tika.detect(event.getFilename());
                     if (mimeType.startsWith("image/")) {
-                        imageUpload.setButtonCaption("UPLOAD IMAGE");
+                        imageFile = new File("./tmp/uploads/" + event.getFilename());
+                        imageUpload.submitUpload();
+
                     } else {
                         new Notification("File is not image  \n",
                                 Notification.Type.ERROR_MESSAGE)
                                 .show(Page.getCurrent());
-                        imageUpload.setButtonCaption(null);
+                        //imageUpload.
                     }
                 }
             }
         });
 
-        filesPane.addComponent(rating);
-        filesPane.addComponent(dropBox);
-        filesPane.addComponent(embedded);
+        filesPane.addComponent(new Label("Choose image to upload"));
         filesPane.addComponent(imageUpload);
+        filesPane.addComponent(dropBox);
+        filesPane.addComponent(imageEmbedded);
         filesPane.setComponentAlignment(imageUpload, Alignment.MIDDLE_CENTER);
 
         filesPane.setWidth(320, Unit.PIXELS);
@@ -248,12 +239,20 @@ public class BookWin extends Window {
         yearSelect.setNullSelectionAllowed(false);
         yearSelect.setWidth(310, Unit.PIXELS);
 
+        authorField.addValueChangeListener(e -> {
+            CheckEmptyness();
+        });
+        nameField.addValueChangeListener(e -> {
+            CheckEmptyness();
+        });
+
         authorField.setWidth(310, Unit.PIXELS);
         nameField.setWidth(310, Unit.PIXELS);
         seriesField.setWidth(310, Unit.PIXELS);
         descArea.setWidth(310, Unit.PIXELS);
 
         //
+        fieldsPane.addComponent(new Label("Choose book to upload"));
         fieldsPane.addComponent(bookUpload);
         fieldsPane.addComponent(authorField);
         fieldsPane.addComponent(nameField);
@@ -265,24 +264,22 @@ public class BookWin extends Window {
 
         fieldsPane.setComponentAlignment(bookUpload, Alignment.MIDDLE_CENTER);
         //
-            dataLayout.addComponent(filesPane);
+        dataLayout.addComponent(filesPane);
         dataLayout.addComponent(fieldsPane);
         //
         addButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                if (!addButtonClick(nameField.getValue(),
+                if (!addButtonClick(nameField.getValue(), seriesField.getValue(),
                         yearSelect.getItemCaption(yearSelect.getValue()),
-                        authorField.getValue(),
-                        dropBox.getFileName()
+                        authorField.getValue(), descArea.getValue(),
+                        imageFile.getPath(), bookFile.getPath()
                 )) {
-
-                    //password.setValue("");
-                    //reenter.setValue("");
                 }
             }
         });
         addButton.setStyleName("super-button");
         addButton.setWidth(310, Unit.PIXELS);
+        addButton.setEnabled(false);
 
         cancelButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
@@ -297,6 +294,7 @@ public class BookWin extends Window {
         buttons.setSpacing(true);
 
         //
+        contentLayout.addComponent(rating);
         contentLayout.addComponent(dataLayout);
         contentLayout.addComponent(buttons);
         contentLayout.setComponentAlignment(dataLayout, Alignment.MIDDLE_CENTER);
@@ -306,18 +304,73 @@ public class BookWin extends Window {
         //contentLayout.setHeight(100, Unit.PERCENTAGE);
     }
 
+    private void CheckEmptyness() {
+        addButton.setEnabled(!(authorField.isEmpty() || nameField.isEmpty()));
+    }
+
     public Books getBook() {
         return book;
     }
 
-    private boolean addButtonClick(String Title, String Year, String Author, String Res
-    ) {
-        //TODO closing windows if-else
-        //TO TABLE
-        book  = new Books(Title, Year, Author, Res);
-        this.close();
-        // TODO SQL
-        return false;
+    private boolean addButtonClick(String Title,
+                                   String Series,
+                                   String Year,
+                                   String Author,
+                                   String Description,
+                                   String Image,
+                                   String File) {
+        Factory F = new Factory();
+        InterfaceDao InUser = F.getDAO(BookDAO.class);
+
+        try {
+            if (InUser.GetByTitleAndName(Title, Author).size() > 0){
+                new Notification("Book with given author and name is already exist",
+                       Notification.Type.ERROR_MESSAGE)
+                        .show(Page.getCurrent());;
+                return false;
+            }
+            book = new Books(Title, Series, Year, Author, Description, Image, File);
+
+            //copy image to
+            //copy file to
+            String imageextension = "";
+
+            int i = imageFile.getPath().lastIndexOf('.');
+            if (i > 0) {
+                imageextension = imageFile.getPath().substring(i+1);
+            }
+
+            String bookextension = "";
+
+            int j = bookFile.getPath().lastIndexOf('.');
+            if (j > 0) {
+                bookextension = bookFile.getPath().substring(j+1);
+            }
+
+            InUser.addEl(book);
+            Books tempbook = (Books)(InUser.GetByTitleAndName(Title, Author)).get(0);
+            tempbook.getId();
+            String id = tempbook.getId().toString();
+
+            if(!imageFile.equals(new File("./resource/default/Logo.png"))) {
+                imageFile.renameTo(new File("./resource/images/" + id + "." + imageextension));
+                tempbook.setImage("./resource/images/" + id + "." + imageextension);
+            }
+            if(!bookFile.equals(new File(""))) {
+                bookFile.renameTo(new File("./resource/books/" + id + "." + bookextension));
+                tempbook.setFile("./resource/books/" + id + "." + bookextension);
+            }
+
+            InUser.updateEl(tempbook);
+
+            this.close();
+
+
+        } catch (SQLException e) {
+            return false;
+        }
+
+        return true;
     }
 
     private static class LineBreakCounter implements Upload.Receiver {
@@ -361,128 +414,6 @@ public class BookWin extends Window {
             sleep = value;
         }
 
-    }
-
-    @StyleSheet("uploadexample.css")
-    private class UploadInfoWindow extends Window implements
-            Upload.StartedListener, Upload.ProgressListener,
-            Upload.FailedListener, Upload.SucceededListener,
-            Upload.FinishedListener {
-        private final Label state = new Label();
-        private final Label result = new Label();
-        private final Label fileName = new Label();
-        private final Label textualProgress = new Label();
-
-        private final ProgressBar progressBar = new ProgressBar();
-        private final Button cancelButton;
-        private final LineBreakCounter counter;
-
-        public UploadInfoWindow(final Upload upload,
-                                final LineBreakCounter lineBreakCounter) {
-            super("Status");
-            this.counter = lineBreakCounter;
-
-            setWidth(700, Unit.PIXELS);
-            //setSizeUndefined();
-
-            addStyleName("upload-info");
-
-            setResizable(false);
-            setDraggable(false);
-
-            final FormLayout l = new FormLayout();
-            setContent(l);
-            l.setMargin(true);
-
-            final HorizontalLayout stateLayout = new HorizontalLayout();
-            stateLayout.setSpacing(true);
-            stateLayout.addComponent(state);
-
-            cancelButton = new Button("Cancel");
-            cancelButton.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    upload.interruptUpload();
-                }
-            });
-            cancelButton.setVisible(false);
-            cancelButton.setStyleName("small");
-            stateLayout.addComponent(cancelButton);
-
-            stateLayout.setCaption("Current state");
-            state.setValue("Idle");
-            l.addComponent(stateLayout);
-
-            fileName.setCaption("File name");
-            l.addComponent(fileName);
-
-            result.setCaption("Line breaks counted");
-            l.addComponent(result);
-
-            progressBar.setCaption("Progress");
-            progressBar.setVisible(false);
-            l.addComponent(progressBar);
-
-            textualProgress.setVisible(false);
-            l.addComponent(textualProgress);
-
-            upload.addStartedListener(this);
-            upload.addProgressListener(this);
-            upload.addFailedListener(this);
-            upload.addSucceededListener(this);
-            upload.addFinishedListener(this);
-        }
-
-        @Override
-        public void uploadFinished(final Upload.FinishedEvent event) {
-            state.setValue("Idle");
-            progressBar.setVisible(false);
-            textualProgress.setVisible(false);
-            cancelButton.setVisible(false);
-
-            //embedded.setSizeUndefined();
-            embedded.setWidth(310, Unit.PIXELS);
-            embedded.setHeight(460, Unit.PIXELS);
-            embedded.setVisible(true);
-            dropBox.setVisible(false);
-            close();
-        }
-
-        @Override
-        public void uploadStarted(final Upload.StartedEvent event) {
-            // this method gets called immediately after upload is started
-            progressBar.setValue(0f);
-            progressBar.setVisible(true);
-            UI.getCurrent().setPollInterval(500);
-            textualProgress.setVisible(true);
-            // updates to client
-            state.setValue("Uploading");
-            fileName.setValue(event.getFilename());
-
-            cancelButton.setVisible(true);
-        }
-
-        @Override
-        public void updateProgress(final long readBytes,
-                                   final long contentLength) {
-            // this method gets called several times during the update
-            progressBar.setValue(new Float(readBytes / (float) contentLength));
-            textualProgress.setValue("Processed " + readBytes + " bytes of "
-                    + contentLength);
-            result.setValue(counter.getLineBreakCount() + " (counting...)");
-        }
-
-        @Override
-        public void uploadSucceeded(final Upload.SucceededEvent event) {
-            result.setValue(counter.getLineBreakCount() + " (total)");
-        }
-
-        @Override
-        public void uploadFailed(final Upload.FailedEvent event) {
-            result.setValue(counter.getLineBreakCount()
-                    + " (counting interrupted at "
-                    + Math.round(100 * progressBar.getValue()) + "%)");
-        }
     }
 
     @StyleSheet("dragndropexample.css")
@@ -584,14 +515,14 @@ public class BookWin extends Window {
             };
             final StreamResource resource = new StreamResource(streamSource,
                     name);
-
+            imageFile = new File(resource.getFilename());
             // show the file contents - images only for now
             //embedded = new Embedded(name, resource);
-            embedded.setSource(resource);
+            imageEmbedded.setSource(resource);
             //embedded.setSizeUndefined();
-            embedded.setWidth(310, Unit.PIXELS);
-            embedded.setHeight(460, Unit.PIXELS);
-            embedded.setVisible(true);
+            imageEmbedded.setWidth(310, Unit.PIXELS);
+            imageEmbedded.setHeight(460, Unit.PIXELS);
+            imageEmbedded.setVisible(true);
             dropBox.setVisible(false);
             //showComponent(embedded, name);
         }
@@ -609,7 +540,7 @@ public class BookWin extends Window {
         }
     }
 
-    class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
+    class imageUploader implements Upload.Receiver, Upload.SucceededListener {
         public File file;
 
         public OutputStream receiveUpload(String filename,
@@ -635,10 +566,40 @@ public class BookWin extends Window {
                     Notification.Type.TRAY_NOTIFICATION)
                     .show(Page.getCurrent());
             dropBox.setVisible(false);
-            embedded.setVisible(true);
-            embedded.setSource(new FileResource(file));
-            embedded.setWidth(310, Unit.PIXELS);
-            embedded.setHeight(460, Unit.PIXELS);
+            imageEmbedded.setVisible(true);
+            imageEmbedded.setSource(new FileResource(file));
+            imageEmbedded.setWidth(310, Unit.PIXELS);
+            imageEmbedded.setHeight(460, Unit.PIXELS);
+            imageFile = file;
+        }
+    };
+
+    class bookUploader implements Upload.Receiver, Upload.SucceededListener {
+        public File file;
+
+        public OutputStream receiveUpload(String filename,
+                                          String mimeType) {
+            FileOutputStream fos = null;
+
+            try {
+                file = new File("tmp/uploads/" + filename);
+                fos = new FileOutputStream(file);
+            } catch (FileNotFoundException ex) {
+                new Notification("File not found \n",
+                        ex.getLocalizedMessage(),
+                        Notification.Type.ERROR_MESSAGE)
+                        .show(Page.getCurrent());
+            }
+
+            return fos;
+        }
+
+        public void uploadSucceeded(Upload.SucceededEvent event) {
+            // Show the uploaded file in the image viewer
+            new Notification("File loaded",
+                    Notification.Type.TRAY_NOTIFICATION)
+                    .show(Page.getCurrent());
+            bookFile = file;
         }
     };
 }

@@ -40,7 +40,6 @@ public class BookDAO implements InterfaceDao<Books> {
         }
     }
 
-
     public void updateEl(Books el) throws SQLException {
         Session session = null;
         try {

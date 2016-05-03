@@ -1,8 +1,13 @@
 package frontend.elements.tablebooks;
 
+import DAO.BookDAO;
+import DAO.Factory;
+import DAO.InterfaceDao;
 import com.vaadin.ui.*;
 import frontend.elements.components.BookWin;
 import mail.Sender;
+
+import java.sql.SQLException;
 
 /**
  * Created by Александр on 25.04.2016.
@@ -45,7 +50,16 @@ public class MenuTableBooks extends VerticalLayout {
             // Open it in the UI
             getUI().addWindow(subWindow);
             subWindow.addListener((Window.CloseEvent e) -> {
-                tableinstance.addRow(subWindow.getBook());
+                //tableinstance.addRow(subWindow.getBook());
+
+                Factory factory = new Factory();
+                InterfaceDao bookInterface = factory.getDAO(BookDAO.class);
+                try {
+                    bookInterface.addEl(subWindow.getBook());
+                } catch(SQLException exp) {
+
+                }
+
             });
         });
 

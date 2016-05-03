@@ -63,7 +63,7 @@ public class MenuFind extends VerticalLayout {
         menu.setMargin(true);
         menu.setSpacing(true);
 
-        name = new TextField("Name");
+        name = new TextField("Title");
         name.setWidth(200, Sizeable.Unit.PIXELS);
 
         author = new TextField("Author");
@@ -74,7 +74,7 @@ public class MenuFind extends VerticalLayout {
             year.addItem(i);
             year.setItemCaption(i, Integer.toString(i));
         }
-        year.setValue(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
+        //year.setValue(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
         year.setNullSelectionAllowed(true);
         year.setWidth(200, Sizeable.Unit.PIXELS);
 
@@ -118,7 +118,10 @@ public class MenuFind extends VerticalLayout {
         name.addTextChangeListener(event -> {
             List<Books> list = null;
             try {
-                list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+                if(year.getValue() == null)
+                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), "");
+                else
+                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -129,7 +132,10 @@ public class MenuFind extends VerticalLayout {
         author.addTextChangeListener(event -> {
             List<Books> list = null;
             try {
-                list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+                if(year.getValue() == null)
+                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), "");
+                else
+                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }

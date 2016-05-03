@@ -1,5 +1,8 @@
 package frontend.elements.tablebooks;
 
+import DAO.BookDAO;
+import DAO.Factory;
+import DAO.InterfaceDao;
 import Data.Books;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -7,19 +10,24 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.renderers.ButtonRenderer;
+import frontend.elements.gridbooks.BookImage;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by LikeMilk on 12.04.2016.
  */
 public class TableBooks extends VerticalLayout {
     private Grid grid;
+    private InterfaceDao bookInterface;
     private BeanItemContainer<Books> users = new BeanItemContainer<>(Books.class);
     private GeneratedPropertyContainer gpc;
     Grid.MultiSelectionModel selection ;
@@ -40,9 +48,14 @@ public class TableBooks extends VerticalLayout {
 
     private TableBooks() {
         users = new BeanItemContainer<>(Books.class);
-        //TODO SQL
-        for(int i =0; i < 10; i++)
-            users.addBean(new Books(""+i, ""+i, ""+i, ""+i));
+
+        Factory factory = new Factory();
+        bookInterface = factory.getDAO(BookDAO.class);
+
+        UpdateTable();
+
+        //for(int i =0; i < 10; i++)
+        //    users.addBean(new Books(""+i, ""+i, ""+i, ""+i));
         //users.addBean(new Books());
         //users.addBean(new Books());
         gpc = new GeneratedPropertyContainer(users);
@@ -129,9 +142,22 @@ public class TableBooks extends VerticalLayout {
         });
     }
 
-    public void addRow(Books row){
-        users.addBean(row);
+    public void UpdateTable() {
+        users.removeAllItems();
+
+        /////////////////////////////////////////
+        try {
+            List<Books> subList = bookInterface.getSubList(0);
+            for (Books el : subList)
+                users.addBean(el);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+    //public void addRow(Books row){
+    //    users.addBean(row);
+    //}
 
     public void deleteSelectedRows() {
         for (Object itemId: selection.getSelectedRows())

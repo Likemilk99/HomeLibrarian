@@ -32,7 +32,13 @@ public class TestBDBooks {
         int year = 1980;
         for (int i = 0; i < 10; i++) {
             year++;
-            B = new Books("Армагеддон",Integer.toString(year), "Дмитрий Иванович", "C://test//pic//1.png");
+            B = new Books("Армагеддон",
+                    "",
+                    Integer.toString(year),
+                    "Дмитрий Иванович",
+                    "",
+                    "./recource/default/Logo.png",
+                    "");
             //B.Books();
             F = new Factory();
             InterfaceDao InBooks = F.getDAO(BookDAO.class);

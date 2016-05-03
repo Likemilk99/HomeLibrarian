@@ -336,6 +336,7 @@ $v-grid-row-stripe-background-color: #def1ff;
     .super-button {
       background-color: #EBC000 !important;
     }
+
     .v-button {
       border: none;
       background-image: none;
@@ -345,6 +346,11 @@ $v-grid-row-stripe-background-color: #def1ff;
         color: white;
         font-size: 26px;
       }
+    }
+
+    .v-disabled {
+      opacity: 1 !important;
+      background-color: lightgray !important;
     }
   }
 }
@@ -600,7 +606,6 @@ $v-grid-row-stripe-background-color: #def1ff;
     padding-bottom: 0px;
   }
 
-
   .super-button {
     border: none !important;
     background-image: none !important;
@@ -609,6 +614,11 @@ $v-grid-row-stripe-background-color: #def1ff;
       color: white;
       font-size: 32px;
     }
+  }
+
+  .v-disabled {
+    opacity: 1 !important;
+    background-color: lightgray !important;
   }
 
   .v-ratingstars-star {
