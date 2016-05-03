@@ -1,6 +1,10 @@
 package DAO;
 
+import Data.Books;
+import Data.Users;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +48,8 @@ public interface InterfaceDao<T>{
      */
     List getAllEls() throws SQLException;
 
+    List<T> GetByTitleAndName(String title, String author)  throws SQLException;
+
     /**
      * Удалить элемент из БД
      * @param El
@@ -54,4 +60,6 @@ public interface InterfaceDao<T>{
     long getCount() throws  SQLException;
 
     List getSubList(int position) throws SQLException;
+
+    public List<T> GetSqlRequst(String author, String title, String year) throws SQLException;
 }

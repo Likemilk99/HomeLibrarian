@@ -3,6 +3,7 @@ package DAO;
 import Data.Books;
 import Data.Guest;
 import Data.Users;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import util.HibernateUtil;
@@ -80,12 +81,12 @@ public class BookDAO implements InterfaceDao<Books> {
     }
 
 
-    public List<Users> getAllEls() throws SQLException {
+    public List<Books> getAllEls() throws SQLException {
         Session session = null;
-        List<Users> users = new ArrayList<Users>();
+        List<Books> books = new ArrayList<Books>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            users = session.createCriteria(Users.class).list();
+            books = session.createCriteria(Books.class).list();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -93,9 +94,31 @@ public class BookDAO implements InterfaceDao<Books> {
                 session.close();
             }
         }
-        return users;
+        return books;
     }
 
+    public List<Books> GetByTitleAndName(String title, String author)  throws SQLException {
+        String sql = "SELECT * FROM \"Book\" WHERE \"Title\" =:name_title AND \"Author\" =:name_author";
+        Session session = null;
+        List<Books> books =  new LinkedList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Books.class);
+            query.setParameter("name_title", title);
+            query.setParameter("name_author", author);
+            books = query.list();
+
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+                   return books;
+            }
+               return books;
+        }
+    }
 
     public void deleteEl(Books el) throws SQLException {
         Session session = null;
@@ -151,5 +174,47 @@ public class BookDAO implements InterfaceDao<Books> {
             }
             return users;
         }
+    }
+
+    @Override
+    public List<Books> GetSqlRequst(String author, String title, String year) throws SQLException {
+
+        String sql = "SELECT * FROM \"Book\" WHERE ";//" \"email\" ='iround0@yandex.ru'";
+        if(!author.isEmpty() ||!title.isEmpty() || !year.isEmpty() ) {
+            if (!author.isEmpty())
+                sql = sql + "\"Author\"" + " LIKE '%" + author + "%'";
+            if (!title.isEmpty() || !year.isEmpty()) {
+                if (!author.isEmpty()) {
+                    sql = sql + " AND ";
+                }
+                if (!title.isEmpty()) {
+                    sql = sql + "\"Title\"" + " LIKE '%" + title + "%'";
+                    if (!year.isEmpty()) {
+                        sql = sql + " AND ";
+                        sql = sql + "\"Year\"" + " LIKE '%" + year + "%'";
+                    }
+                } else if (!year.isEmpty()) {
+                    sql = sql + "\"Year\"" + " LIKE '%" + year + "%'";
+                }
+            }
+            Session session = null;
+            List<Books> users = new LinkedList<>();
+            try {
+                session = HibernateUtil.getSessionFactory().openSession();
+                SQLQuery query = session.createSQLQuery(sql);
+                query.addEntity(Books.class);
+                // query.setParameter("employee_id", "iround0@yandex.ru");
+                users = query.list();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+            } finally {
+                if (session != null && session.isOpen()) {
+                    session.close();
+                    return users;
+                }
+                return users;
+            }
+        }
+        return new ArrayList<>();
     }
 }

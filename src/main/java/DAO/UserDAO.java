@@ -1,9 +1,12 @@
 package DAO;
 
+import Data.Books;
 import Data.Guest;
 import Data.Users;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
+import org.junit.Test;
 import util.HibernateUtil;
 
 import javax.swing.*;
@@ -168,4 +171,34 @@ public class UserDAO implements InterfaceDao<Users> {
             return users;
         }
     }
+
+    @Override
+    public List<Users> GetSqlRequst(String author, String title, String year) throws SQLException {
+
+        String sql = "SELECT * FROM Users WHERE ";//" \"email\" ='iround0@yandex.ru'";
+
+        Session session = null;
+        List<Users> users =  new LinkedList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Users.class);
+            // query.setParameter("employee_id", "iround0@yandex.ru");
+            users = query.list();
+            System.out.println("users.size() = " + users.size());
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+                   return users;
+            }
+               return users;
+        }
+    }
+
+    public List<Users> GetByTitleAndName(String title, String author)  throws SQLException{
+        return new ArrayList<>();
+    }
+
 }

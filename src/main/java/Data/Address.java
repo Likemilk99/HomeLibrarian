@@ -3,12 +3,13 @@ package Data;
 import javax.persistence.*;
 
 
-@Entity
-@Table(name = "\"User\"")
-@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+//@Entity
+//@Table(name = "\"User\"")
+//@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+//@Inheritance(strategy= InheritanceType.JOINED)
 public class Address {
-    private String fname;
-    private String email;
+    protected String fname;
+    protected String email;
 
 
    // @GeneratedValue(strategy=GenerationType.AUTO)
@@ -22,13 +23,13 @@ public class Address {
         this.email = email;
     }
 
-    @Column(name = "FName")
+    @Column(name = "\"FName\"")
     public String getFname() {
         return fname;
     }
 
     @Id
-    @Column(name = "Email")
+    @Column(name = "email")
     public String getEmail() { return email; }
 
     public void setFname(String nickName) {
@@ -38,4 +39,6 @@ public class Address {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

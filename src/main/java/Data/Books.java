@@ -39,22 +39,22 @@ public class Books {
         return Id;
     }
 
-    @Column(name = "Title")
+    @Column(name = "\"Title\"")
     public String getTitle() {
         return Title;
     }
 
-    @Column(name = "Year")
+    @Column(name = "\"Year\"")
     public String getYear() {
         return Year;
     }
 
-    @Column(name = "Author")
+    @Column(name = "\"Author\"")
     public String getAuthor() {
         return Author;
     }
 
-    @Column(name = "Res")
+    @Column(name = "\"Res\"")
     public String getRes() {
         return Res;
     }
@@ -63,22 +63,22 @@ public class Books {
         this.Id = Id;
     }
 
-    @Column(name = "Title")
+
     public void setTitle(String Title) {
         this.Title = Title;
     }
 
-    @Column(name = "Year")
+
     public void setYear(String Year) {
         this.Year = Year;
     }
 
-    @Column(name = "Author")
+
     public void setAuthor(String Author) {
         this.Author = Author;
     }
 
-    @Column(name = "Res")
+
     public void setRes(String Res) {
         this.Res = Res;
     }

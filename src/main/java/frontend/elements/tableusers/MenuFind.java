@@ -1,14 +1,23 @@
 package frontend.elements.tableusers;
 
+import DAO.BookDAO;
+import DAO.Factory;
+import DAO.InterfaceDao;
+import Data.Books;
+import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
 import frontend.elements.components.RegistrationWin;
+import frontend.elements.gridbooks.BookImage;
 import frontend.elements.tablebooks.TableBooks;
+import frontend.views.SearchView;
 import mail.Sender;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by likemilk on 16.03.2016.
@@ -26,6 +35,10 @@ public class MenuFind extends VerticalLayout {
     private NativeSelect rating_max;
     private HorizontalLayout rating_layout;
     private NativeSelect year;
+    private CssLayout grid;
+
+    //BD
+    private  InterfaceDao BooksDAO;
 
     public static MenuFind getInstance() {
         MenuFind localInstance = instance;
@@ -40,7 +53,12 @@ public class MenuFind extends VerticalLayout {
 
     public MenuFind() {
         menu = new VerticalLayout();
-        sender = new Sender();
+       // sender = new Sender();
+
+
+        Factory F= new Factory();
+        BooksDAO = F.getDAO(BookDAO.class );
+
         menu.setWidth(100, Sizeable.Unit.PERCENTAGE);
         menu.setMargin(true);
         menu.setSpacing(true);
@@ -95,5 +113,56 @@ public class MenuFind extends VerticalLayout {
 
         this.setStyleName("menulayout");
         this.setSizeFull();
+
+
+        name.addTextChangeListener(event -> {
+            List<Books> list = null;
+            try {
+                list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("list.size() = " + list.size());
+            setList(list);
+        });
+
+        author.addTextChangeListener(event -> {
+            List<Books> list = null;
+            try {
+                list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("list.size() = " + list.size());
+            setList(list);
+        });
+
+        year.addValueChangeListener(event -> {
+            List<Books> list = null;
+            try {
+                if(year.getValue() == null)
+                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), "");
+                else
+                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("list.size() = " + list.size());
+            setList(list);
+        });
+    }
+
+    public void setGrid(CssLayout grid){
+      this.grid = grid;
+    }
+
+    public void setList(List<Books> list ){
+        grid.removeAllComponents();
+        for (Books el : list) {
+            BookImage book = new BookImage(el);
+            book.setHeight(400, Unit.PIXELS);
+            book.setWidth(250, Unit.PIXELS);
+            grid.addComponent(book);
+        }
     }
 }

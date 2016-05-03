@@ -7,7 +7,8 @@ import javax.persistence.*;
  * Пользователь
  */
 @Entity
-@Table(name = "\"User\"")
+//@Table(name = "\"User\"")
+@SecondaryTable(name = "\"User\"")
 public class Users extends Address{
 
   //  private Integer id;
@@ -39,25 +40,29 @@ public class Users extends Address{
    // @Column(name = "emp_id")
   //  public Integer getId() { return id; }
 
-   //
+    @Id
+    @Column(name = "email")
+    public String getEmail() { return email; }
+
+
+    @Column(name = "\"Fname\"")
+    public String getFname() { return fname; }
 
     //@Id
-    @Column(name = "Nickname")
+    @Column(name = "\"Nickname\"")
     public String getNickName() {
         return nickName;
     }
 
-    @Column(name = "Password")
+    @Column(name = "\"Password\"")
     public String getPassword() {
         return password;
     }
 
-    @Column(name = "Role")
+    @Column(name = "\"nRole\"")
     public String getRole() {
         return role;
     }
-
-
 
   /*  public void setId(Integer id) {
         this.id = id;
@@ -74,6 +79,8 @@ public class Users extends Address{
     public void setRole(String role) {
         this.role = role;
     }
+
+
 
 
 }

@@ -13,10 +13,8 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.server.Page;
+import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.ButtonRenderer;
 
 import java.util.*;
@@ -32,6 +30,7 @@ public class TableUsers extends VerticalLayout {
     Grid.MultiSelectionModel selection ;
     private static TableUsers instance;
     private ArrayList<Users> listUsers ;
+
     public static  TableUsers getInstance() {
         TableUsers localInstance = instance;
         if (localInstance == null) {
@@ -116,10 +115,17 @@ public class TableUsers extends VerticalLayout {
                                         change.getText(), true, false));
                 });
                 cell.setComponent(filterField);
+                filterField.addTextChangeListener(event -> {
+                            new Notification("addTextChangeListener Filter \n","Value: " + event.getText() ,
+                                    Notification.TYPE_WARNING_MESSAGE, true)
+                                    .show(Page.getCurrent());
+                        }
+                );
                 filterField.setHeight(90, Unit.PERCENTAGE);
                 filterField.setWidth(80, Unit.PERCENTAGE);
             }
         }
+
 
         selection = (Grid.MultiSelectionModel) grid.getSelectionModel();
         this.addComponent(grid);

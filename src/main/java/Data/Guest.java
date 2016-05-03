@@ -29,7 +29,7 @@ public class Guest {
         return nickname;
     }
 
-    @Column(name = "\"Password\"")
+    @Column(name = "Password")
     public String GetPassword() { return password; }
 
     /*@Column(name = "\"rep\"")

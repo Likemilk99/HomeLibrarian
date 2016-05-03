@@ -11,6 +11,7 @@ import frontend.elements.tableusers.MenuFind;
 
 import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Александр on 13.03.2016.
@@ -42,6 +43,7 @@ public class SearchView extends CustomComponent implements View {
         return localInstance;
     }
 
+
     private SearchView() {
         mainlayout = new AbsoluteLayout();
         header = new HeaderLayout();
@@ -52,7 +54,7 @@ public class SearchView extends CustomComponent implements View {
         hSplitBar.setMaxSplitPosition(320, Unit.PIXELS);
         hSplitBar.setMinSplitPosition(20, Unit.PIXELS);
         menu = MenuFind.getInstance();
-
+        menu.setGrid(grid);
         // Styles
         mainlayout.setStyleName("v-main-body");
         body.setStyleName("bodylayout");
@@ -62,13 +64,14 @@ public class SearchView extends CustomComponent implements View {
         hSplitBar.setSecondComponent(grid);
 
         // TODO SQL
-        for (int i=0; i < 40; i++) {
+
+      /*  for (int i=0; i < 40; i++) {
             BookImage el = new BookImage(new Books(""+i, ""+i, ""+i, ""+i));
             el.setHeight(400, Unit.PIXELS);
             el.setWidth(250, Unit.PIXELS);
 
             grid.addComponent(el);
-        }
+        }*/
         body.addComponent(hSplitBar);
 
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
@@ -90,4 +93,15 @@ public class SearchView extends CustomComponent implements View {
         //String username = String.valueOf(getSession().getAttribute("user"));
         //String status = String.valueOf(getSession().getAttribute("status"));
     }
+
+    public void setList(List<Books> list ){
+        for (Books el : list) {
+            BookImage book = new BookImage(el);
+            book.setHeight(400, Unit.PIXELS);
+            book.setWidth(250, Unit.PIXELS);
+            grid.addComponent(book);
+        }
+    }
+
+
 }
