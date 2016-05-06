@@ -69,15 +69,18 @@ public class Sender {
             message.setText(TemplateMails.MAIL_REG + code + "</b>", "utf-8", "html");
             //отправляем сообщение
             Transport.send(message);
-
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        } finally {
             new Notification("Success","Mail sended! ",
                     Notification.TYPE_WARNING_MESSAGE, true)
                     .show(Page.getCurrent());
+
+        } catch (MessagingException e) {
+            new Notification("Error","Stop send mail. ",
+                    Notification.TYPE_WARNING_MESSAGE, true)
+                    .show(Page.getCurrent());
+
+         //   throw new RuntimeException(e);
         }
+
     }
 
     public void send(TemplateMails mail, String toEmail){

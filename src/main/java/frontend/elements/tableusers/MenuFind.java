@@ -7,6 +7,7 @@ import Data.Books;
 import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
+import frontend.elements.components.OnEnterKeyHandler;
 import frontend.elements.components.RegistrationWin;
 import frontend.elements.gridbooks.BookImage;
 import frontend.elements.tablebooks.TableBooks;
@@ -115,7 +116,7 @@ public class MenuFind extends VerticalLayout {
         this.setSizeFull();
 
 
-        name.addTextChangeListener(event -> {
+        name.addValueChangeListener(event -> {
             List<Books> list = null;
             try {
                 if(year.getValue() == null)
@@ -129,7 +130,7 @@ public class MenuFind extends VerticalLayout {
             setList(list);
         });
 
-        author.addTextChangeListener(event -> {
+        author.addValueChangeListener(event -> {
             List<Books> list = null;
             try {
                 if(year.getValue() == null)
@@ -156,7 +157,14 @@ public class MenuFind extends VerticalLayout {
             System.out.println("list.size() = " + list.size());
             setList(list);
         });
+
+     //   name.setImmediate(true);
+    //    author.setImmediate(true);
+      //  year.setImmediate(true);
+
+
     }
+
 
     public void setGrid(CssLayout grid){
       this.grid = grid;

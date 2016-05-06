@@ -27,7 +27,7 @@ public class MenuTable extends VerticalLayout {
     private Button button_block;
     private Button button_add;
     private Button button_send;
-    private ComboBox box_mails;
+   // private ComboBox box_mails;
     private TableUsers tableinstance;
     private static MenuTable instance;
     private Sender sender;
@@ -83,14 +83,14 @@ public class MenuTable extends VerticalLayout {
         });
         button_send.setWidth(200, Sizeable.Unit.PIXELS);
 
-        box_mails = new ComboBox(null);
+      /*  box_mails = new ComboBox(null);
         Object itemId = box_mails.addItem();
         box_mails.setItemCaption(itemId, "custom");
         box_mails.addItem("one");
         box_mails.addItem("two");
         box_mails.addItem("three");
         box_mails.setValue(itemId);
-        box_mails.setNullSelectionAllowed(false);
+        box_mails.setNullSelectionAllowed(false);*/
 
         menu.addComponent(button_add);
         menu.setComponentAlignment(button_add, Alignment.TOP_CENTER);
@@ -99,8 +99,8 @@ public class MenuTable extends VerticalLayout {
         menu.addComponent(button_delete);
         menu.setComponentAlignment(button_delete, Alignment.TOP_CENTER);
 
-        menu.addComponent(box_mails);
-        menu.setComponentAlignment(box_mails, Alignment.TOP_CENTER);
+      //  menu.addComponent(box_mails);
+      //  menu.setComponentAlignment(box_mails, Alignment.TOP_CENTER);
         menu.addComponent(button_send);
         menu.setComponentAlignment(button_send, Alignment.TOP_CENTER);
 

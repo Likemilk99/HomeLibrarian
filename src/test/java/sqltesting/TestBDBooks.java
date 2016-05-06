@@ -37,7 +37,7 @@ public class TestBDBooks {
                     Integer.toString(year),
                     "Дмитрий Иванович",
                     "",
-                    "./recource/default/Logo.png",
+                    "./resource/default/Logo.png",
                     "");
             //B.Books();
             F = new Factory();
