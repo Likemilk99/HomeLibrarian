@@ -23,9 +23,9 @@ public class ManageUsersView extends CustomComponent implements View {
 
     private TableUsers table;
     private VerticalLayout tablecontent = new VerticalLayout();
-    private HorizontalLayout buttons = new HorizontalLayout();
-    private Button back = new Button("<");
-    private Button forward = new Button(">");
+ //   private HorizontalLayout buttons = new HorizontalLayout();
+ //   private Button back = new Button("<");
+ //   private Button forward = new Button(">");
 
     private MenuTable menu;
     private HorizontalSplitPanel hSplitBar;
@@ -53,13 +53,13 @@ public class ManageUsersView extends CustomComponent implements View {
         table = TableUsers.getInstance();
         table.setSizeFull();
 
-        buttons.addComponent(back);
-        buttons.addComponent(forward);
+      //  buttons.addComponent(back);
+      //  buttons.addComponent(forward);
 
-        tablecontent.addComponent(buttons);
+      //  tablecontent.addComponent(buttons);
         tablecontent.addComponent(table);
         tablecontent.setSizeFull();
-        tablecontent.setExpandRatio(buttons, 5);
+      //  tablecontent.setExpandRatio(buttons, 5);
         tablecontent.setExpandRatio(table, 95);
 
         hSplitBar = new HorizontalSplitPanel();
@@ -86,6 +86,14 @@ public class ManageUsersView extends CustomComponent implements View {
         ///TESTING MENU////
         menu.setTable(table);
         ///////////////////
+
+       /* back.addClickListener(e -> {
+
+        });
+
+        forward.addClickListener(e -> {
+
+        });*/
 
         setSizeFull();
         setCompositionRoot(mainlayout);

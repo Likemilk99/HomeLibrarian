@@ -4,6 +4,7 @@ import DAO.Factory;
 import DAO.InterfaceDao;
 import DAO.UserDAO;
 import Data.Address;
+import Data.ConstParam;
 import Data.Users;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -59,7 +60,7 @@ public class TestBDUsers {
     public void testGetQuery() throws SQLException{
         F= new Factory();
         InterfaceDao InUser = F.getDAO(UserDAO.class );
-        List<Users> users =InUser.getSubList(30);
+        List<Users> users =InUser.getSubList(30,  ConstParam.TABLE_PAGE_VALUE);
 
         for (Users el : users)
             System.out.println("el.getNickName() = " + el.getFname());

@@ -11,7 +11,7 @@ import java.util.List;
  * Created by likemilk on 04.02.2016.
  */
 public interface InterfaceDao<T>{
-    int COUNT_ROWS = 8;
+    //int COUNT_ROWS = 8;
     /**
      *
      * Чья реализауия.
@@ -59,7 +59,7 @@ public interface InterfaceDao<T>{
 
     long getCount() throws  SQLException;
 
-    List getSubList(int position) throws SQLException;
+    List getSubList(int position, int count) throws SQLException;
 
     public List<T> GetSqlRequst(String author, String title, String year) throws SQLException;
 }

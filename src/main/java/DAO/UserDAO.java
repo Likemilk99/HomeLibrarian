@@ -151,13 +151,13 @@ public class UserDAO implements InterfaceDao<Users> {
     }
 
     @Override
-    public List getSubList(int position) throws SQLException {
+    public List getSubList(int position, int count) throws SQLException {
         Session session = null;
         List<Users> users =  new LinkedList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             users = session.createCriteria(Users.class)
-                    .setMaxResults(COUNT_ROWS)
+                    .setMaxResults(count)
                     .setFirstResult(position)
                     .list();
         }catch (Exception e) {

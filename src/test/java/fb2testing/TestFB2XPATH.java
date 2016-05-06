@@ -13,7 +13,8 @@ import java.io.IOException;
  * Testing working with Fb2 (getters and Setters)
  */
 public class TestFB2XPATH {
-    private final String path = new String("F:\\PROJECTS\\JAVA\\HomeLibrarian\\src\\main\\resources\\doc_xml\\Drakonoboriets_impierii_-_Andriei_Burievoi.fb2");
+    private final String path =  "tmp/uploads/Злотников Роман - Время вызова. Нужны князья, а не тати.fb2";
+    // new String("F:\\PROJECTS\\JAVA\\HomeLibrarian\\src\\main\\resources\\doc_xml\\Drakonoboriets_impierii_-_Andriei_Burievoi.fb2");
 
     /**
      * testing getfname for XPath

@@ -4,6 +4,7 @@ import DAO.BookDAO;
 import DAO.Factory;
 import DAO.InterfaceDao;
 import Data.Books;
+import Data.ConstParam;
 import com.google.gwt.dom.client.NativeEvent;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.event.MouseEvents;
@@ -51,13 +52,13 @@ public class MetroBook extends AbsoluteLayout{
         ArrayList<BookImage> list = new ArrayList<>();
 
         try {
-            List<Books> subList = bookInterface.getSubList(position);
+            List<Books> subList = bookInterface.getSubList(position, ConstParam.METRO_PAGE_VALUE);
             for (Books el : subList)
                 list.add(new BookImage(el));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            position = position + 8;
+            position = position + ConstParam.METRO_PAGE_VALUE;
         }
 
         //TESTING
@@ -107,7 +108,7 @@ public class MetroBook extends AbsoluteLayout{
         button_2.addClickListener(lambda -> {
                     if(oldScroll == p.getScrollLeft()) {
                         try {
-                            final List<Books> subList = bookInterface.getSubList(position);
+                            final List<Books> subList = bookInterface.getSubList(position, ConstParam.METRO_PAGE_VALUE);
                             for (Books el : subList)
                                 list.add(new BookImage(el));
                             for (BookImage el : list) {
@@ -120,7 +121,7 @@ public class MetroBook extends AbsoluteLayout{
                         } catch (SQLException e) {
                             e.printStackTrace();
                         } finally {
-                            position = position + 8;
+                            position = position + ConstParam.METRO_PAGE_VALUE;
                         }
                     }
                     oldScroll = p.getScrollLeft();

@@ -5,6 +5,7 @@ import DAO.Factory;
 import DAO.InterfaceDao;
 import Data.Books;
 import Data.Users;
+import XMlWorker.Fb2OpenXPATH;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -576,13 +577,17 @@ public class BookWin extends Window {
 
     class bookUploader implements Upload.Receiver, Upload.SucceededListener {
         public File file;
-
+        private String path = "tmp/uploads/";
+        private Fb2OpenXPATH worker;
         public OutputStream receiveUpload(String filename,
                                           String mimeType) {
             FileOutputStream fos = null;
 
             try {
-                file = new File("tmp/uploads/" + filename);
+                file = new File(path + filename);
+
+
+
                 fos = new FileOutputStream(file);
             } catch (FileNotFoundException ex) {
                 new Notification("File not found \n",

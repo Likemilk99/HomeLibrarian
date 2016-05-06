@@ -24,9 +24,6 @@ public class ManageBooksView extends CustomComponent implements View {
     private TableBooks table;
 
     private VerticalLayout tablecontent = new VerticalLayout();
-    private HorizontalLayout buttons = new HorizontalLayout();
-    private Button back = new Button("<");
-    private Button forward = new Button(">");
 
     private MenuTableBooks menu;
     private HorizontalSplitPanel hSplitBar;
@@ -53,13 +50,8 @@ public class ManageBooksView extends CustomComponent implements View {
         body = new HorizontalLayout();
         table = TableBooks.getInstance();
 
-        buttons.addComponent(back);
-        buttons.addComponent(forward);
-
-        tablecontent.addComponent(buttons);
         tablecontent.addComponent(table);
         tablecontent.setSizeFull();
-        tablecontent.setExpandRatio(buttons, 5);
         tablecontent.setExpandRatio(table, 95);
 
         hSplitBar = new HorizontalSplitPanel();
