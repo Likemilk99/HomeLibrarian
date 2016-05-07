@@ -10,6 +10,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 import com.vaadin.annotations.*;
 import com.vaadin.ui.themes.ValoTheme;
+import frontend.elements.components.PasswordWin;
 import frontend.elements.components.RegistrationWin;
 
 import java.sql.SQLException;
@@ -301,8 +302,9 @@ public class SimpleLoginView extends CustomComponent implements View,
     }
 
     protected void forgotButtonClick() {
-        //Window subWindow = new Window("Try to remember");
+
+       //Window subWindow = new Window("Try to remember");
         // Open it in the UI
-        //getUI().addWindow(subWindow);
+        getUI().addWindow(new PasswordWin());
     }
 }

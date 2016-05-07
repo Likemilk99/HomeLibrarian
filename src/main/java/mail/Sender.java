@@ -109,4 +109,31 @@ public class Sender {
                     .show(Page.getCurrent());
         }
     }
+
+    public void send(TemplateMails mail,String code, String toEmail){
+        Session session = Session.getDefaultInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        try {
+            MimeMessage message = new MimeMessage(session);
+            //от кого
+            message.setFrom(new InternetAddress(username));
+            //кому
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            //тема сообщения
+            message.setSubject("Notification");
+            //текст
+            message.setText(mail.getMail() + code + "</b>", "utf-8", "html");
+            //отправляем сообщение
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }finally {
+            new Notification("Success","Mails sended!",
+                    Notification.TYPE_TRAY_NOTIFICATION, true)
+                    .show(Page.getCurrent());
+        }
+    }
 }
