@@ -183,5 +183,66 @@ public class RatingDAO implements InterfaceDao <Rating> {
         }
     }
 
+    public void updateEmail(String oldName, String newName) throws SQLException {
+        Session session = null;
+        String sql = "SELECT * FROM \"Rating\" WHERE \"Email\" =:name_mail";
+        List<Rating> rating = new ArrayList<>();
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Rating.class);
+            query.setParameter("name_mail", oldName);
+            rating =query.list();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+        for (Rating el : rating){
+            el.setEmail(newName);
+            try {
+                updateEl(el);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void updateTitle(String oldTitle, String newTitle) throws SQLException {
+        Session session = null;
+        String sql = "SELECT * FROM \"Rating\" WHERE \"Title\" =:name_title";
+        List<Rating> rating = new ArrayList<>();
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Rating.class);
+            query.setParameter("name_title", oldTitle);
+         //   query.setParameter("name_mail", email);
+            rating =query.list();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+
+        for (Rating el : rating){
+                el.setTitle(newTitle);
+            try {
+                updateEl(el);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }

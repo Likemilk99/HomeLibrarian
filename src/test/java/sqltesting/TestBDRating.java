@@ -76,4 +76,29 @@ public class TestBDRating {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testChangeTitle() {
+        Factory F = new Factory();
+        RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
+
+        try {
+
+            in.updateTitle("new_Value", "ygufyf");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testChangeEmail() {
+        Factory F = new Factory();
+        RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
+
+        try {
+            in.updateEmail("new_Valu1e", "6666");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
