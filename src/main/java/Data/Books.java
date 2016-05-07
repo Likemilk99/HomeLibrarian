@@ -76,7 +76,7 @@ public class Books {
         return Author;
     }
 
-    @Column(name = "\"Description\"")
+    @Column(name = "\"Description\"", columnDefinition = "TEXT")
     public String getDescription() {
         return Description;
     }

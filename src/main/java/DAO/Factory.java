@@ -22,7 +22,8 @@ public class Factory{
     //  END WTF
     public InterfaceDao getDAO(Object Obj){
        if(Obj== UserDAO.class ) return new UserDAO();
-        else if(Obj == BookDAO.class)return new BookDAO();
+       if(Obj == BookDAO.class)return new BookDAO();
+       if(Obj == RatingDAO.class)return new RatingDAO();
         return null;
     }
 }

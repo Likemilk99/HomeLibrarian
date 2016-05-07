@@ -141,7 +141,7 @@ public class BookDAO implements InterfaceDao<Books> {
         long count = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            count = (long) session.createCriteria(Users.class).setProjection(Projections.rowCount()).uniqueResult();
+            count = (long) session.createCriteria(Books.class).setProjection(Projections.rowCount()).uniqueResult();
             session.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

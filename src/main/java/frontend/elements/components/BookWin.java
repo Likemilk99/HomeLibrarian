@@ -504,6 +504,12 @@ public class BookWin extends Window {
         private void showFile(final String name, final String type,
                               final ByteArrayOutputStream bas) {
             // resource for serving the file contents
+
+            new Notification("File\n",
+             "trololol",
+                    Notification.Type.ERROR_MESSAGE)
+                    .show(Page.getCurrent());
+
             final StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
                 @Override
                 public InputStream getStream() {
@@ -547,6 +553,7 @@ public class BookWin extends Window {
         public OutputStream receiveUpload(String filename,
                                           String mimeType) {
             FileOutputStream fos = null;
+           //тут после вставки
 
             try {
                 file = new File("tmp/uploads/" + filename);

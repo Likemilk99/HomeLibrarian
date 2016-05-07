@@ -17,5 +17,6 @@
         <mapping class="Data.Users"/>
         <mapping class="Data.Guest"/>
         <mapping class="Data.Books"/>
+        <mapping class="Data.Rating"/>
     </session-factory>
 </hibernate-configuration>

@@ -74,6 +74,20 @@ public class Fb2OpenXPATH {
     }
 
     /**
+     * Get Annotation
+     *
+     * @return
+     */
+    public String GetAnnotatiome() {
+        try {
+            return xpath.compile("/FictionBook/description/title-info/annotation").evaluate(xmlDoc);
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return Err;
+    }
+
+    /**
      * Get Middlename from xml
      *
      * @return

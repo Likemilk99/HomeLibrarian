@@ -110,4 +110,15 @@ public class TestBDBooks {
         System.out.println("test ");
     }
 
+    @Test
+    public void getCount() {
+        F= new Factory();
+        BookDAO InBooks = new BookDAO();//F.getDAO(BookDAO.class );
+        try {
+            System.out.println("F = " + InBooks.getCount());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
