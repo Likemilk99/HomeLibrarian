@@ -63,16 +63,20 @@ public class TableBooks extends VerticalLayout {
 
         buttons.addComponent(back);
 
+        back.setEnabled(false);
         back.addClickListener(a -> {
             position = position - ConstParam.TABLE_PAGE_VALUE;
-            if (position < 0)
+            if (position <= 0) {
                 position = 0;
+                back.setEnabled(false);
+            }
             try {
 
                 final List<Books> subList = bookInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
                 books.removeAllItems();
                 books.addAll(subList);
                 lablePages.setValue(position + "-" + (position + subList.size()));
+                forward.setEnabled(true);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -98,9 +102,15 @@ public class TableBooks extends VerticalLayout {
 
                 try {
                     final List<Books> subList = bookInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+
                     books.removeAllItems();
                     books.addAll(subList);
                     lablePages.setValue(position + "-" + (position + subList.size()));
+                    back.setEnabled(true);
+
+                    if(position + subList.size() == bookInterface.getCount())
+                        forward.setEnabled(false);
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -184,6 +194,9 @@ public class TableBooks extends VerticalLayout {
             }
         }
 
+        //grid.getColumn("Description").setWidth(320);
+        grid.getColumns().get(1).setWidth(320);
+
         selection = (Grid.MultiSelectionModel) grid.getSelectionModel();
         this.addComponent(grid);
         this.setExpandRatio(buttons, 5);
@@ -203,33 +216,17 @@ public class TableBooks extends VerticalLayout {
         grid.getEditorFieldGroup().addCommitHandler(new FieldGroup.CommitHandler() {
             @Override
             public void preCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
+            }
 
+            @Override
+            public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
                 try {
                     bookInterface.updateEl(books.getItem(grid.getEditedItemId()).getBean());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-            }
-
-            @Override
-            public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
-                //Trololo
             }
         });
-    }
-
-    public void UpdateTable() {
-        books.removeAllItems();
-
-        /////////////////////////////////////////
-        try {
-            List<Books> subList = bookInterface.getSubList(0, ConstParam.TABLE_PAGE_VALUE);
-            for (Books el : subList)
-                books.addBean(el);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
   /*  public void addRow(Books row){
@@ -272,6 +269,9 @@ public class TableBooks extends VerticalLayout {
             books.removeAllItems();
             books.addAll(subList);
             lablePages.setValue(position +"-" + (position + subList.size()));
+
+            if(subList.size() <  ConstParam.TABLE_PAGE_VALUE)
+                forward.setEnabled(false);
             //  position = position + ConstParam.TABLE_PAGE_VALUE;
         } catch (SQLException e) {
             e.printStackTrace();

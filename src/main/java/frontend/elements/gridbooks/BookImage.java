@@ -1,17 +1,18 @@
 package frontend.elements.gridbooks;
 
+import DAO.Factory;
+import DAO.RatingDAO;
 import Data.Books;
+import Data.Rating;
 import com.vaadin.annotations.Theme;
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.ThemeResource;
+import com.vaadin.server.*;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.BaseTheme;
 import frontend.elements.components.BookWin;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.io.*;
+import java.sql.SQLException;
 
 /**
  * Created by likemilk on 14.02.2016.
@@ -20,48 +21,19 @@ import java.io.*;
 public class BookImage extends VerticalLayout {
     private final Books Book;
     private RatingStars rating = new RatingStars();
+    private RatingStars rating_my = new RatingStars();
+    private HorizontalLayout rating_layout = new HorizontalLayout();
     protected FileDownloader fileDownloader;
     private Button  buttonDownload = new Button("Download");
     private Embedded imageEmbedded = new Embedded();
     private Label   title = new Label("TITLE");
     private Label   author = new Label("Author");
-    /**
-     * НАДО ПЕРЕДАТЬ ДЛЯ РАБОТЫ С БД
-     * @param path
-     */
-    /*public BookImage(String path) {
-        // TODO SQL
-        this.Book = new Books("i", "i", "i", "i");//!!!!!!!!!!!!!!!!!!!!!!
-
-        this.setStyleName("cells");
-        this.setHeight("250px");
-        this.setWidth("200px");
-
-        button_2.setWidth("80%");
-
-        button_3.setStyleName(BaseTheme.BUTTON_LINK);
-        button_3.setIcon(new ThemeResource("Images/logo.png"));
-
-        button_3.setWidth("100%");
-        button_3.setHeight("100%");
-
-        this.addComponent(rating);
-        this.addComponent(name);
-        this.addComponent(author);
-        this.addComponent(button_3);
-        this.addComponent(button_2);
-
-        this.setComponentAlignment(rating, Alignment.TOP_CENTER);
-        this.setComponentAlignment(button_3, Alignment.MIDDLE_CENTER);
-        this.setComponentAlignment(button_2, Alignment.BOTTOM_CENTER);
-
-    }*/
 
     /**
      * НАДО ПЕРЕДАТЬ ДЛЯ РАБОТЫ С БД
      * @param el
      */
-    public BookImage(Books el) {
+    public BookImage(Books el, String user) {
         super();
         this.Book = el;
 
@@ -72,6 +44,53 @@ public class BookImage extends VerticalLayout {
         rating.setAnimated(true);
         rating.setCaption(null);
         rating.setMaxValue(5);
+        rating.setStyleName("rating");
+        rating.setReadOnly(true);
+
+        rating_my.setAnimated(true);
+        rating_my.setCaption(null);
+        rating_my.setMaxValue(5);
+        rating_my.setStyleName("rating_my");
+
+        Factory F = new Factory();
+        RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
+        try {
+            double rate = in.getRaiting(el.getId());
+            rating.setReadOnly(false);
+            rating.setValue(rate);
+            rating.setReadOnly(true);
+            double myrate = in.getRaiting(user,el.getId());
+            rating_my.setValue(myrate);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        rating_my.addValueChangeListener(e -> {
+            try {
+                Rating rat = in.getUser(getUI().getSession().getAttribute("user").toString(),el.getId());
+
+                rat.setRaiting(rating_my.getValue());
+
+                in.updateEl(rat);
+
+                double rate = in.getRaiting(el.getId());
+                rating.setReadOnly(false);
+                rating.setValue(rate);
+                rating.setReadOnly(true);
+
+                new Notification(String.valueOf(rate),
+                        Notification.Type.TRAY_NOTIFICATION)
+                        .show(Page.getCurrent());
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        rating_layout.addComponent(rating);
+        rating_layout.addComponent(rating_my);
+        rating_layout.setComponentAlignment(rating, Alignment.MIDDLE_LEFT);
+        rating_layout.setComponentAlignment(rating_my, Alignment.MIDDLE_LEFT);
+        rating_layout.setStyleName("ratinglayout");
 
         imageEmbedded.setSource(new FileResource(new File(Book.getImage())));
 
@@ -83,16 +102,17 @@ public class BookImage extends VerticalLayout {
 
         buttonDownload.setWidth("80%");
         imageEmbedded.setWidth("100%");
+        imageEmbedded.setHeight("100%");
 
         title.setWidth(null);
         author.setWidth(null);
 
         VerticalLayout bodyLayout = new VerticalLayout(title, author, imageEmbedded);
 
-        bodyLayout.setExpandRatio(title, 6);
-        bodyLayout.setExpandRatio(author, 4);
-        bodyLayout.setExpandRatio(imageEmbedded, 90);
-
+        bodyLayout.setExpandRatio(title, 12);
+        bodyLayout.setExpandRatio(author, 8);
+        bodyLayout.setExpandRatio(imageEmbedded, 80);
+        bodyLayout.setSizeFull();
         bodyLayout.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
         bodyLayout.setComponentAlignment(author, Alignment.MIDDLE_CENTER);
         bodyLayout.setComponentAlignment(imageEmbedded, Alignment.MIDDLE_CENTER);
@@ -101,14 +121,14 @@ public class BookImage extends VerticalLayout {
         title.setStyleName("name-label");
         author.setStyleName("author-label");
 
-        this.addComponent(rating);
+        this.addComponent(rating_layout);
         this.addComponent(bodyLayout);
         this.addComponent(buttonDownload);
 
-        this.setComponentAlignment(rating, Alignment.TOP_CENTER);
-        this.setComponentAlignment(bodyLayout, Alignment.MIDDLE_CENTER);
+        this.setComponentAlignment(rating_layout, Alignment.TOP_CENTER);
+        this.setComponentAlignment(bodyLayout, Alignment.TOP_CENTER);
         this.setComponentAlignment(buttonDownload, Alignment.BOTTOM_CENTER);
-        this.setExpandRatio(rating, 5);
+        this.setExpandRatio(rating_layout, 5);
         this.setExpandRatio(bodyLayout, 85);
         this.setExpandRatio(buttonDownload, 10);
 

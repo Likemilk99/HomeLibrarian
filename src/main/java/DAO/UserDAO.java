@@ -200,4 +200,29 @@ public class UserDAO implements InterfaceDao<Users> {
         return new ArrayList<>();
     }
 
+    public boolean isUsernameExist(String username) throws  SQLException {
+        String sql = "SELECT * FROM Users WHERE \"Nickname\" =:nickname";
+        Session session = null;
+        List<Users> users =  new LinkedList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Users.class);
+            query.setParameter("nickname", username);
+            users = query.list();
+
+            System.out.println("users.size() = " + users.size());
+            System.out.println("username = " + username);
+
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+                return users.size() > 0;
+            }
+            return users.size() > 0;
+        }
+    }
+
 }

@@ -33,10 +33,9 @@ public class MainView extends CustomComponent implements View {
 
     public MainView() {
         // Layouts
-        metro = new MetroBook();
+        metro = MetroBook.getInstance();
         mainlayout = new AbsoluteLayout();
        // mainlayout = new VerticalLayout();
-        header = new HeaderLayout();
         body = new VerticalLayout();
 
         //header.setHeight(10, Unit.PERCENTAGE);
@@ -47,8 +46,6 @@ public class MainView extends CustomComponent implements View {
 
         body.addComponent(metro);
         // Add components
-        mainlayout.addComponent(body, "left: 0px; top: 10%;");
-        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
 
        // mainlayout.addComponent(header);
        //mainlayout.addComponent(body);
@@ -59,7 +56,6 @@ public class MainView extends CustomComponent implements View {
         setSizeFull();
         setCompositionRoot(mainlayout);
         body.setComponentAlignment(metro, Alignment.MIDDLE_CENTER);
-
     }
 
     @Override
@@ -67,5 +63,13 @@ public class MainView extends CustomComponent implements View {
         // Get the user name from the session
         String username = String.valueOf(getSession().getAttribute("user"));
         String status = String.valueOf(getSession().getAttribute("status"));
+
+        MetroBook.getInstance().updateTable(username);
+
+        mainlayout.removeAllComponents();
+
+        header = new HeaderLayout(status);
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
     }
 }

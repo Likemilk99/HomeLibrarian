@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Table(name = "\"Rating\"")
 public class Rating {
     private String email;
-    private String title;
+    private Integer book_id;
+
     private double raiting;
     private Integer id;
 
@@ -17,10 +18,10 @@ public class Rating {
 
     }
 
-    public Rating(double raiting, String email, String title) {
+    public Rating(double raiting, String email, Integer book_id) {
         this.raiting = raiting;
         this.email = email;
-        this.title = title;
+        this.book_id = book_id;
     }
 
     @Id
@@ -30,15 +31,14 @@ public class Rating {
         return id;
     }
 
-
     @Column(name = "\"Email\"")
     public String getEmail() {
         return email;
     }
 
-    @Column(name = "\"Title\"")
-    public String getTitle() {
-        return title;
+    @Column(name = "book")
+    public Integer getBook() {
+        return book_id;
     }
 
     @Column(name = "\"Rating\"")
@@ -50,8 +50,8 @@ public class Rating {
         this.email = email;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBook(Integer book_id) {
+        this.book_id = book_id;
     }
 
     public void setRaiting(double raiting) {

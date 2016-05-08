@@ -64,6 +64,7 @@ public class Fb2OpenXPATH {
      *
      * @return
      */
+
     public String GetFName() {
         try {
             return xpath.compile("/FictionBook/description/title-info/author/first-name/text()").evaluate(xmlDoc);

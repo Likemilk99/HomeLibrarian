@@ -2,6 +2,7 @@ package frontend.elements.components;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 import frontend.views.*;
@@ -18,10 +19,8 @@ public class HeaderLayout extends HorizontalLayout {
     private Button button_search;
 
     private Button button_add;
- //   private Button button_mail;
 
-    private Button button_manage;
-    private MenuBar menu_manage;
+    private VerticalLayout menu_layout;
     private final MenuBar.Command menuCommand_users = new MenuBar.Command() {
         @Override
         public void menuSelected(final MenuBar.MenuItem selectedItem) {
@@ -49,12 +48,7 @@ public class HeaderLayout extends HorizontalLayout {
     private HorizontalLayout header_pro;
     private HorizontalLayout header_logout;
 
-    // Narrow
-
-    // Mobile
-
-    // TODO user rights to add elements to navigation panel
-    public HeaderLayout() {
+    public HeaderLayout(String status) {
         button_main = new Button("Main", event -> {
             // Refresh this view, should redirect
             getUI().getNavigator().navigateTo(MainView.NAME);
@@ -85,11 +79,6 @@ public class HeaderLayout extends HorizontalLayout {
             // Refresh this view, should redirect to login view
             getUI().getNavigator().navigateTo(SimpleLoginView.NAME);
         });
-        menu_manage = new MenuBar();
-        MenuBar.MenuItem child = menu_manage.addItem("Manage", null);
-        child.addItem("Users", menuCommand_users);
-        child.addItem("Content", menuCommand_books);
-        child.addItem("Settings", menuCommand_settings);
 
         //button_main.setIcon( new ThemeResource( "Images/Logo_icon.ico" ) );
         //button_profile.setIcon(new ThemeResource( "Images/vaadin-icons-png/user.png" ));
@@ -108,18 +97,25 @@ public class HeaderLayout extends HorizontalLayout {
         header_basic.setComponentAlignment(button_profile, Alignment.MIDDLE_CENTER);
         header_basic.setComponentAlignment(button_search, Alignment.MIDDLE_CENTER);
 
-        // TODO on user status add or not
-        header_pro.addComponent(button_add);
-       // header_pro.addComponent(button_mail);
-        header_pro.addComponent(menu_manage);
+        if(status.equals("admin")) {
+            MenuBar menu_manage = new MenuBar();
+            MenuBar.MenuItem child = menu_manage.addItem("Manage", null);
+            child.addItem("Users", menuCommand_users);
+            child.addItem("Content", menuCommand_books);
+            child.addItem("Settings", menuCommand_settings);
 
-        header_pro.setComponentAlignment(button_add, Alignment.MIDDLE_CENTER);
-      //  header_pro.setComponentAlignment(button_mail, Alignment.MIDDLE_CENTER);
-        header_pro.setComponentAlignment(menu_manage, Alignment.MIDDLE_CENTER);
+            menu_layout = new VerticalLayout(menu_manage);
+            menu_layout.setComponentAlignment(menu_manage, Alignment.MIDDLE_CENTER);
+            menu_layout.setStyleName("menu_layout");
+            menu_layout.setHeight(100, Unit.PERCENTAGE);
 
-        //header_basic.setSpacing(true);
-        //header_pro.setSpacing(true);
-        //header_logout.setSpacing(true);
+            header_pro.addComponent(button_add);
+            header_pro.addComponent(menu_layout);
+            header_pro.setComponentAlignment(button_add, Alignment.MIDDLE_CENTER);
+            header_pro.setComponentAlignment(menu_layout, Alignment.MIDDLE_CENTER);
+        } else {
+            header_pro.removeAllComponents();
+        }
 
         addComponent(header_basic);
         addComponent(header_pro);
@@ -127,6 +123,10 @@ public class HeaderLayout extends HorizontalLayout {
         setComponentAlignment(header_basic, Alignment.MIDDLE_LEFT);
         setComponentAlignment(header_pro, Alignment.MIDDLE_CENTER);
         setComponentAlignment(header_logout, Alignment.MIDDLE_RIGHT);
+
+        //header_basic.setSpacing(true);
+        //header_pro.setSpacing(true);
+        //header_logout.setSpacing(true);
 
         header_basic.setHeight(100, Unit.PERCENTAGE);
         header_pro.setHeight(100, Unit.PERCENTAGE);
@@ -136,15 +136,15 @@ public class HeaderLayout extends HorizontalLayout {
         button_profile.setHeight(100, Unit.PERCENTAGE);
         button_search.setHeight(100, Unit.PERCENTAGE);
         button_add.setHeight(100, Unit.PERCENTAGE);
-     //   button_mail.setHeight(100, Unit.PERCENTAGE);
-        menu_manage.setHeight(100, Unit.PERCENTAGE);
+        //   button_mail.setHeight(100, Unit.PERCENTAGE);
+        // menu_manage.setHeight(100, Unit.PERCENTAGE);
         button_logout.setHeight(100, Unit.PERCENTAGE);
 
         button_main.setWidth(140, Unit.PIXELS);
         button_profile.setWidth(140, Unit.PIXELS);
         button_search.setWidth(140, Unit.PIXELS);
         button_add.setWidth(140, Unit.PIXELS);
-        menu_manage.setWidth(185, Unit.PIXELS);
+        //menu_manage.setWidth(185, Unit.PIXELS);
         button_logout.setWidth(140, Unit.PIXELS);
 
         setStyleName("cssmenu");

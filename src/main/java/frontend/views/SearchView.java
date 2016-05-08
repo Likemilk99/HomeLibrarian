@@ -43,10 +43,8 @@ public class SearchView extends CustomComponent implements View {
         return localInstance;
     }
 
-
     private SearchView() {
         mainlayout = new AbsoluteLayout();
-        header = new HeaderLayout();
         body = new HorizontalLayout();
         hSplitBar = new HorizontalSplitPanel();
         grid = new CssLayout();
@@ -63,20 +61,9 @@ public class SearchView extends CustomComponent implements View {
         hSplitBar.setFirstComponent(menu);
         hSplitBar.setSecondComponent(grid);
 
-        // TODO SQL
-
-      /*  for (int i=0; i < 40; i++) {
-            BookImage el = new BookImage(new Books(""+i, ""+i, ""+i, ""+i));
-            el.setHeight(400, Unit.PIXELS);
-            el.setWidth(250, Unit.PIXELS);
-
-            grid.addComponent(el);
-        }*/
         body.addComponent(hSplitBar);
 
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
-        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
-        //mainlayout.addComponent(hSplitBar, "left: 0px; top: 10%;");
 
         //header.setSizeFull();
      //   grid.setSizeFull();
@@ -92,13 +79,22 @@ public class SearchView extends CustomComponent implements View {
         // Get the user name from the session
         //String username = String.valueOf(getSession().getAttribute("user"));
         //String status = String.valueOf(getSession().getAttribute("status"));
+        String status = String.valueOf(getSession().getAttribute("status"));
+
+        mainlayout.removeAllComponents();
+
+        header = new HeaderLayout(status);
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
+
+        menu.updateFind();
     }
 
     public void setList(List<Books> list ){
         for (Books el : list) {
-            BookImage book = new BookImage(el);
-            book.setHeight(400, Unit.PIXELS);
-            book.setWidth(250, Unit.PIXELS);
+            BookImage book = new BookImage(el, getUI().getSession().getAttribute("user").toString());
+            book.setHeight(568, Unit.PIXELS);
+            book.setWidth(320, Unit.PIXELS);
             grid.addComponent(book);
         }
     }

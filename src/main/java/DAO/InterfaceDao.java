@@ -61,5 +61,7 @@ public interface InterfaceDao<T>{
 
     List getSubList(int position, int count) throws SQLException;
 
+    boolean isUsernameExist(String username) throws  SQLException;
+
     public List<T> GetSqlRequst(String author, String title, String year) throws SQLException;
 }

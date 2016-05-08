@@ -3,7 +3,9 @@ package frontend.elements.components;
 import DAO.BookDAO;
 import DAO.Factory;
 import DAO.InterfaceDao;
+import DAO.RatingDAO;
 import Data.Books;
+import Data.Rating;
 import Data.Users;
 import XMlWorker.Fb2OpenXPATH;
 import com.vaadin.annotations.StyleSheet;
@@ -16,6 +18,9 @@ import com.vaadin.server.Page;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamVariable;
 import com.vaadin.ui.*;
+import frontend.elements.metro.MetroBook;
+import frontend.elements.tablebooks.TableBooks;
+import frontend.elements.tableusers.TableUsers;
 import frontend.views.AddView;
 import org.apache.tika.Tika;
 import org.apache.tika.io.FilenameUtils;
@@ -23,10 +28,9 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.awt.print.Book;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * Created by Александр on 30.04.2016.
@@ -72,9 +76,18 @@ public class BookWin extends Window {
 
     private Books book;
 
+    private void purgeDirectory(File dir) {
+        for (File file: dir.listFiles()) {
+            if (file.isDirectory()) purgeDirectory(file);
+            if (!file.getName().equals("temp"))
+                file.delete();
+        }
+    }
+
     public BookWin(Books book, boolean Master) {
 
     }
+
 
     public BookWin(Books book) {
         setModal(true);
@@ -140,6 +153,17 @@ public class BookWin extends Window {
         buttons.addComponent(cancelButton);
         buttons.setSpacing(true);
 
+        Factory F = new Factory();
+        RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
+        try {
+            double rat = in.getRaiting(book.getId());
+
+            rating.setValue(rat);
+            rating.setReadOnly(true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //
         contentLayout.addComponent(rating);
         contentLayout.addComponent(dataLayout);
@@ -158,6 +182,10 @@ public class BookWin extends Window {
         setResizable(false);
         center();
         setDraggable(false);
+
+        this.addCloseListener( e -> {
+            purgeDirectory(new File("./tmp/uploads/"));
+        });
 
         setStyleName("bookinfolayout");
 
@@ -217,7 +245,6 @@ public class BookWin extends Window {
                         new Notification("File is not image  \n",
                                 Notification.Type.ERROR_MESSAGE)
                                 .show(Page.getCurrent());
-                        //imageUpload.
                     }
                 }
             }
@@ -327,7 +354,7 @@ public class BookWin extends Window {
             if (InUser.GetByTitleAndName(Title, Author).size() > 0){
                 new Notification("Book with given author and name is already exist",
                        Notification.Type.ERROR_MESSAGE)
-                        .show(Page.getCurrent());;
+                        .show(Page.getCurrent());
                 return false;
             }
             book = new Books(Title, Series, Year, Author, Description, Image, File);
@@ -364,6 +391,21 @@ public class BookWin extends Window {
 
             InUser.updateEl(tempbook);
 
+            try {
+                RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
+
+                Rating rat = in.getUser(getSession().getAttribute("user").toString(),book.getId());
+
+                rat.setRaiting(rating.getValue());
+
+                in.updateEl(rat);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            TableBooks.getInstance().updateTable();
+            MetroBook.getInstance().updateTable(getSession().getAttribute("user").toString());
+
             this.close();
 
 
@@ -374,56 +416,12 @@ public class BookWin extends Window {
         return true;
     }
 
-    private static class LineBreakCounter implements Upload.Receiver {
-        private int counter;
-        private int total;
-        private boolean sleep;
-
-        /**
-         * return an OutputStream that simply counts lineends
-         */
-        @Override
-        public OutputStream receiveUpload(final String filename,
-                                          final String MIMEType) {
-            counter = 0;
-            total = 0;
-            return new OutputStream() {
-                private static final int searchedByte = '\n';
-
-                @Override
-                public void write(final int b) throws IOException {
-                    total++;
-                    if (b == searchedByte) {
-                        counter++;
-                    }
-                    if (sleep && total % 1000 == 0) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (final InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            };
-        }
-
-        public int getLineBreakCount() {
-            return counter;
-        }
-
-        public void setSlow(final boolean value) {
-            sleep = value;
-        }
-
-    }
-
-    @StyleSheet("dragndropexample.css")
     class ImageDropBox extends DragAndDropWrapper implements
             DropHandler {
         private static final long FILE_SIZE_LIMIT = 2 * 1024 * 1024; // 2MB
 
         private String fileName = new String("");
-
+        private File fileFile;
         public String getFileName() {
             return fileName;
         }
@@ -446,6 +444,8 @@ public class BookWin extends Window {
             final Html5File[] files = tr.getFiles();
             if (files != null) for (final Html5File html5File : files) {
                 fileName = html5File.getFileName();
+
+                //fileFile = new File(html5File.getFileName());
                 if (html5File.getFileSize() > FILE_SIZE_LIMIT) {
                     Notification
                             .show("File rejected. Max 2Mb files are accepted",
@@ -515,17 +515,44 @@ public class BookWin extends Window {
                 public InputStream getStream() {
                     if (bas != null) {
                         final byte[] byteArray = bas.toByteArray();
-                        return new ByteArrayInputStream(byteArray);
+
+                        return new ByteArrayInputStream(byteArray) {
+                            public void close() throws IOException {
+                                super.close();
+                            }
+                        };
                     }
                     return null;
                 }
             };
-            final StreamResource resource = new StreamResource(streamSource,
-                    name);
-            imageFile = new File(resource.getFilename());
+
+            int read = 0;
+            byte[] bytes = bas.toByteArray();
+            OutputStream outputStream = null;
+            try {
+                fileFile = new File("./tmp/uploads/" + name);
+                outputStream = new FileOutputStream( fileFile);
+
+                bas.writeTo(outputStream);
+            }
+            catch (IOException e) {
+
+            } finally {
+                if (outputStream != null) {
+                    try {
+                        // outputStream.flush();
+                        outputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            imageFile = fileFile;
             // show the file contents - images only for now
             //embedded = new Embedded(name, resource);
-            imageEmbedded.setSource(resource);
+            imageEmbedded.setSource(new FileResource(imageFile));
             //embedded.setSizeUndefined();
             imageEmbedded.setWidth(310, Unit.PIXELS);
             imageEmbedded.setHeight(460, Unit.PIXELS);
@@ -537,13 +564,6 @@ public class BookWin extends Window {
         @Override
         public AcceptCriterion getAcceptCriterion() {
             return AcceptAll.get();
-        }
-    }
-
-    /**Writes to nowhere*/
-    public class NullOutputStream extends OutputStream {
-        @Override
-        public void write(int b) throws IOException {
         }
     }
 
@@ -593,8 +613,6 @@ public class BookWin extends Window {
             try {
                 file = new File(path + filename);
 
-
-
                 fos = new FileOutputStream(file);
             } catch (FileNotFoundException ex) {
                 new Notification("File not found \n",
@@ -612,6 +630,17 @@ public class BookWin extends Window {
                     Notification.Type.TRAY_NOTIFICATION)
                     .show(Page.getCurrent());
             bookFile = file;
-        }
+
+            Fb2OpenXPATH Fbxpath = new Fb2OpenXPATH(file.getAbsolutePath());
+
+            authorField.setValue(Fbxpath.GetFName() + " " + Fbxpath.GetMName() + " " + Fbxpath.GetLName());
+            nameField.setValue(Fbxpath.GetTitle());
+
+            yearSelect.setValue(Integer.parseInt(Fbxpath.GetDate()));
+
+            seriesField.setValue(Fbxpath.GetBookSeries());
+
+            descArea.setValue(Fbxpath.GetAnnotatiome());
+    }
     };
 }

@@ -34,8 +34,6 @@ public class MailWindow extends Window {
         super("Mail"); // Set window caption
         center();
         // Some basic content for the window
-        setHeight(465, Unit.PIXELS);
-        setWidth(800, Unit.PIXELS);
         setCaption("Send mail");
         leftBody = new VerticalLayout();
 
@@ -63,13 +61,10 @@ public class MailWindow extends Window {
         header.addComponent(new Label("Send to:"));
         header.setSpacing(true);
 
-
         table = new Table();
         dataSource = new BeanItemContainer<>(Address.class);
         table.setContainerDataSource(dataSource);
         dataSource.addAll(list);
-
-
 
 //        table.addContainerProperty("Name", String.class, null);
   //      table.addContainerProperty("Mail", String.class, null);
@@ -101,6 +96,10 @@ public class MailWindow extends Window {
         button_send.setWidth(60, Unit.PERCENTAGE);
 
         footer = new HorizontalLayout(button_send, button_close);
+
+        footer.setComponentAlignment(button_close, Alignment.MIDDLE_CENTER);
+        footer.setComponentAlignment(button_send, Alignment.MIDDLE_CENTER);
+
         footer.setWidth(100, Unit.PERCENTAGE);
         //    footer.setHeight(0, Unit.PERCENTAGE);
 
@@ -110,8 +109,8 @@ public class MailWindow extends Window {
         leftBody.addComponent(header);
         leftBody.addComponent(body);
         leftBody.addComponent(footer);
-
-
+        leftBody.setMargin(true);
+        leftBody.setSpacing(true);
         int i=0;
         for (Address el : list) {
 
@@ -122,12 +121,13 @@ public class MailWindow extends Window {
 
         content.addComponent(leftBody);
         //content.addComponent(addresses);
-        content.setSizeFull();
+        content.setWidth(800, Unit.PIXELS);;
         content.setSpacing(true);
 
         setContent(content);
         setModal(true);
         setResizable(false);
+        setDraggable(false);
         text.setInputPrompt("Input text...");
         box_mails.addListener((Property.ValueChangeListener) event -> {
             String str = (String) box_mails.getValue();
@@ -144,6 +144,4 @@ public class MailWindow extends Window {
 
         setClosable(false);
     }
-
-
 }

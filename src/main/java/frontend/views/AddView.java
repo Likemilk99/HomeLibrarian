@@ -22,7 +22,6 @@ public class AddView extends CustomComponent implements View {
 
     public AddView() {
         mainlayout = new AbsoluteLayout();
-        header = new HeaderLayout();
         body = new HorizontalLayout();
 
         // Styles
@@ -30,7 +29,6 @@ public class AddView extends CustomComponent implements View {
         body.setStyleName("bodylayout");
         // Add components
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
-        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
 
         //header.setSizeFull();
         body.setSizeFull();
@@ -44,6 +42,12 @@ public class AddView extends CustomComponent implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // Get the user name from the session
         //String username = String.valueOf(getSession().getAttribute("user"));
-        //String status = String.valueOf(getSession().getAttribute("status"));
+        String status = String.valueOf(getSession().getAttribute("status"));
+
+        mainlayout.removeAllComponents();
+
+        header = new HeaderLayout(status);
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
     }
 }

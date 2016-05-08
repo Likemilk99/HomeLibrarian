@@ -47,7 +47,6 @@ public class ManageUsersView extends CustomComponent implements View {
 
     private ManageUsersView() {
         mainlayout = new AbsoluteLayout();
-        header = new HeaderLayout();
 
         body = new HorizontalLayout();
         table = TableUsers.getInstance();
@@ -77,7 +76,6 @@ public class ManageUsersView extends CustomComponent implements View {
         body.addComponent(hSplitBar);
 
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
-        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
 
         //header.setSizeFull();
         body.setSizeFull();
@@ -104,5 +102,12 @@ public class ManageUsersView extends CustomComponent implements View {
         // Get the user name from the session
         //String username = String.valueOf(getSession().getAttribute("user"));
         //String status = String.valueOf(getSession().getAttribute("status"));
+        String status = String.valueOf(getSession().getAttribute("status"));
+
+        mainlayout.removeAllComponents();
+
+        header = new HeaderLayout(status);
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
     }
 }

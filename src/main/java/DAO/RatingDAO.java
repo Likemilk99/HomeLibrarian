@@ -18,8 +18,6 @@ import java.util.List;
  * Created by likemilk on 07.05.2016.
  */
 public class RatingDAO implements InterfaceDao <Rating> {
-
-
     @Override
     public String WhoIsIt() {
         return "Rating";
@@ -87,6 +85,12 @@ public class RatingDAO implements InterfaceDao <Rating> {
     }
 
     @Override
+    public boolean isUsernameExist(String username) throws  SQLException {
+
+        return true;
+    }
+
+    @Override
     public void deleteEl(Rating el) throws SQLException {
         Session session = null;
         try {
@@ -133,52 +137,63 @@ public class RatingDAO implements InterfaceDao <Rating> {
     }
 
 
-    public double getRaiting(String title) throws SQLException  {
+    public double getRaiting(Integer book_id) throws SQLException  {
         Session session = null;
-        String sql = "SELECT * FROM \"Rating\" WHERE \"Title\" =:name_title";
+        String sql = "SELECT * FROM \"Rating\" WHERE book =:book_id";
         List<Rating> list = new LinkedList<>();
 
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Rating.class);
-            query.setParameter("name_title", title);
+            query.setParameter("book_id", book_id);
             list = query.list();
-            System.out.println("list.size() = " + list.size());
+            //System.out.println("list.size() = " + list.size());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
+            double rating =0.;
             if (session != null && session.isOpen()) {
                 session.close();
-                double rating =0;
                 for (Rating el : list)
                     rating = rating + el.getRaiting();
-                rating/=list.size();
-                return rating;
+                if(list.size() > 0)
+                    rating/=list.size();
             }
-            return 0.;
+            return rating;
         }
     }
 
-    public Rating getUser(String email, String title)  throws SQLException {
-        Session session = null;
-        String sql = "SELECT * FROM \"Rating\" WHERE \"Title\" =:name_title AND \"Email\" =:name_mail";
-        Rating rating = new Rating();
+    public double getRaiting(String email, Integer book_id) throws  SQLException {
+        return getUser(email, book_id).getRaiting();
+    }
 
+    public Rating getUser(String email, Integer book_id)  throws SQLException {
+        Session session = null;
+        String sql = "SELECT * FROM \"Rating\" WHERE book =:book_id AND \"Email\" =:name_mail";
+        Rating rating = new Rating();
+        rating.setEmail(email);
+        rating.setBook(book_id);
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Rating.class);
-            query.setParameter("name_title", title);
+            query.setParameter("book_id", book_id);
             query.setParameter("name_mail", email);
-            rating =(Rating) query.list().get(0);
+
+            if(query.list().size() > 0)
+                rating =(Rating) query.list().get(0);
+            else {
+                if (session != null && session.isOpen())
+                    session.close();
+                addEl(rating);
+                rating = getUser(email, book_id);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
-            if (session != null && session.isOpen()) {
+            if (session != null && session.isOpen())
                 session.close();
-                return rating;
-            }
             return rating;
         }
     }
@@ -212,37 +227,4 @@ public class RatingDAO implements InterfaceDao <Rating> {
             }
         }
     }
-
-    public void updateTitle(String oldTitle, String newTitle) throws SQLException {
-        Session session = null;
-        String sql = "SELECT * FROM \"Rating\" WHERE \"Title\" =:name_title";
-        List<Rating> rating = new ArrayList<>();
-
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            SQLQuery query = session.createSQLQuery(sql);
-            query.addEntity(Rating.class);
-            query.setParameter("name_title", oldTitle);
-         //   query.setParameter("name_mail", email);
-            rating =query.list();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-        for (Rating el : rating){
-                el.setTitle(newTitle);
-            try {
-                updateEl(el);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
 }

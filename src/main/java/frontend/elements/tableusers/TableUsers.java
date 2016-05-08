@@ -71,16 +71,20 @@ public class TableUsers extends VerticalLayout {
 
         buttons.addComponent(back);
 
+        back.setEnabled(false);
         back.addClickListener(a -> {
             position = position - ConstParam.TABLE_PAGE_VALUE;
-            if (position < 0)
+            if (position <= 0) {
                 position = 0;
+                back.setEnabled(false);
+            }
             try {
-
                 final List<Users> subList = userInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+
                 users.removeAllItems();
                 users.addAll(subList);
                 lablePages.setValue(position + "-" + (position + subList.size()));
+                forward.setEnabled(true);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -106,9 +110,15 @@ public class TableUsers extends VerticalLayout {
 
                 try {
                     final List<Users> subList = userInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+
                     users.removeAllItems();
                     users.addAll(subList);
-                    lablePages.setValue(position +"-" + (position + subList.size()));
+                    lablePages.setValue(position + "-" + (position + subList.size()));
+                    back.setEnabled(true);
+
+                    if(position + subList.size() == userInterface.getCount())
+                        forward.setEnabled(false);
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -211,18 +221,15 @@ public class TableUsers extends VerticalLayout {
         grid.getEditorFieldGroup().addCommitHandler(new FieldGroup.CommitHandler() {
             @Override
             public void preCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
+            }
 
+            @Override
+            public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
                 try {
                     userInterface.updateEl(users.getItem(grid.getEditedItemId()).getBean());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-            }
-
-            @Override
-            public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
-                //Trololo
             }
         });
     }
@@ -276,6 +283,9 @@ public class TableUsers extends VerticalLayout {
             users.removeAllItems();
             users.addAll(subList);
             lablePages.setValue(position +"-" + (position + subList.size()));
+
+            if(subList.size() <  ConstParam.TABLE_PAGE_VALUE)
+                forward.setEnabled(false);
             //  position = position + ConstParam.TABLE_PAGE_VALUE;
         } catch (SQLException e) {
             e.printStackTrace();

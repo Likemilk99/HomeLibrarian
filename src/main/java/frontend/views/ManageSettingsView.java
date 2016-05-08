@@ -36,7 +36,6 @@ public class ManageSettingsView extends CustomComponent implements View {
 
     private ManageSettingsView() {
         mainlayout = new AbsoluteLayout();
-        header = new HeaderLayout();
 
         body = new HorizontalLayout();
         // Styles
@@ -45,7 +44,6 @@ public class ManageSettingsView extends CustomComponent implements View {
 
         // Add components
         mainlayout.addComponent(body, "left: 0px; top: 10%;");
-        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
 
         //header.setSizeFull();
         body.setSizeFull();
@@ -62,5 +60,12 @@ public class ManageSettingsView extends CustomComponent implements View {
         // Get the user name from the session
         //String username = String.valueOf(getSession().getAttribute("user"));
         //String status = String.valueOf(getSession().getAttribute("status"));
+        String status = String.valueOf(getSession().getAttribute("status"));
+
+        mainlayout.removeAllComponents();
+
+        header = new HeaderLayout(status);
+        mainlayout.addComponent(body, "left: 0px; top: 10%;");
+        mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
     }
 }

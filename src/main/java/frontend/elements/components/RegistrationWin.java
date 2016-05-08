@@ -1,103 +1,115 @@
 package frontend.elements.components;
 
+import DAO.Factory;
+import DAO.InterfaceDao;
+import DAO.UserDAO;
 import Data.Users;
+import com.vaadin.data.Validator;
 import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.server.Page;
 import com.vaadin.ui.*;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.sql.SQLException;
 
 /**
  * Created by Лукерия on 16.03.2016.
  */
 public class RegistrationWin extends Window {
-    private VerticalLayout content;
-    private TextField username;
-    private PasswordField password;
-    private PasswordField reenter;
-    private Label date;
+    private VerticalLayout contentLayout;
+    private TextField usernameField;
+    private TextField fnameField;
+    private PasswordField passwordField;
+    private PasswordField reenterField;
+    private Label dateLabel;
     private HorizontalLayout date_layout;
-    private NativeSelect day;
-    private NativeSelect month;
-    private NativeSelect year;
-    private TextField email;
-    private Button signup;
+    private NativeSelect daySelect;
+    private NativeSelect monthSelect;
+    private NativeSelect yearSelect;
+    private TextField emailField;
+    private Button signupButton;
 
     private Users user;
     public RegistrationWin() {
         setCaption("Registration");
 
         //setSizeFull();
-        content = new VerticalLayout();
-        //content.setSizeFull();
-        content.setWidth(60, Unit.PERCENTAGE);
-        content.setMargin(true);
-        content.setSpacing(true);
-        content.setStyleName("loginlayout");
-        setContent(content);
+        contentLayout = new VerticalLayout();
+        //contentLayout.setSizeFull();
+        contentLayout.setWidth(60, Unit.PERCENTAGE);
+        contentLayout.setMargin(true);
+        contentLayout.setSpacing(true);
+        contentLayout.setStyleName("loginlayout");
+        setContent(contentLayout);
 
-        username = new TextField("Username:");
-        username.setRequired(true);
-        username.setWidth(100, Unit.PERCENTAGE);
-        username.setResponsive(true);
+        usernameField = new TextField("Username:");
+        usernameField.addValidator(new usernameValidator());
+        usernameField.setRequired(true);
+        usernameField.setWidth(100, Unit.PERCENTAGE);
 
-        password = new PasswordField("Password:");
-        password.addValidator(new PasswordReenterValidator());
-        password.setRequired(true);
-        password.setWidth(100, Unit.PERCENTAGE);
-        password.setResponsive(true);
+        fnameField = new TextField("First name:");
+        fnameField.setWidth(100, Unit.PERCENTAGE);
 
-        reenter = new PasswordField("Reenter password:");
-        reenter.addValidator(new PasswordReenterValidator());
-        reenter.setRequired(true);
-        reenter.setWidth(100, Unit.PERCENTAGE);
-        reenter.setResponsive(true);
+        passwordField = new PasswordField("Password:");
+        passwordField.addValidator(new emptyValidator());
+        passwordField.setRequired(true);
+        passwordField.setWidth(100, Unit.PERCENTAGE);
+        passwordField.setResponsive(true);
 
-        date = new Label("Date of birth:");
-        date.setWidth(100, Unit.PERCENTAGE);
-        date.setResponsive(true);
+        reenterField = new PasswordField("Reenter password:");
+        reenterField.addValidator(new passwordValidator());
+        reenterField.setRequired(true);
+        reenterField.setWidth(100, Unit.PERCENTAGE);
+        reenterField.setResponsive(true);
+
+        dateLabel = new Label("Date of birth:");
+        dateLabel.setWidth(100, Unit.PERCENTAGE);
+        dateLabel.setResponsive(true);
 
         date_layout = new HorizontalLayout();
-        day = new NativeSelect("Day: ");
+        daySelect = new NativeSelect("Day: ");
         for (int i=1; i<=31; i++) {
-            day.addItem(i);
-            day.setItemCaption(i, Integer.toString(i));
+            daySelect.addItem(i);
+            daySelect.setItemCaption(i, Integer.toString(i));
         }
-        day.setValue(1);
-        day.setNullSelectionAllowed(false);
-        day.setWidth(100, Unit.PERCENTAGE);
-        day.setResponsive(true);
+        daySelect.setValue(1);
+        daySelect.setNullSelectionAllowed(false);
+        daySelect.setWidth(100, Unit.PERCENTAGE);
+        daySelect.setResponsive(true);
 
-        month = new NativeSelect("Month: ");
+        monthSelect = new NativeSelect("Month: ");
         for (int i=1; i<=12; i++) {
-            month.addItem(i);
-            month.setItemCaption(i, Integer.toString(i));
+            monthSelect.addItem(i);
+            monthSelect.setItemCaption(i, Integer.toString(i));
         }
-        month.setValue(1);
-        month.setNullSelectionAllowed(false);
-        month.setWidth(100, Unit.PERCENTAGE);
-        month.setResponsive(true);
+        monthSelect.setValue(1);
+        monthSelect.setNullSelectionAllowed(false);
+        monthSelect.setWidth(100, Unit.PERCENTAGE);
+        monthSelect.setResponsive(true);
 
-        year = new NativeSelect("Year: ");
+        yearSelect = new NativeSelect("Year: ");
         for (int i=java.util.Calendar.getInstance().get(java.util.Calendar.YEAR); i>1900; --i) {
-            year.addItem(i);
-            year.setItemCaption(i, Integer.toString(i));
+            yearSelect.addItem(i);
+            yearSelect.setItemCaption(i, Integer.toString(i));
         }
-        year.setValue(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
-        year.setNullSelectionAllowed(false);
-        year.setWidth(100, Unit.PERCENTAGE);
-        year.setResponsive(true);
+        yearSelect.setValue(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR));
+        yearSelect.setNullSelectionAllowed(false);
+        yearSelect.setWidth(100, Unit.PERCENTAGE);
+        yearSelect.setResponsive(true);
 
-        date_layout.addComponent(day);
-        date_layout.addComponent(month);
-        date_layout.addComponent(year);
+        date_layout.addComponent(daySelect);
+        date_layout.addComponent(monthSelect);
+        date_layout.addComponent(yearSelect);
         date_layout.setSpacing(true);
         date_layout.setWidth(100, Unit.PERCENTAGE);
 
-        email = new TextField("Email:");
-        email.addValidator(new EmailValidator(
-                "Username must be an email address"));
-        email.setRequired(true);
-        email.setWidth(100, Unit.PERCENTAGE);
-        email.setResponsive(true);
+        emailField = new TextField("Email:");
+        emailField.addValidator(new emailValidator());
+        emailField.setRequired(true);
+        emailField.setWidth(100, Unit.PERCENTAGE);
+        emailField.setResponsive(true);
 
         /*final TextField secret = new TextField("Secret question:");
         secret.setRequired(true);
@@ -111,71 +123,92 @@ public class RegistrationWin extends Window {
         answer.setStyleName("textfield");
         answer.setResponsive(true);*/
 
-        signup = new Button("SIGNUP");
-        signup.setWidth(80, Unit.PERCENTAGE);
-        signup.addClickListener(new Button.ClickListener() {
+        signupButton = new Button("SIGNUP");
+        signupButton.setWidth(80, Unit.PERCENTAGE);
+        signupButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                if (!newuserButtonClick(username.getValue(),
-                        password.getValue(),
-                        day.getItemCaption(day.getValue()),
-                        month.getItemCaption(month.getValue()),
-                        year.getItemCaption(year.getValue()),
-                        email.getValue()
-                        //secret.getValue(),
-                        //answer.getValue()
-                )) {
-
-                    password.setValue("");
-                    reenter.setValue("");
+                if (!newuserButtonClick()) {
+                    passwordField.setValue("");
+                    reenterField.setValue("");
                 }
             }
         });
-        signup.setStyleName("super-button");
-        signup.setResponsive(true);
+        signupButton.setStyleName("super-button");
+        signupButton.setResponsive(true);
 
         // Put some components in it
-        content.addComponent(username);
-        content.addComponent(password);
-        content.addComponent(reenter);
-        content.addComponent(date);
-        content.addComponent(date_layout);
-        content.addComponent(email);
+        contentLayout.addComponent(usernameField);
+        contentLayout.addComponent(fnameField);
+        contentLayout.addComponent(passwordField);
+        contentLayout.addComponent(reenterField);
+        contentLayout.addComponent(dateLabel);
+        contentLayout.addComponent(date_layout);
+        contentLayout.addComponent(emailField);
         //subContent.addComponent(secret);
         // subContent.addComponent(answer);
-        content.addComponent(signup);
+        contentLayout.addComponent(signupButton);
 
-        content.setComponentAlignment(username, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(reenter, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(date, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(date_layout, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(email, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(usernameField, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(fnameField, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(passwordField, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(reenterField, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(dateLabel, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(date_layout, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(emailField, Alignment.MIDDLE_CENTER);
         //subContent.setComponentAlignment(secret, Alignment.MIDDLE_CENTER);
         //subContent.setComponentAlignment(answer, Alignment.MIDDLE_CENTER);
-        content.setComponentAlignment(signup, Alignment.MIDDLE_CENTER);
+        contentLayout.setComponentAlignment(signupButton, Alignment.MIDDLE_CENTER);
         // Center it in the browser window
         center();
         setDraggable(false);
+        setResizable(false);
         setWidth(320, Unit.PIXELS);
         setModal(true);
     }
 
 
-    private final class PasswordReenterValidator extends
+    private final class usernameValidator extends
             AbstractValidator<String> {
 
-        public PasswordReenterValidator() {
-            super("Password does not match the confirm password");
+        public usernameValidator() {
+            super("Username is already exist!");
         }
 
         @Override
         protected boolean isValidValue(String value) {
-            //
-            // Password must be at least 8 characters long and contain at least
-            // one number
-            //
-            if (reenter.getValue().matches(password.getValue())) {
-                //&& (value.length() < 5 || !value.matches(".*\\d.*")))
+            if(value.isEmpty())
+                return false;
+            InterfaceDao userInterface;
+            Factory factory = new Factory();
+            userInterface = factory.getDAO(UserDAO.class);
+            try {
+                if(!userInterface.isUsernameExist(usernameField.getValue()))
+                    return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        public Class<String> getType() {
+            return String.class;
+        }
+    }
+
+    private final class passwordValidator extends
+            AbstractValidator<String> {
+
+        public passwordValidator() {
+            super("Password does not match the confirm password!");
+        }
+
+        @Override
+        protected boolean isValidValue(String value) {
+            if(reenterField.isEmpty())
+                return false;
+
+            if (reenterField.getValue().matches(passwordField.getValue())) {
                 return true;
             }
             return false;
@@ -187,22 +220,89 @@ public class RegistrationWin extends Window {
         }
     }
 
+    private final class emailValidator extends
+            AbstractValidator<String> {
+
+        public emailValidator() {
+            super("Must be an email address");
+        }
+
+        @Override
+        protected boolean isValidValue(String value) {
+            if(value.isEmpty() || !isValidEmailAddress(value))
+                return false;
+
+            return true;
+        }
+
+        @Override
+        public Class<String> getType() {
+            return String.class;
+        }
+    }
+
+    private final class emptyValidator extends
+            AbstractValidator<String> {
+
+        public emptyValidator() {
+            super("Cannot be empty");
+        }
+
+        @Override
+        protected boolean isValidValue(String value) {
+            if(value.isEmpty())
+                return false;
+
+            return true;
+        }
+
+        @Override
+        public Class<String> getType() {
+            return String.class;
+        }
+    }
+
+    private static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
+
     public Users getUser() {
         return user;
     }
 
-    protected boolean newuserButtonClick(String username,
-                                         String pass,
-                                         String day,
-                                         String month,
-                                         String year,
-                                         String email
-                                         //String secret,
-                                         // String answer
-    ) {
-        //TODO closing windows if-else
-        //TO TABLE
-        user  = new Users(username, username, pass, email);
+    private boolean newuserButtonClick() {
+        String username = usernameField.getValue();
+        String fname = fnameField.getValue();
+        String pass = passwordField.getValue();
+        String day = daySelect.getItemCaption(daySelect.getValue());
+        String month = monthSelect.getItemCaption(monthSelect.getValue());
+        String year = yearSelect.getItemCaption(yearSelect.getValue());
+        String email = emailField.getValue();
+        //secret.getValue(),
+        //answer.getValue()
+        if(!emailField.isValid() || !reenterField.isValid() || !usernameField.isValid()) {
+            new Notification("Необходимо заполнить все требуемые поля.",
+                    Notification.Type.WARNING_MESSAGE)
+                    .show(Page.getCurrent());
+            return false;
+        }
+
+        user  = new Users(username, fname, pass, email);
+        InterfaceDao userInterface;
+        Factory factory = new Factory();
+        userInterface = factory.getDAO(UserDAO.class);
+        try {
+            userInterface.addEl(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.close();
         // TODO SQL
         return false;

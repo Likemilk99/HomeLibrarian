@@ -6,12 +6,14 @@ import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 import com.vaadin.annotations.*;
 import com.vaadin.ui.themes.ValoTheme;
 import frontend.elements.components.PasswordWin;
 import frontend.elements.components.RegistrationWin;
+import frontend.elements.metro.MetroBook;
 
 import java.sql.SQLException;
 
@@ -52,7 +54,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         //logo_layout.setSizeFull();
         //logo_layout.setExpandRatio(logo, 1.0f);
         // Initialize lebels
-        testlabel = new Label("(test@test.com/passw0rd)");
+        testlabel = new Label("");
         testlabel.setWidth(null);
         testlabel.setHeight(100, Unit.PERCENTAGE);
         testlabel.addStyleName("errorlabel");
@@ -67,7 +69,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         passwordlabel.setHeight(100, Unit.PERCENTAGE);
         passwordlabel.setResponsive(true);
 
-        Label loginlabel = new Label("Username or email: ");
+        Label loginlabel = new Label("Email: ");
         loginlabel.setSizeFull();
         loginlabel.setResponsive(true);
 
@@ -256,18 +258,21 @@ public class SimpleLoginView extends CustomComponent implements View,
         // I use a dummy username and password.
         //
 
-        // TODO SQL
-
         UserDAO InUser = new UserDAO();
         Users user = new Users("LikeMilk","Ivan", "7154255", "iround@yandex.ru");
         try {
-         user = InUser.getElById(username);
+            user = InUser.getElById(username);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if(user == null) {
+            testlabel.setValue("username or password is invalid");
+            password_field.setValue(null);
+            password_field.focus();
+            return;
+        }
+
         boolean isValid;
-        //isValid = username.equals("test@test.com")
-        //            && password.equals("passw0rd");
         try {
             isValid = user.getEmail().equals(username)
                     && user.getPassword().equals(password);
@@ -276,14 +281,18 @@ public class SimpleLoginView extends CustomComponent implements View,
             isValid = false;
         }
 
-
-        String status = "admin";
+        String status = user.getRole();
         if (isValid) {
 
             // Store the current user in the service session
-            getSession().setAttribute("user", username);
-            getSession().setAttribute("status", status);
+            getUI().getSession().setAttribute("user", username);
+            getUI().getSession().setAttribute("status", status);
+
+            new Notification(status,
+                    Notification.Type.TRAY_NOTIFICATION)
+                    .show(Page.getCurrent());
             // Navigate to main view
+            //MetroBook.getInstance().updateTable(username);
             getUI().getNavigator().navigateTo(MainView.NAME);//
 
         } else {
@@ -291,7 +300,7 @@ public class SimpleLoginView extends CustomComponent implements View,
             // Wrong password clear the password field and refocuses it
             password_field.setValue(null);
             password_field.focus();
-            testlabel.setValue("username or password is invalid (test@test.com/passw0rd)");
+            testlabel.setValue("username or password is invalid");
         }
     }
 

@@ -165,6 +165,11 @@ public class MenuFind extends VerticalLayout {
 
     }
 
+    public void updateFind() {
+        name.setValue("");
+        author.setValue("");
+        year.setValue(null);
+    }
 
     public void setGrid(CssLayout grid){
       this.grid = grid;
@@ -173,9 +178,9 @@ public class MenuFind extends VerticalLayout {
     public void setList(List<Books> list ){
         grid.removeAllComponents();
         for (Books el : list) {
-            BookImage book = new BookImage(el);
-            book.setHeight(400, Unit.PIXELS);
-            book.setWidth(250, Unit.PIXELS);
+            BookImage book = new BookImage(el, getUI().getSession().getAttribute("user").toString());
+            book.setHeight(568, Unit.PIXELS);
+            book.setWidth(320, Unit.PIXELS);
             grid.addComponent(book);
         }
     }

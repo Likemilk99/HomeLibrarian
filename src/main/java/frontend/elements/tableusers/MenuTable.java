@@ -60,17 +60,17 @@ public class MenuTable extends VerticalLayout {
             RegistrationWin subWindow = new RegistrationWin();
             // Open it in the UI
             getUI().addWindow(subWindow);
-            subWindow.addListener((Window.CloseEvent e) -> {
-                tableinstance.addRow(subWindow.getUser());
-            });
+            //subWindow.addListener((Window.CloseEvent e) -> {
+                //tableinstance.addRow(subWindow.getUser());
+            //});
         });
 
         button_add.setWidth(200, Unit.PIXELS);
 
-        button_block = new Button("Block", event -> {
-
-        });
-        button_block.setWidth(200, Unit.PIXELS);
+        //button_block = new Button("Block", event -> {
+//
+        //});
+//        button_block.setWidth(200, Unit.PIXELS);
 
         button_send = new Button("Send", event -> {
 
@@ -94,8 +94,8 @@ public class MenuTable extends VerticalLayout {
 
         menu.addComponent(button_add);
         menu.setComponentAlignment(button_add, Alignment.TOP_CENTER);
-        menu.addComponent(button_block);
-        menu.setComponentAlignment(button_block, Alignment.TOP_CENTER);
+     //   menu.addComponent(button_block);
+     //   menu.setComponentAlignment(button_block, Alignment.TOP_CENTER);
         menu.addComponent(button_delete);
         menu.setComponentAlignment(button_delete, Alignment.TOP_CENTER);
 

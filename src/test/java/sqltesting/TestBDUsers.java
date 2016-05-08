@@ -30,18 +30,26 @@ public class TestBDUsers {
      */
     @Test
     public void testAddtoBD() {
-        for (int i=0; i <100;i++) {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            Users contactEntity = new Users("test@test.com","Ivan", "7154255", "test@test.com");
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
+        Users adminEntity = new Users("admin","admin", "7154255", "iround0@yandex.ru");
+        adminEntity.setRole("admin");
+
+        session.beginTransaction();
+        //    contactEntity.SetId(15);
+        session.save(adminEntity);
+        session.getTransaction().commit();
+
+        for (int i=1; i <100;i++) {
+            Users contactEntity = new Users("test@test.com","Ivan", "7154255", "test@test.com");
             contactEntity.setEmail("iround"+i+"@yandex.ru");
+
+            session.beginTransaction();
          //    contactEntity.SetId(15);
             session.save(contactEntity);
             session.getTransaction().commit();
-
-            session.close();
         }
+        session.close();
     }
 
     /**

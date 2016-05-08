@@ -16,7 +16,6 @@ public class Users extends Address{
     private String password;
     private String role;
 
-
     public  Users() {}
 
     public Users(Integer id, String fname, String password, String role, String email) {
@@ -33,7 +32,6 @@ public class Users extends Address{
         this.password = password;
         this.role = "user";
     }
-
 
    // @Id
    // @GeneratedValue(strategy = GenerationType.IDENTITY)

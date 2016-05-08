@@ -216,4 +216,10 @@ public class BookDAO implements InterfaceDao<Books> {
         }
         return new ArrayList<>();
     }
+
+    @Override
+    public boolean isUsernameExist(String username) throws  SQLException {
+
+        return true;
+    }
 }

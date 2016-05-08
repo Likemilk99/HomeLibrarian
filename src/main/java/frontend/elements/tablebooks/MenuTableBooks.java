@@ -52,28 +52,28 @@ public class MenuTableBooks extends VerticalLayout {
             subWindow.addListener((Window.CloseEvent e) -> {
                 //tableinstance.addRow(subWindow.getBook());
 
-                Factory factory = new Factory();
-                InterfaceDao bookInterface = factory.getDAO(BookDAO.class);
-                try {
-                    bookInterface.addEl(subWindow.getBook());
-                } catch(SQLException exp) {
+                //Factory factory = new Factory();
+                //InterfaceDao bookInterface = factory.getDAO(BookDAO.class);
+                //try {
+                    //bookInterface.addEl(subWindow.getBook());
+                //} catch(SQLException exp) {
 
-                }
+                //}
 
             });
         });
 
         button_add.setWidth(200, Unit.PIXELS);
 
-        button_block = new Button("Block", event -> {
-
-        });
-        button_block.setWidth(200, Unit.PIXELS);
+        //button_block = new Button("Block", event -> {
+//
+        //});
+        //button_block.setWidth(200, Unit.PIXELS);
 
         menu.addComponent(button_add);
         menu.setComponentAlignment(button_add, Alignment.TOP_CENTER);
-        menu.addComponent(button_block);
-        menu.setComponentAlignment(button_block, Alignment.TOP_CENTER);
+        //menu.addComponent(button_block);
+        //menu.setComponentAlignment(button_block, Alignment.TOP_CENTER);
         menu.addComponent(button_delete);
         menu.setComponentAlignment(button_delete, Alignment.TOP_CENTER);
 

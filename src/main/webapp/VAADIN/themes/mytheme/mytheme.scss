@@ -61,6 +61,7 @@ $v-grid-row-stripe-background-color: #def1ff;
       color: $admin-color;
       font-size: 100%;
     }
+
     .super-button {
       border: none;
       background-image: none;
@@ -69,6 +70,11 @@ $v-grid-row-stripe-background-color: #def1ff;
         color: white;
         font-size: 32px;
       }
+    }
+
+    .v-disabled {
+      opacity: 1 !important;
+      background-color: lightgray !important;
     }
     .main-button {
       border: none;
@@ -104,6 +110,10 @@ $v-grid-row-stripe-background-color: #def1ff;
       color: white;
 
       box-shadow: none;
+    }
+
+    .v-textfield-error {
+      background: #FF7979;
     }
   }
   .v-caption {
@@ -160,19 +170,26 @@ $v-grid-row-stripe-background-color: #def1ff;
   z-index:999;
 
   .v-horizontallayout .v-menubar {
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
 
-    background-image: none;
-    background-color: $main-color-lighter;
-    color: $background-color;
-    font-size: 170%;
+  }
+  .menu_layout {
 
-    line-height: 110px !important;
+    .v-menubar {
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
 
-    outline: none;
-    border: none;
+      background-image: none;
+      background-color: $main-color-lighter;
+      color: $background-color;
+      font-size: 170%;
+
+      text-align: center;
+      //line-height: 12pt !important;
+
+      outline: none;
+      border: none;
+    }
 
     @include on-event {
       background-color: $background-color;
@@ -183,6 +200,14 @@ $v-grid-row-stripe-background-color: #def1ff;
     &:hover:after {
       background-color: rgba(0, 0, 0, 0);
     }
+  }
+
+  .menu_layout:hover .v-menubar {
+    background-color: $background-color;
+    color: $main-color-lighter;
+
+    //box-shadow: inset 25px 0px 25px -25px rgba(0,0,0,0.5), inset -25px 0px 25px -25px rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0);
   }
   .v-horizontallayout .v-button {
     -webkit-border-radius: 0px;
@@ -258,12 +283,15 @@ $v-grid-row-stripe-background-color: #def1ff;
 .bookinfolayout {
   min-width: 320px !important;
 
+  .v-ratingstars-wrapper {
+    border: none;
+    .v-ratingstars-star {
+      margin: -1px;
+    }
+  }
+
   .v-csslayout {
     .v-verticallayout {
-      .v-ratingstars-wrapper {
-        border: none;
-      }
-
       .v-upload {
         input button  {
           border: none;
@@ -364,16 +392,16 @@ $v-grid-row-stripe-background-color: #def1ff;
         .v-panel {
           .v-panel-content {
             .v-table {
-              background: $main-color-lighter;
-              color: white;
+              background: white;
+              //color: white;
               .v-table-header-wrap {
                 background-image: none;
-                background-color: $main-color-lighter;
+                background-color: #b6e1ff;
               }
               .v-table-body {
                 .v-table-table {
                   .v-table-row {
-                    background-color: $main-color-lighter;
+                    background-color: #def1ff;
                   }
                 }
               }
@@ -541,6 +569,10 @@ $v-grid-row-stripe-background-color: #def1ff;
         font-size: 26px;
       }
     }
+    .v-disabled {
+      opacity: 1 !important;
+      background-color: lightgray !important;
+    }
 
     .v-checkbox input[type="checkbox"]+label::before,.myradio input[type="radio"]+label::before
     {
@@ -579,12 +611,12 @@ $v-grid-row-stripe-background-color: #def1ff;
   //-ms-transition: transform 0.5s ease;
   //transition: transform 0.5s ease;
 
-  -webkit-transform: translate(0px, 0);
-  -webkit-transition: -webkit-transform 0.5s ease;
-  -moz-transform: translate(0px, 0);
-  -moz-transition: -webkit-transform 0.5s ease;
-  transform: translate(0px, 0);
-  transition: -webkit-transform 0.5s ease;
+  //-webkit-transform: translate(0px, 0);
+  //-webkit-transition: -webkit-transform 0.5s ease;
+  //-moz-transform: translate(0px, 0);
+  //-moz-transition: -webkit-transform 0.5s ease;
+  //transform: translate(0px, 0);
+  //transition: -webkit-transform 0.5s ease;
 
   cursor: pointer;
 
@@ -635,17 +667,35 @@ $v-grid-row-stripe-background-color: #def1ff;
     background-repeat: no-repeat;
     overflow: inherit !important;
   }
+
+  .ratinglayout {
+    .rating {
+      display: inline;
+    }
+    .rating_my {
+      display: none
+    }
+  }
+
+  .ratinglayout:hover {
+    .rating {
+      display: none
+    }
+    .rating_my {
+      display: inline;
+    }
+  }
 }
 
 .cells:hover {
   z-index:101;
   //background-color: $main-color;
 
-  -webkit-transform:scale(1.15); /* Safari and Chrome */
-  -moz-transform:scale(1.15); /* Firefox */
-  -ms-transform:scale(1.15); /* IE 9 */
-  -o-transform:scale(1.15); /* Opera */
-  transform:scale(1.15);
+  -webkit-transform:scale(1.05); /* Safari and Chrome */
+  -moz-transform:scale(1.05); /* Firefox */
+  -ms-transform:scale(1.05); /* IE 9 */
+  -o-transform:scale(1.05); /* Opera */
+  transform:scale(1.05);
 }
 
 .v-grid-cell.invisible {

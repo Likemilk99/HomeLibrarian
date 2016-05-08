@@ -36,13 +36,13 @@ public class GridBooks extends GridLayout {
         this.setWidth(100, Unit.PERCENTAGE);
 
         for(Books el : list)
-            elements.add(new BookImage(el));
+            elements.add(new BookImage(el, getUI().getSession().getAttribute("user").toString()));
     }
 
     public void SetBookCollection(List<Books> list) {
         elements.clear();
         for(Books el : list)
-            elements.add(new BookImage(el));
+            elements.add(new BookImage(el, getUI().getSession().getAttribute("user").toString()));
     }
 
 

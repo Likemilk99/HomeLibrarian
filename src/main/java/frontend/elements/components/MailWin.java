@@ -23,8 +23,6 @@ public class MailWin extends Window {
         center();
 
         // Some basic content for the window
-        setHeight(450, Unit.PIXELS);
-        setWidth(800, Unit.PIXELS);
         setCaption("Send mail");
         leftBody = new VerticalLayout();
 
@@ -51,7 +49,6 @@ public class MailWin extends Window {
         header.addComponent(box_mails);
         header.addComponent(new Label("Send to:"));
         header.setSpacing(true);
-
 
         table = new Table();
         table.addContainerProperty("Name", String.class, null);
@@ -85,6 +82,8 @@ public class MailWin extends Window {
 
         footer = new HorizontalLayout(button_send, button_close);
         footer.setWidth(100, Unit.PERCENTAGE);
+        footer.setComponentAlignment(button_close, Alignment.MIDDLE_CENTER);
+        footer.setComponentAlignment(button_send, Alignment.MIDDLE_CENTER);
         //    footer.setHeight(0, Unit.PERCENTAGE);
         //  footer.setStyleName("v-header");
 
@@ -96,7 +95,9 @@ public class MailWin extends Window {
         leftBody.addComponent(header);
         leftBody.addComponent(body);
         leftBody.addComponent(footer);
-
+        leftBody.setComponentAlignment(footer, Alignment.MIDDLE_CENTER);
+        leftBody.setSpacing(true);
+        leftBody.setWidth(100, Unit.PERCENTAGE);
 
         for (int i = 0; i < 30; i++) {
             table.addItem(new Object[]{"Canopus", "test"}, i);
@@ -105,7 +106,7 @@ public class MailWin extends Window {
 
         content.addComponent(leftBody);
         //content.addComponent(addresses);
-        content.setSizeFull();
+        content.setWidth(640, Unit.PIXELS);
         content.setSpacing(true);
 
         content.setStyleName("sebdmaillayout");

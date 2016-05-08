@@ -13,6 +13,7 @@ import com.vaadin.ui.*;
 import frontend.elements.gridbooks.BookImage;
 import javafx.scene.layout.Pane;
 
+import java.awt.print.Book;
 import java.security.PrivateKey;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,9 +28,26 @@ public class MetroBook extends AbsoluteLayout{
     private InterfaceDao bookInterface;
     private int position;
     private int oldScroll = -1;
+    private HorizontalLayout hl = new HorizontalLayout();
+    private ArrayList<BookImage> list = new ArrayList<BookImage>();
     private static int width;
 
-    public MetroBook() {
+    private static MetroBook instance;
+
+    public static  MetroBook getInstance() {
+        MetroBook localInstance = instance;
+        if (localInstance == null) {
+            synchronized (MetroBook.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new MetroBook();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+    private MetroBook() {
         super();
         position = 0;
         Factory factory = new Factory();
@@ -44,35 +62,12 @@ public class MetroBook extends AbsoluteLayout{
         button_2.setStyleName("scroll-button");
 
         Panel p = new Panel();
-        HorizontalLayout hl = new HorizontalLayout();
+
         p.setStyleName("metro-panel");
         p.setId("panelScroll");
         hl.setId("anchor");
-        /////////////////////////////////////////
-        ArrayList<BookImage> list = new ArrayList<>();
 
-        try {
-            List<Books> subList = bookInterface.getSubList(position, ConstParam.METRO_PAGE_VALUE);
-            for (Books el : subList)
-                list.add(new BookImage(el));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            position = position + ConstParam.METRO_PAGE_VALUE;
-        }
-
-        //TESTING
-        for (int i = 0; i < 50; i++) {
-            //  list.add(new BookImage(new Books()));
-        }
-
-        for (BookImage el : list) {
-            hl.addComponent(el);
-            el.setHeight(568, Unit.PIXELS);
-            el.setWidth(320, Unit.PIXELS);
-            hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
-        }
-
+        //updateTable();
         //////////////////////////////////////
         hl.setSpacing(true);
         hl.setMargin(true);
@@ -89,7 +84,7 @@ public class MetroBook extends AbsoluteLayout{
         button_1.setWidth(100, Unit.PERCENTAGE);
         button_2.setWidth(100, Unit.PERCENTAGE);
 
-        addComponent(p, "left: 0px; top: 0%;");
+        addComponent(p, "left: 10%; right: 10%;");
         addComponent(button_1, "left: 0%; right: 90%;");
         addComponent(button_2, "left: 90%; right: 0%;");
 
@@ -110,13 +105,14 @@ public class MetroBook extends AbsoluteLayout{
                         try {
                             final List<Books> subList = bookInterface.getSubList(position, ConstParam.METRO_PAGE_VALUE);
                             for (Books el : subList)
-                                list.add(new BookImage(el));
+                                list.add(new BookImage(el, getUI().getSession().getAttribute("user").toString()));
                             for (BookImage el : list) {
                                 hl.addComponent(el);
                                 el.setHeight(568, Unit.PIXELS);
                                 el.setWidth(320, Unit.PIXELS);
                                 hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
                             }
+                            list.clear();
 
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -129,29 +125,33 @@ public class MetroBook extends AbsoluteLayout{
                             "smoothScroll('panelScroll', 'right')");
                 }
         );
-
-
-        /*button_2.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                //TODO change condition
-
-                new Notification("Values",String.valueOf(p.getScrollLeft()),
-                        Notification.TYPE_WARNING_MESSAGE, true)
-                        .show(Page.getCurrent());
-                if(p.getScrollLeft() + 100 <= UI.getCurrent().getWidth()) {
-                    p.setScrollLeft(p.getScrollLeft() + 100);
-                } else {
-
-                }
-            }
-
-        });*/
     }
 
+    public void updateTable(String user) {
+        try {
+            hl.removeAllComponents();
 
+            position = 0;
+            final List<Books> subList = bookInterface.getSubList(position, ConstParam.METRO_PAGE_VALUE);
 
-     class PanelClick extends Panel implements MouseEvents.ClickListener {
+            for (Books el : subList)
+                list.add(new BookImage(el, user));
+
+            for (BookImage el : list) {
+                hl.addComponent(el);
+                el.setHeight(568, Unit.PIXELS);
+                el.setWidth(320, Unit.PIXELS);
+                hl.setComponentAlignment(el, Alignment.MIDDLE_CENTER);
+            }
+            list.clear();
+
+            position = position + ConstParam.METRO_PAGE_VALUE;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    class PanelClick extends Panel implements MouseEvents.ClickListener {
 
         public PanelClick(){
             addListener((MouseEvents.ClickListener)this);

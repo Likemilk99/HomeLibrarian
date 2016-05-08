@@ -15,7 +15,7 @@ public class TestBDRating {
 
     @Test
     public void testAddOnetoBD() {
-        Rating raiting = new Rating(10, "test@test.com","Title");
+        Rating raiting = new Rating(5, "test@test.com",1);
         Factory F = new Factory();
         InterfaceDao in = F.getDAO(RatingDAO.class);
         try {
@@ -29,7 +29,7 @@ public class TestBDRating {
     public void testAddtoBD() {
 
         for (int i = 0; i < 30; i++){
-            Rating raiting = new Rating(i % 5, "test@test.com", "Title");
+            Rating raiting = new Rating(i % 5 + 1, "test@test.com", i);
             Factory F = new Factory();
             InterfaceDao in = F.getDAO(RatingDAO.class);
             try {
@@ -46,20 +46,21 @@ public class TestBDRating {
         RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
 
         try {
-            System.out.println("Rating = " + in.getRaiting("Title"));
+            System.out.println("Rating = " + in.getRaiting(1));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testUpgate() {
+    public void testUpdate() {
         Factory F = new Factory();
         RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
-        Rating raiting = new Rating(777, "test@test.com", "Title");
-        raiting.setId(2);
+
         try {
-                in. updateEl(raiting);
+            Rating rat = in.getUser("test@test.com",1);
+            rat.setRaiting(1);
+            in.updateEl(rat);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,21 +71,8 @@ public class TestBDRating {
         Factory F = new Factory();
         RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
         try {
-            Rating rating = in.getUser("test@test.com","Title");
+            Rating rating = in.getUser("test@test.com",1);
             System.out.println("rating.getRaiting() = " + rating.getRaiting());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void testChangeTitle() {
-        Factory F = new Factory();
-        RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
-
-        try {
-
-            in.updateTitle("new_Value", "ygufyf");
         } catch (SQLException e) {
             e.printStackTrace();
         }
