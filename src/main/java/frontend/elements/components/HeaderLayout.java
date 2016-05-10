@@ -102,7 +102,7 @@ public class HeaderLayout extends HorizontalLayout {
             MenuBar.MenuItem child = menu_manage.addItem("Manage", null);
             child.addItem("Users", menuCommand_users);
             child.addItem("Content", menuCommand_books);
-            child.addItem("Settings", menuCommand_settings);
+            //child.addItem("Settings", menuCommand_settings);
 
             menu_layout = new VerticalLayout(menu_manage);
             menu_layout.setComponentAlignment(menu_manage, Alignment.MIDDLE_CENTER);

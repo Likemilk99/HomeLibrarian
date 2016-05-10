@@ -106,8 +106,8 @@ public class MenuFind extends VerticalLayout {
         menu.addComponent(name);
         menu.addComponent(author);
         menu.addComponent(year);
-        menu.addComponent(rating_label);
-        menu.addComponent(rating_layout);
+        //menu.addComponent(rating_label);
+        //menu.addComponent(rating_layout);
 
         this.addComponent(menu);
         this.setComponentAlignment(menu, Alignment.TOP_CENTER);
