@@ -41,18 +41,14 @@ public class BookDAO implements InterfaceDao<Books> {
     }
 
     public void updateEl(Books el) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        //Session session = null;
+        try(Session  session = HibernateUtil.getSessionFactory().openSession();) {
+
             session.beginTransaction();
             session.update(el);
             session.getTransaction().commit();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
@@ -62,11 +58,9 @@ public class BookDAO implements InterfaceDao<Books> {
         Books book = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            // test start
-            book = (Books) session.get(Books.class, el);
-            //guest =  session.load(Guest.class, nickname);
 
-            //end test
+            book = session.get(Books.class, el);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);
         } finally {
@@ -74,8 +68,7 @@ public class BookDAO implements InterfaceDao<Books> {
                 session.close();
             }
         }
-        // user.setNickname(guest.getNickname());
-        // user.setPassword(guest.getPassword());
+
         return book;
     }
 
@@ -202,7 +195,6 @@ public class BookDAO implements InterfaceDao<Books> {
                 session = HibernateUtil.getSessionFactory().openSession();
                 SQLQuery query = session.createSQLQuery(sql);
                 query.addEntity(Books.class);
-                // query.setParameter("employee_id", "iround0@yandex.ru");
                 users = query.list();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error I/O", JOptionPane.OK_OPTION);

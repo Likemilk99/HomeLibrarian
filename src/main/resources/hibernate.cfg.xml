@@ -5,11 +5,11 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/homelibbd</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/homelibrarian</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
 
         <property name="connection.username">postgres</property>
-        <property name="connection.password">Iround!1</property>
+        <property name="connection.password">root</property>
 
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="show_sql">true</property>
