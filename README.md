@@ -9,7 +9,6 @@
 * PostgreSQL
 * Hibernate
 * Vaadin
-* Spring Security
 * Maven
 * Система контроля версий Github
 * Тестирование Junit
