@@ -1,24 +1,19 @@
 package frontend.views;
 
-import DAO.Factory;
-import DAO.InterfaceDao;
-import DAO.UserDAO;
 import Data.Users;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import frontend.elements.components.HeaderLayout;
+import service.IService.IUserService;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.sql.SQLException;
 
-/**
- * Created by Александр on 13.03.2016.
- */
+
 @Theme("mytheme")
 public class ProfileView extends CustomComponent implements View {
 
@@ -73,14 +68,14 @@ public class ProfileView extends CustomComponent implements View {
         newusername.addValidator(new usernameValidator());
         apply_username.setVisible(false);
         apply_username.setEnabled(false);
+
         apply_username.addClickListener(e -> {
-            InterfaceDao userInterface;
-            Factory factory = new Factory();
-            userInterface = factory.getDAO(UserDAO.class);
+           IUserService iUserService = new IUserService();
+
             try {
-                Users user = (Users) userInterface.getElById(usernameString);
+                Users user =  iUserService.getElById(usernameString);
                 user.setNickName(newusername.getValue());
-                userInterface.updateEl(user);
+                iUserService.update(user);
 
                 username.setReadOnly(false);
                 username.setValue(newusername.getValue());
@@ -96,6 +91,7 @@ public class ProfileView extends CustomComponent implements View {
                 e1.printStackTrace();
             }
         });
+
         change_username.addClickListener(e -> {
             newusername.setVisible(true);
             apply_username.setVisible(true);
@@ -108,14 +104,14 @@ public class ProfileView extends CustomComponent implements View {
         newfname.addValidator(new emptyValidator());
         apply_fname.setVisible(false);
         apply_fname.setEnabled(false);
+
         apply_fname.addClickListener(e -> {
-            InterfaceDao userInterface;
-            Factory factory = new Factory();
-            userInterface = factory.getDAO(UserDAO.class);
+            IUserService iUserService = new IUserService();
+
             try {
-                Users user = (Users) userInterface.getElById(usernameString);
+                Users user =  iUserService.getElById(usernameString);
                 user.setFname(newfname.getValue());
-                userInterface.updateEl(user);
+                iUserService.update(user);
 
                 fname.setReadOnly(false);
                 fname.setValue(newfname.getValue());
@@ -143,16 +139,16 @@ public class ProfileView extends CustomComponent implements View {
         newemail.addValidator(new emailValidator());
         apply_email.setVisible(false);
         apply_email.setEnabled(false);
+
         apply_email.addClickListener(e -> {
-            InterfaceDao userInterface;
-            Factory factory = new Factory();
-            userInterface = factory.getDAO(UserDAO.class);
+            IUserService iUserService = new IUserService();
+
             try {
-                Users user = (Users) userInterface.getElById(usernameString);
+                Users user = (Users) iUserService.getElById(usernameString);
                 user.setEmail(newemail.getValue());
                 getSession().setAttribute("user", newemail.getValue());
                 usernameString = newemail.getValue();
-                userInterface.updateEl(user);
+                iUserService.update(user);
 
                 email.setReadOnly(false);
                 email.setValue(newemail.getValue());
@@ -180,14 +176,14 @@ public class ProfileView extends CustomComponent implements View {
         repassword.addValidator(new passwordValidator());
         apply_password.setVisible(false);
         apply_password.setEnabled(false);
+
         apply_password.addClickListener(e -> {
-            InterfaceDao userInterface;
-            Factory factory = new Factory();
-            userInterface = factory.getDAO(UserDAO.class);
+            IUserService iUserService = new IUserService();
+
             try {
-                Users user = (Users) userInterface.getElById(usernameString);
+                Users user = (Users) iUserService.getElById(usernameString);
                 user.setPassword(repassword.getValue());
-                userInterface.updateEl(user);
+                iUserService.update(user);
 
                 password.setValue("");
                 repassword.setValue("");
@@ -315,10 +311,9 @@ public class ProfileView extends CustomComponent implements View {
         mainlayout.addComponent(header, "left: 0px; top: 0px; bottom: 90%;");
         role.setValue("Status: " + statusString);
 
-        Factory F = new Factory();
-        InterfaceDao dao = F.getDAO(UserDAO.class);
+        IUserService iUserService = new IUserService();
         try {
-            Users user = (Users) dao.getElById(usernameString);
+            Users user = iUserService.getElById(usernameString);
 
             username.setReadOnly(false);
             username.setValue(user.getNickName());
@@ -350,11 +345,9 @@ public class ProfileView extends CustomComponent implements View {
                 apply_username.setEnabled(false);
                 return false;
             }
-            InterfaceDao userInterface;
-            Factory factory = new Factory();
-            userInterface = factory.getDAO(UserDAO.class);
+            IUserService iUserService = new IUserService();
             try {
-                if(!userInterface.isUsernameExist(newusername.getValue()))
+                if(!iUserService.isUsernameExist(newusername.getValue()))
                     apply_username.setEnabled(true);
                     return true;
             } catch (SQLException e) {

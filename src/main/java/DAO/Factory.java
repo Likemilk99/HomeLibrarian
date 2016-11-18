@@ -1,15 +1,14 @@
 package DAO;
 
 
+import DAO.ImpDAO.IBookDAO;
+import DAO.ImpDAO.IRatingDAO;
+import DAO.ImpDAO.IUserDAO;
 
 /**
  * Created by likemilk on 04.02.2016.
  */
 public class Factory{
-
-    private static UserDAO DAO = null;
-    //private static BookDAO DAO = null;
-    //  START WTF ???
     private static Factory instance = null;
 
     public static synchronized Factory getInstance(){
@@ -19,11 +18,16 @@ public class Factory{
         return instance;
     }
 
-    //  END WTF
-    public InterfaceDao getDAO(Object Obj){
-       if(Obj== UserDAO.class ) return new UserDAO();
-       if(Obj == BookDAO.class)return new BookDAO();
-       if(Obj == RatingDAO.class)return new RatingDAO();
-        return null;
+    public IUserDAO getUserDAO() {
+        return new IUserDAO();
     }
+
+    public IBookDAO getBookDAO() {
+        return new IBookDAO();
+    }
+
+    public IRatingDAO getRaitingDAO() {
+        return new IRatingDAO();
+    }
+
 }

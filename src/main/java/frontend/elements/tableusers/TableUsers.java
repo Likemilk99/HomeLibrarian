@@ -1,17 +1,10 @@
 package frontend.elements.tableusers;
 
-import DAO.BookDAO;
-import DAO.Factory;
-import DAO.InterfaceDao;
-import DAO.UserDAO;
 import Data.Address;
-import Data.Books;
 import Data.ConstParam;
 import Data.Users;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.client.widget.grid.CellReference;
-import com.vaadin.client.widget.grid.CellStyleGenerator;
 import com.vaadin.data.Item;
 
 import com.vaadin.data.Property;
@@ -20,11 +13,10 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.ButtonRenderer;
-import frontend.elements.gridbooks.BookImage;
-import javassist.CtMethod;
+import service.IService.IBookService;
+import service.IService.IUserService;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -41,7 +33,6 @@ public class TableUsers extends VerticalLayout {
     private static TableUsers instance;
     private ArrayList<Users> listUsers ;
 
-    private InterfaceDao userInterface;
     private int position;
 
     private Label lablePages;
@@ -65,8 +56,8 @@ public class TableUsers extends VerticalLayout {
     private TableUsers() {
         lablePages = new Label();
         position = 0;
-        Factory factory = new Factory();
-        userInterface = factory.getDAO(UserDAO.class);
+
+        IUserService iUserService = new IUserService();
         users = new BeanItemContainer<>(Users.class);
 
         buttons.addComponent(back);
@@ -79,7 +70,7 @@ public class TableUsers extends VerticalLayout {
                 back.setEnabled(false);
             }
             try {
-                final List<Users> subList = userInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+                final List<Users> subList = iUserService.getListByPosition(position, ConstParam.TABLE_PAGE_VALUE);
 
                 users.removeAllItems();
                 users.addAll(subList);
@@ -99,7 +90,7 @@ public class TableUsers extends VerticalLayout {
             long tableCount = 0;
 
             try {
-                tableCount = userInterface.getCount();
+                tableCount = iUserService.getCount();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -109,14 +100,14 @@ public class TableUsers extends VerticalLayout {
                 position = position + ConstParam.TABLE_PAGE_VALUE;
 
                 try {
-                    final List<Users> subList = userInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+                    final List<Users> subList = iUserService.getListByPosition(position, ConstParam.TABLE_PAGE_VALUE);
 
                     users.removeAllItems();
                     users.addAll(subList);
                     lablePages.setValue(position + "-" + (position + subList.size()));
                     back.setEnabled(true);
 
-                    if(position + subList.size() == userInterface.getCount())
+                    if(position + subList.size() == iUserService.getCount())
                         forward.setEnabled(false);
 
                 } catch (SQLException e) {
@@ -152,7 +143,7 @@ public class TableUsers extends VerticalLayout {
         grid.getColumn("delete")
                 .setRenderer(new ButtonRenderer(e -> {
                     try {
-                        userInterface.deleteEl(users.getItem(e.getItemId()).getBean());
+                        iUserService.delete(users.getItem(e.getItemId()).getBean());
                     } catch (SQLException e1) {
                         e1.printStackTrace();
                     }
@@ -187,7 +178,7 @@ public class TableUsers extends VerticalLayout {
                         lablePages.setValue("Search all pages");
                         users.removeAllItems();
                         try {
-                            users.addAll(userInterface.getAllEls());
+                            users.addAll(iUserService.getAll());
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
@@ -226,7 +217,7 @@ public class TableUsers extends VerticalLayout {
             @Override
             public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
                 try {
-                    userInterface.updateEl(users.getItem(grid.getEditedItemId()).getBean());
+                    iUserService.update(users.getItem(grid.getEditedItemId()).getBean());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -236,17 +227,21 @@ public class TableUsers extends VerticalLayout {
 
     public void addRow(Users row){
         users.addBean(row);
+        IUserService iUserService = new IUserService();
+
         try {
-            userInterface.addEl(row);
+            iUserService.insert(row);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void deleteSelectedRows() {
+        IUserService iUserService = new IUserService();
+
         for (Object itemId: selection.getSelectedRows()) {
             try {
-                userInterface.deleteEl(users.getItem(itemId).getBean());
+                iUserService.delete(users.getItem(itemId).getBean());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -261,6 +256,7 @@ public class TableUsers extends VerticalLayout {
 
     public ArrayList<String> getMails() {
         ArrayList <String> emails = new ArrayList<>();
+
         for (Object obj: selection.getSelectedRows()) {
             Property o = grid.getContainerDataSource().getItem(obj).getItemProperty("email");
             emails.add((String) o.getValue());
@@ -278,8 +274,10 @@ public class TableUsers extends VerticalLayout {
     }
 
     public void updateTable() {
+        IUserService iUserService = new IUserService();
+
         try {
-            final List<Users> subList = userInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+            final List<Users> subList = iUserService.getListByPosition(position, ConstParam.TABLE_PAGE_VALUE);
             users.removeAllItems();
             users.addAll(subList);
             lablePages.setValue(position +"-" + (position + subList.size()));

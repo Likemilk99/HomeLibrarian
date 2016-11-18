@@ -134,7 +134,7 @@ public class Fb2OpenDOM {
             }
         }
         else {
-             return null;
+             return "Unknown";
          }
     }
 
@@ -150,7 +150,7 @@ public class Fb2OpenDOM {
         }
     }
     else {
-        return null;
+        return "Unknown";
     }
 }
 
@@ -191,7 +191,7 @@ public class Fb2OpenDOM {
             }
         }
         else {
-            return null;
+            return "Unknown";
         }
     }
 
@@ -207,7 +207,7 @@ public class Fb2OpenDOM {
             }
         }
         else {
-            return null;
+            return "Unknown";
         }
     }
 

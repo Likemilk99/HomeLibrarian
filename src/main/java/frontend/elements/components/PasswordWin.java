@@ -1,16 +1,14 @@
 package frontend.elements.components;
 
-import DAO.Factory;
-import DAO.InterfaceDao;
-import DAO.UserDAO;
+
 import Data.PasswordGenerator;
 import Data.Users;
 import com.vaadin.data.validator.AbstractValidator;
-import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import mail.Sender;
 import mail.TemplateMails;
+import service.IService.IUserService;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -105,11 +103,10 @@ public class PasswordWin extends Window {
 
         but_send.addClickListener(e -> {
             if (field_mail.isValid()) {
-                Factory F = new Factory();
-                InterfaceDao dao = F.getDAO(UserDAO.class);
+                IUserService iUserService = new IUserService();
                 Users user = new Users();
                 try {
-                    user = (Users) dao.getElById(field_mail.getValue());
+                    user = iUserService.getUserById(field_mail.getValue());
 
                 } catch (SQLException e1) {
                     e1.printStackTrace();
@@ -143,13 +140,13 @@ public class PasswordWin extends Window {
 
         but_change.addClickListener(e -> {
             if(field_pass.getValue().equals(field_newPass.getValue())) {
-                Factory F = new Factory();
-                InterfaceDao dao = F.getDAO(UserDAO.class);
+
                 Users user = new Users();
+                IUserService iUserService = new IUserService();
                 try {
-                    user = (Users) dao.getElById(field_mail.getValue());
+                    user =  iUserService.getUserById(field_mail.getValue());
                     user.setPassword(field_pass.getValue());
-                    dao.updateEl(user);
+                    iUserService.update(user);
                     new Notification("Success","Password changed!",
                             Notification.TYPE_TRAY_NOTIFICATION, true)
                             .show(Page.getCurrent());

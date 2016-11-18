@@ -1,23 +1,13 @@
 package frontend.elements.tableusers;
 
-import DAO.BookDAO;
-import DAO.Factory;
-import DAO.InterfaceDao;
 import Data.Books;
-import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
-import frontend.elements.components.OnEnterKeyHandler;
-import frontend.elements.components.RegistrationWin;
 import frontend.elements.gridbooks.BookImage;
-import frontend.elements.tablebooks.TableBooks;
-import frontend.views.SearchView;
 import mail.Sender;
+import service.IService.IBookService;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +29,6 @@ public class MenuFind extends VerticalLayout {
     private CssLayout grid;
 
     //BD
-    private  InterfaceDao BooksDAO;
 
     public static MenuFind getInstance() {
         MenuFind localInstance = instance;
@@ -54,11 +43,7 @@ public class MenuFind extends VerticalLayout {
 
     public MenuFind() {
         menu = new VerticalLayout();
-       // sender = new Sender();
 
-
-        Factory F= new Factory();
-        BooksDAO = F.getDAO(BookDAO.class );
 
         menu.setWidth(100, Sizeable.Unit.PERCENTAGE);
         menu.setMargin(true);
@@ -115,14 +100,15 @@ public class MenuFind extends VerticalLayout {
         this.setStyleName("menulayout");
         this.setSizeFull();
 
+        IBookService iBookService = new IBookService();
 
         name.addValueChangeListener(event -> {
             List<Books> list = null;
             try {
                 if(year.getValue() == null)
-                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), "");
+                    list = iBookService.GetListBooks(author.getValue(), name.getValue(), "");
                 else
-                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+                    list = iBookService.GetListBooks(author.getValue(), name.getValue(), year.getValue().toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -134,9 +120,9 @@ public class MenuFind extends VerticalLayout {
             List<Books> list = null;
             try {
                 if(year.getValue() == null)
-                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), "");
+                    list = iBookService.GetListBooks(author.getValue(), name.getValue(), "");
                 else
-                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+                    list = iBookService.GetListBooks(author.getValue(), name.getValue(), year.getValue().toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -148,9 +134,9 @@ public class MenuFind extends VerticalLayout {
             List<Books> list = null;
             try {
                 if(year.getValue() == null)
-                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), "");
+                    list = iBookService.GetListBooks(author.getValue(), name.getValue(), "");
                 else
-                    list = BooksDAO.GetSqlRequst(author.getValue(), name.getValue(), year.getValue().toString());
+                    list = iBookService.GetListBooks(author.getValue(), name.getValue(), year.getValue().toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }

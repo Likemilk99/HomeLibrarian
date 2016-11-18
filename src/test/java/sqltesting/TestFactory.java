@@ -1,7 +1,7 @@
 package sqltesting;
 
-import DAO.BookDAO;
-import DAO.UserDAO;
+import DAO.ImpDAO.IBookDAO;
+import DAO.ImpDAO.IUserDAO;
 import DAO.Factory;
 import DAO.InterfaceDao;
 
@@ -16,10 +16,10 @@ public class TestFactory {
 
     @Test
     public void TestFactory(){
-        InterfaceDao InBook = F.getDAO(BookDAO.class );
-        InterfaceDao InUser = F.getDAO(UserDAO.class );
+        IUserDAO iUserDAO = F.getUserDAO();
+        IBookDAO iBookDAO = F.getBookDAO();
 
-        assertEquals(InBook.WhoIsIt().toString(),"Books");
-        assertEquals(InUser.WhoIsIt().toString(), "Users");
+        assertEquals(iUserDAO.WhoIsIt().toString(),"Books");
+        assertEquals(iBookDAO.WhoIsIt().toString(), "Users");
     }
 }

@@ -1,20 +1,14 @@
 package frontend.elements.metro;
 
-import DAO.BookDAO;
-import DAO.Factory;
-import DAO.InterfaceDao;
 import Data.Books;
 import Data.ConstParam;
-import com.google.gwt.dom.client.NativeEvent;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import frontend.elements.gridbooks.BookImage;
-import javafx.scene.layout.Pane;
+import service.IService.IBookService;
 
-import java.awt.print.Book;
-import java.security.PrivateKey;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +19,6 @@ import java.util.List;
 
 @JavaScript({"vaadin://themes/mytheme/js/SmoothScroll_17.js"})
 public class MetroBook extends AbsoluteLayout{
-    private InterfaceDao bookInterface;
     private int position;
     private int oldScroll = -1;
     private HorizontalLayout hl = new HorizontalLayout();
@@ -50,9 +43,8 @@ public class MetroBook extends AbsoluteLayout{
     private MetroBook() {
         super();
         position = 0;
-        Factory factory = new Factory();
-        bookInterface = factory.getDAO(BookDAO.class);
 
+        IBookService iBookService = new IBookService();
         setStyleName("metrolayout");
 
         Button button_1 = new Button("<");
@@ -103,7 +95,7 @@ public class MetroBook extends AbsoluteLayout{
         button_2.addClickListener(lambda -> {
                     if(oldScroll == p.getScrollLeft()) {
                         try {
-                            final List<Books> subList = bookInterface.getSubList(position, ConstParam.METRO_PAGE_VALUE);
+                            final List<Books> subList = iBookService.getListByPosition(position, ConstParam.METRO_PAGE_VALUE);
                             for (Books el : subList)
                                 list.add(new BookImage(el, getUI().getSession().getAttribute("user").toString()));
                             for (BookImage el : list) {
@@ -130,9 +122,10 @@ public class MetroBook extends AbsoluteLayout{
     public void updateTable(String user) {
         try {
             hl.removeAllComponents();
-
             position = 0;
-            final List<Books> subList = bookInterface.getSubList(position, ConstParam.METRO_PAGE_VALUE);
+
+            IBookService iBookService = new IBookService();
+            final List<Books> subList = iBookService.getListByPosition(position, ConstParam.METRO_PAGE_VALUE);
 
             for (Books el : subList)
                 list.add(new BookImage(el, user));

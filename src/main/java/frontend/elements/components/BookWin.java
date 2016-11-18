@@ -1,14 +1,8 @@
 package frontend.elements.components;
 
-import DAO.BookDAO;
-import DAO.Factory;
-import DAO.InterfaceDao;
-import DAO.RatingDAO;
 import Data.Books;
 import Data.Rating;
-import Data.Users;
 import XMlWorker.Fb2OpenXPATH;
-import com.vaadin.annotations.StyleSheet;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -20,17 +14,13 @@ import com.vaadin.server.StreamVariable;
 import com.vaadin.ui.*;
 import frontend.elements.metro.MetroBook;
 import frontend.elements.tablebooks.TableBooks;
-import frontend.elements.tableusers.TableUsers;
-import frontend.views.AddView;
 import org.apache.tika.Tika;
-import org.apache.tika.io.FilenameUtils;
 import org.vaadin.teemu.ratingstars.RatingStars;
+import service.IService.IBookService;
+import service.IService.IRaitingService;
 
-import java.awt.print.Book;
 import java.io.*;
-import java.nio.file.*;
 import java.sql.SQLException;
-import java.util.Collection;
 
 /**
  * Created by Александр on 30.04.2016.
@@ -59,8 +49,6 @@ public class BookWin extends Window {
     private final Upload imageUpload = new Upload(null, imageLineBreakCounter);
     private File imageFile = new File("./resource/default/Logo.png");
 
-    //private UploadInfoWindow imageUploadInfoWindow = new UploadInfoWindow(imageUpload, imageLineBreakCounter);
-    //private UploadInfoWindow bookUploadInfoWindow = new UploadInfoWindow(bookUpload, bookLineBreakCounter);
 
     private TextField nameField = new TextField("Title");
     private TextField seriesField = new TextField("Series");
@@ -153,10 +141,9 @@ public class BookWin extends Window {
         buttons.addComponent(cancelButton);
         buttons.setSpacing(true);
 
-        Factory F = new Factory();
-        RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
+        IRaitingService iRaitingService = new IRaitingService();
         try {
-            double rat = in.getRaiting(book.getId());
+            double rat = iRaitingService.getRaiting(book.getId());
 
             rating.setValue(rat);
             rating.setReadOnly(true);
@@ -347,11 +334,10 @@ public class BookWin extends Window {
                                    String Description,
                                    String Image,
                                    String File) {
-        Factory F = new Factory();
-        InterfaceDao InUser = F.getDAO(BookDAO.class);
+        IBookService iBookService = new IBookService();
 
         try {
-            if (InUser.GetByTitleAndName(Title, Author).size() > 0){
+            if (iBookService.GetListBooks(Title, Author).size() > 0){
                 new Notification("Book with given author and name is already exist",
                        Notification.Type.ERROR_MESSAGE)
                         .show(Page.getCurrent());
@@ -361,44 +347,47 @@ public class BookWin extends Window {
 
             //copy image to
             //copy file to
-            String imageextension = "";
+            String imageExtension = "";
 
             int i = imageFile.getPath().lastIndexOf('.');
             if (i > 0) {
-                imageextension = imageFile.getPath().substring(i+1);
+                imageExtension = imageFile.getPath().substring(i+1);
             }
 
-            String bookextension = "";
+            String bookExtension = "";
 
             int j = bookFile.getPath().lastIndexOf('.');
             if (j > 0) {
-                bookextension = bookFile.getPath().substring(j+1);
+                bookExtension = bookFile.getPath().substring(j+1);
             }
 
-            InUser.addEl(book);
-            Books tempbook = (Books)(InUser.GetByTitleAndName(Title, Author)).get(0);
+            iBookService.insert(book);
+
+
+
+            Books tempbook = (iBookService.GetListBooks(Title, Author)).get(0);
             tempbook.getId();
             String id = tempbook.getId().toString();
 
             if(!imageFile.equals(new File("./resource/default/Logo.png"))) {
-                imageFile.renameTo(new File("./resource/images/" + id + "." + imageextension));
-                tempbook.setImage("./resource/images/" + id + "." + imageextension);
+                imageFile.renameTo(new File("./resource/images/" + id + "." + imageExtension));
+                tempbook.setImage("./resource/images/" + id + "." + imageExtension);
             }
             if(!bookFile.equals(new File(""))) {
-                bookFile.renameTo(new File("./resource/books/" + id + "." + bookextension));
-                tempbook.setFile("./resource/books/" + id + "." + bookextension);
+                bookFile.renameTo(new File("./resource/books/" + id + "." + bookExtension));
+                tempbook.setFile("./resource/books/" + id + "." + bookExtension);
             }
 
-            InUser.updateEl(tempbook);
+            iBookService.update(tempbook);
 
+            IRaitingService iRaitingService = new IRaitingService();
             try {
-                RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
 
-                Rating rat = in.getUser(getSession().getAttribute("user").toString(),book.getId());
+                Rating rat = iRaitingService.getUser(getSession().getAttribute("user").toString(),book.getId());
 
                 rat.setRaiting(rating.getValue());
 
-                in.updateEl(rat);
+                iRaitingService.update(rat);
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -633,10 +622,10 @@ public class BookWin extends Window {
 
             Fb2OpenXPATH Fbxpath = new Fb2OpenXPATH(file.getAbsolutePath());
 
-            authorField.setValue(Fbxpath.GetFName() + " " + Fbxpath.GetMName() + " " + Fbxpath.GetLName());
+           authorField.setValue(Fbxpath.GetFName() + " " + Fbxpath.GetMName() + " " + Fbxpath.GetLName());
             nameField.setValue(Fbxpath.GetTitle());
 
-            yearSelect.setValue(Integer.parseInt(Fbxpath.GetDate()));
+           // yearSelect.setValue(Integer.parseInt(Fbxpath.GetDate()));
 
             seriesField.setValue(Fbxpath.GetBookSeries());
 

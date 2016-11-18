@@ -1,6 +1,6 @@
 package frontend.views;
 
-import DAO.UserDAO;
+import DAO.ImpDAO.IUserDAO;
 import Data.Users;
 import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.data.validator.EmailValidator;
@@ -13,7 +13,6 @@ import com.vaadin.annotations.*;
 import com.vaadin.ui.themes.ValoTheme;
 import frontend.elements.components.PasswordWin;
 import frontend.elements.components.RegistrationWin;
-import frontend.elements.metro.MetroBook;
 
 import java.sql.SQLException;
 
@@ -258,7 +257,7 @@ public class SimpleLoginView extends CustomComponent implements View,
         // I use a dummy username and password.
         //
 
-        UserDAO InUser = new UserDAO();
+        IUserDAO InUser = new IUserDAO();
         Users user = new Users("LikeMilk","Ivan", "7154255", "iround@yandex.ru");
         try {
             user = InUser.getElById(username);

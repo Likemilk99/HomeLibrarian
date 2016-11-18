@@ -1,9 +1,9 @@
 package sqltesting;
 
-import DAO.BookDAO;
+import DAO.ImpDAO.IBookDAO;
 import DAO.Factory;
+import DAO.ImpDAO.IUserDAO;
 import DAO.InterfaceDao;
-import DAO.UserDAO;
 import Data.Books;
 import Data.Users;
 import org.hibernate.SQLQuery;
@@ -41,8 +41,8 @@ public class TestBDBooks {
                     "");
             //B.Books();
             F = new Factory();
-            InterfaceDao InBooks = F.getDAO(BookDAO.class);
-            InBooks.addEl(B);
+            IBookDAO InBooks = F.getBookDAO();
+            InBooks.insert(B);
             //test
              }
 
@@ -80,7 +80,7 @@ public class TestBDBooks {
     public void testGetSqlRequst() {
         String sql = "SELECT * FROM Users WHERE \"Password\" ='7154255'";
         F= new Factory();
-        InterfaceDao InBooks = F.getDAO(BookDAO.class );
+        IBookDAO InBooks = F.getBookDAO();
         ArrayList<String> list = new ArrayList<>();
         list.add("7154255");
         list.add("iround0@yandex.ru");
@@ -101,9 +101,9 @@ public class TestBDBooks {
     @Test
     public void testSub() {
         F= new Factory();
-        InterfaceDao books = F.getDAO(BookDAO.class );
+        IBookDAO InBooks = F.getBookDAO();
         try {
-            books.GetByTitleAndName("1","1");
+            InBooks.GetByTitleAndName("1","1");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -113,9 +113,9 @@ public class TestBDBooks {
     @Test
     public void getCount() {
         F= new Factory();
-        BookDAO InBooks = new BookDAO();//F.getDAO(BookDAO.class );
+        IBookDAO InBooks = new IBookDAO();//F.getDAO(IBookDAO.class );
         try {
-            System.out.println("F = " + InBooks.getCount());
+            System.out.println("F = " + InBooks.getCount(Books.class));
         } catch (SQLException e) {
             e.printStackTrace();
         }

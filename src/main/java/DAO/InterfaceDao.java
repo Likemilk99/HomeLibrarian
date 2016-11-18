@@ -2,6 +2,7 @@ package DAO;
 
 import Data.Books;
 import Data.Users;
+import org.omg.CORBA.IRObject;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,14 +25,14 @@ public interface InterfaceDao<T>{
      * @param El Добавление обьекта  <b>EL<b>
      * @throws SQLException
      */
-    void addEl(T El) throws SQLException;
+    void insert(T El) throws SQLException;
 
     /**
      *
      * @param El Обновить обьект  <b>EL<b>
      * @throws SQLException
      */
-    void updateEl(T El) throws SQLException;
+    void update(T El) throws SQLException;
 
     /**
      * Получить обьекта по id
@@ -39,29 +40,22 @@ public interface InterfaceDao<T>{
      * @return возвращает обьект заданного типа
      * @throws SQLException
      */
-    // T getUserById(Integer id) throws SQLException;
-    T getElById(String id) throws SQLException;
+
     /**
      * Получить список обьектов
      * @return список
      * @throws SQLException
      */
-    List getAllEls() throws SQLException;
-
-    List<T> GetByTitleAndName(String title, String author)  throws SQLException;
+    List getAll(Class <T> clazz) throws SQLException;
 
     /**
      * Удалить элемент из БД
      * @param El
      * @throws SQLException
      */
-    void deleteEl(T El) throws SQLException;
+    void delete(T El) throws SQLException;
 
-    long getCount() throws  SQLException;
+    long getCount(Class<T> clazz) throws  SQLException;
 
-    List getSubList(int position, int count) throws SQLException;
-
-    boolean isUsernameExist(String username) throws  SQLException;
-
-    public List<T> GetSqlRequst(String author, String title, String year) throws SQLException;
+    List getSubList(int position, int count, Class<T> clazz) throws SQLException;
 }

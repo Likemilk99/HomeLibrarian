@@ -8,8 +8,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import frontend.elements.components.HeaderLayout;
-import frontend.elements.tablebooks.MenuTableBooks;
-import frontend.elements.tablebooks.TableBooks;
 
 /**
  * Created by Александр on 25.04.2016.

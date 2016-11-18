@@ -40,8 +40,7 @@ public class AddView extends CustomComponent implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        // Get the user name from the session
-        //String username = String.valueOf(getSession().getAttribute("user"));
+
         String status = String.valueOf(getSession().getAttribute("status"));
 
         mainlayout.removeAllComponents();

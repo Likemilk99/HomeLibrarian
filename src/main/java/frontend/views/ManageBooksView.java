@@ -8,7 +8,6 @@ import com.vaadin.ui.*;
 import frontend.elements.components.HeaderLayout;
 import frontend.elements.tablebooks.MenuTableBooks;
 import frontend.elements.tablebooks.TableBooks;
-import frontend.elements.tableusers.MenuTable;
 
 /**
  * Created by Александр on 25.04.2016.
@@ -83,9 +82,6 @@ public class ManageBooksView extends CustomComponent implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        // Get the user name from the session
-        //String username = String.valueOf(getSession().getAttribute("user"));
-        //String status = String.valueOf(getSession().getAttribute("status"));
         String status = String.valueOf(getSession().getAttribute("status"));
 
         mainlayout.removeAllComponents();

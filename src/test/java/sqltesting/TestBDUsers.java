@@ -2,20 +2,16 @@ package sqltesting;
 
 import DAO.Factory;
 import DAO.InterfaceDao;
-import DAO.UserDAO;
-import Data.Address;
+import DAO.ImpDAO.IUserDAO;
 import Data.ConstParam;
 import Data.Users;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
 import org.junit.Test;
+import org.osgi.service.useradmin.User;
 import util.HibernateUtil;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -59,16 +55,16 @@ public class TestBDUsers {
     public void testAddtoBDUsingFactory() throws SQLException {
         Us = new Users("Likemilk", "Ivan", "7154255", "iround@yandex.ru");
         F= new Factory();
-        InterfaceDao InUser = F.getDAO(UserDAO.class );
-        InUser.addEl(Us);
+        IUserDAO iUserDAO = F.getUserDAO();
+        iUserDAO.insert(Us);
 
     }
 
     @Test
     public void testGetQuery() throws SQLException{
         F= new Factory();
-        InterfaceDao InUser = F.getDAO(UserDAO.class );
-        List<Users> users =InUser.getSubList(30,  ConstParam.TABLE_PAGE_VALUE);
+        IUserDAO iUserDAO = F.getUserDAO();
+        List<Users> users =iUserDAO.getSubList(30,  ConstParam.TABLE_PAGE_VALUE, Users.class);
 
         for (Users el : users)
             System.out.println("el.getNickName() = " + el.getFname());
@@ -78,15 +74,15 @@ public class TestBDUsers {
     @Test
     public void testGetCountTable() throws SQLException{
         F= new Factory();
-        InterfaceDao InUser = F.getDAO(UserDAO.class );
-        System.out.println("Count = " + InUser.getCount());
+        IUserDAO iUserDAO = F.getUserDAO();
+        System.out.println("Count = " + iUserDAO.getCount(Users.class));
     }
 
     @Test
     public void testGetSqlRequst() {
         String sql = "SELECT * FROM Users WHERE \"Password\" ='7154255'";
         F= new Factory();
-        InterfaceDao InUser = F.getDAO(UserDAO.class );
+        IUserDAO iUserDAO = F.getUserDAO();
         ArrayList<String> list = new ArrayList<>();
         list.add("7154255");
         list.add("iround0@yandex.ru");
@@ -98,17 +94,17 @@ public class TestBDUsers {
             System.out.println(el.getEmail() + " " + el.getNickName() + " " +  el.getPassword() + " " +  el.getRole() + " " +  el.getFname());
     }
 
-    @Test
+    /*@Test
     public void testSub() {
         F= new Factory();
-        InterfaceDao InUser = F.getDAO(UserDAO.class );
+        IUserDAO iUserDAO = F.getUserDAO();
         try {
-            InUser.GetByTitleAndName("1","1");
+            iUserDAO.GetByTitleAndName("1","1", Users.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         System.out.println("test ");
-    }
+    }*/
 
 
 }

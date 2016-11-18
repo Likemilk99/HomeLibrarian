@@ -1,11 +1,7 @@
 package frontend.elements.tablebooks;
 
-import DAO.BookDAO;
-import DAO.Factory;
-import DAO.InterfaceDao;
 import Data.Books;
 import Data.ConstParam;
-import Data.Users;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -16,10 +12,10 @@ import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.ButtonRenderer;
+import service.IService.IBookService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,7 +24,6 @@ import java.util.List;
 @Theme("mytheme")
 public class TableBooks extends VerticalLayout {
     private Grid grid;
-    private InterfaceDao bookInterface;
     private BeanItemContainer<Books> books = new BeanItemContainer<>(Books.class);
     private GeneratedPropertyContainer gpc;
     Grid.MultiSelectionModel selection ;
@@ -57,8 +52,8 @@ public class TableBooks extends VerticalLayout {
     private TableBooks() {
         lablePages = new Label();
         position = 0;
-        Factory factory = new Factory();
-        bookInterface = factory.getDAO(BookDAO.class);
+
+        IBookService iBookService = new IBookService();
         books = new BeanItemContainer<>(Books.class);
 
         buttons.addComponent(back);
@@ -72,7 +67,7 @@ public class TableBooks extends VerticalLayout {
             }
             try {
 
-                final List<Books> subList = bookInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+                final List<Books> subList = iBookService.getListByPosition(position, ConstParam.TABLE_PAGE_VALUE);
                 books.removeAllItems();
                 books.addAll(subList);
                 lablePages.setValue(position + "-" + (position + subList.size()));
@@ -91,7 +86,7 @@ public class TableBooks extends VerticalLayout {
             long tableCount = 0;
 
             try {
-                tableCount = bookInterface.getCount();
+                tableCount = iBookService.getCount();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -101,14 +96,14 @@ public class TableBooks extends VerticalLayout {
                 position = position + ConstParam.TABLE_PAGE_VALUE;
 
                 try {
-                    final List<Books> subList = bookInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+                    final List<Books> subList = iBookService.getListByPosition(position, ConstParam.TABLE_PAGE_VALUE);
 
                     books.removeAllItems();
                     books.addAll(subList);
                     lablePages.setValue(position + "-" + (position + subList.size()));
                     back.setEnabled(true);
 
-                    if(position + subList.size() == bookInterface.getCount())
+                    if(position + subList.size() == iBookService.getCount())
                         forward.setEnabled(false);
 
                 } catch (SQLException e) {
@@ -144,7 +139,7 @@ public class TableBooks extends VerticalLayout {
         grid.getColumn("delete")
                 .setRenderer(new ButtonRenderer(e -> {
                     try {
-                        bookInterface.deleteEl(books.getItem(e.getItemId()).getBean());
+                        iBookService.delete(books.getItem(e.getItemId()).getBean());
                     } catch (SQLException e1) {
                         e1.printStackTrace();
                     }
@@ -179,7 +174,7 @@ public class TableBooks extends VerticalLayout {
                         lablePages.setValue("Search all pages");
                         books.removeAllItems();
                         try {
-                            books.addAll(bookInterface.getAllEls());
+                            books.addAll(iBookService.getAll());
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
@@ -221,7 +216,7 @@ public class TableBooks extends VerticalLayout {
             @Override
             public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
                 try {
-                    bookInterface.updateEl(books.getItem(grid.getEditedItemId()).getBean());
+                    iBookService.update(books.getItem(grid.getEditedItemId()).getBean());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -232,16 +227,18 @@ public class TableBooks extends VerticalLayout {
   /*  public void addRow(Books row){
         books.addBean(row);
         try {
-            bookInterface.addEl(row);
+            bookInterface.insert(row);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }*/
 
     public void deleteSelectedRows() {
+        IBookService iBookService = new IBookService();
+
         for (Object itemId: selection.getSelectedRows()) {
             try {
-                bookInterface.deleteEl(books.getItem(itemId).getBean());
+                iBookService.delete(books.getItem(itemId).getBean());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -264,8 +261,10 @@ public class TableBooks extends VerticalLayout {
     }
 
     public void updateTable() {
+        IBookService iBookService = new IBookService();
+
         try {
-            final List<Books> subList = bookInterface.getSubList(position, ConstParam.TABLE_PAGE_VALUE);
+            final List<Books> subList = iBookService.getListByPosition(position, ConstParam.TABLE_PAGE_VALUE);
             books.removeAllItems();
             books.addAll(subList);
             lablePages.setValue(position +"-" + (position + subList.size()));

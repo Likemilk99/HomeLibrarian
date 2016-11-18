@@ -1,15 +1,13 @@
 package frontend.elements.gridbooks;
 
-import DAO.Factory;
-import DAO.RatingDAO;
 import Data.Books;
 import Data.Rating;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.*;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.BaseTheme;
 import frontend.elements.components.BookWin;
 import org.vaadin.teemu.ratingstars.RatingStars;
+import service.IService.IRaitingService;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -30,7 +28,7 @@ public class BookImage extends VerticalLayout {
     private Label   author = new Label("Author");
 
     /**
-     * НАДО ПЕРЕДАТЬ ДЛЯ РАБОТЫ С БД
+     *
      * @param el
      */
     public BookImage(Books el, String user) {
@@ -52,14 +50,13 @@ public class BookImage extends VerticalLayout {
         rating_my.setMaxValue(5);
         rating_my.setStyleName("rating_my");
 
-        Factory F = new Factory();
-        RatingDAO in = (RatingDAO) F.getDAO(RatingDAO.class);
+        IRaitingService iRaitingService = new IRaitingService();
         try {
-            double rate = in.getRaiting(el.getId());
+            double rate = iRaitingService.getRaiting(el.getId());
             rating.setReadOnly(false);
             rating.setValue(rate);
             rating.setReadOnly(true);
-            double myrate = in.getRaiting(user,el.getId());
+            double myrate = iRaitingService.getRaiting(user,el.getId());
             rating_my.setValue(myrate);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,13 +64,13 @@ public class BookImage extends VerticalLayout {
 
         rating_my.addValueChangeListener(e -> {
             try {
-                Rating rat = in.getUser(getUI().getSession().getAttribute("user").toString(),el.getId());
+                Rating rat = iRaitingService.getUser(getUI().getSession().getAttribute("user").toString(),el.getId());
 
                 rat.setRaiting(rating_my.getValue());
 
-                in.updateEl(rat);
+                iRaitingService.update(rat);
 
-                double rate = in.getRaiting(el.getId());
+                double rate = iRaitingService.getRaiting(el.getId());
                 rating.setReadOnly(false);
                 rating.setValue(rate);
                 rating.setReadOnly(true);

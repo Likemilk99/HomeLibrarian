@@ -23,9 +23,7 @@ public class ManageUsersView extends CustomComponent implements View {
 
     private TableUsers table;
     private VerticalLayout tablecontent = new VerticalLayout();
- //   private HorizontalLayout buttons = new HorizontalLayout();
- //   private Button back = new Button("<");
- //   private Button forward = new Button(">");
+
 
     private MenuTable menu;
     private HorizontalSplitPanel hSplitBar;

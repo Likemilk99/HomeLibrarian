@@ -1,14 +1,10 @@
 package frontend.elements.components;
 
-import DAO.Factory;
-import DAO.InterfaceDao;
-import DAO.UserDAO;
 import Data.Users;
-import com.vaadin.data.Validator;
 import com.vaadin.data.validator.AbstractValidator;
-import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
+import service.IService.IUserService;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -127,7 +123,7 @@ public class RegistrationWin extends Window {
         signupButton.setWidth(80, Unit.PERCENTAGE);
         signupButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                if (!newuserButtonClick()) {
+                if (!newUserButtonClick()) {
                     passwordField.setValue("");
                     reenterField.setValue("");
                 }
@@ -178,11 +174,10 @@ public class RegistrationWin extends Window {
         protected boolean isValidValue(String value) {
             if(value.isEmpty())
                 return false;
-            InterfaceDao userInterface;
-            Factory factory = new Factory();
-            userInterface = factory.getDAO(UserDAO.class);
+
+            IUserService iUserService = new IUserService();
             try {
-                if(!userInterface.isUsernameExist(usernameField.getValue()))
+                if(!iUserService.isUsernameExist(usernameField.getValue()))
                     return true;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -277,7 +272,7 @@ public class RegistrationWin extends Window {
         return user;
     }
 
-    private boolean newuserButtonClick() {
+    private boolean newUserButtonClick() {
         String username = usernameField.getValue();
         String fname = fnameField.getValue();
         String pass = passwordField.getValue();
@@ -295,16 +290,13 @@ public class RegistrationWin extends Window {
         }
 
         user  = new Users(username, fname, pass, email);
-        InterfaceDao userInterface;
-        Factory factory = new Factory();
-        userInterface = factory.getDAO(UserDAO.class);
+        IUserService iUserService = new IUserService();
         try {
-            userInterface.addEl(user);
+            iUserService.insert(user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         this.close();
-        // TODO SQL
         return false;
     }
 }
