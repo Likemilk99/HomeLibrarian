@@ -1,21 +1,14 @@
 package DAO.ImpDAO;
 
-import DAO.AbstractDao;
 import DAO.InterfaceDao;
 import DAO.InterfaceUser;
-import Data.Books;
-import Data.Guest;
 import Data.Users;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
-import org.junit.Test;
-import org.junit.runners.Parameterized;
 import util.HibernateUtil;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

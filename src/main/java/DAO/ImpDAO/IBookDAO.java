@@ -1,14 +1,10 @@
 package DAO.ImpDAO;
 
-import DAO.AbstractDao;
 import DAO.InterfaceBook;
 import DAO.InterfaceDao;
 import Data.Books;
-import Data.Guest;
-import Data.Users;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import util.HibernateUtil;
 
 import javax.swing.*;

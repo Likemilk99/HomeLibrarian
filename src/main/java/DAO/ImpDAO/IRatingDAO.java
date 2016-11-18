@@ -1,6 +1,5 @@
 package DAO.ImpDAO;
 
-import DAO.AbstractDao;
 import DAO.InterfaceDao;
 import DAO.InterfaceRaiting;
 import Data.Rating;
