@@ -10,6 +10,7 @@
 * Hibernate
 * Vaadin
 * Maven
+* Работа с почтой javax.mail.
 * Система контроля версий Github
 * Тестирование Junit
 * Сервер Tomcat или Jetty
